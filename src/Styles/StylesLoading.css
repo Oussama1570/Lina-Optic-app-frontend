@@ -1,0 +1,32 @@
+.lina-loader-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f2f6f8; /* Light clean background */
+  }
+  
+  .lina-spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #dbe4ea;
+    border-top: 5px solid #007a99; /* Teal highlight */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  
+  .lina-loading-text {
+    color: #1c3b58;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

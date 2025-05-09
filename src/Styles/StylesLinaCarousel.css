@@ -1,0 +1,129 @@
+.lina-carousel-wrapper {
+  width: 100%;
+  background-color: #eef6fc;
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 🎯 Cursor only visible inside the carousel */
+.custom-hover-cursor {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(0, 122, 153, 0.2);
+  border: 2px solid #007a99;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1000;
+  transition: transform 0.1s ease, opacity 0.3s ease;
+  opacity: 0; /* Hidden by default */
+}
+
+.carousel-slide.new-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.carousel-text-block {
+  flex: 1;
+  max-width: 450px;
+  text-align: left;
+}
+
+.carousel-subtitle {
+  color: #007a99;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.carousel-title {
+  font-size: 2rem;
+  color: #1c3b58;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.carousel-button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #007a99;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: #005f73;
+  transform: scale(1.05);
+}
+
+.carousel-image-block {
+  flex: 1;
+  text-align: center;
+}
+
+.carousel-image-block img {
+  max-width: 380px;
+  max-height: 340px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide:hover .carousel-image-block img {
+  transform: scale(1.03);
+}
+
+/* Dots */
+.carousel .control-dots {
+  bottom: 10px;
+}
+
+/* 🌐 Responsive */
+@media (max-width: 768px) {
+  .carousel-slide.new-layout {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  }
+
+  .carousel-text-block {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .carousel-title {
+    font-size: 1.5rem;
+  }
+
+  .carousel-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .carousel-button {
+    font-size: 0.9rem;
+  }
+
+  .carousel-image-block img {
+    max-width: 280px;
+  }
+}

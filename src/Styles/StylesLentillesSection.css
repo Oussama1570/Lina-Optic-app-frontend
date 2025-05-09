@@ -1,0 +1,128 @@
+.lentilles-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    background: linear-gradient(135deg, #f7fafd, #e6f0f8);
+    gap: 2.5rem;
+    overflow: hidden;
+    animation: fadeInUp 1.2s ease both;
+  }
+  
+  .lentilles-content {
+    flex: 1;
+    max-width: 500px;
+    padding: 1rem;
+    animation: slideInLeft 1s ease both;
+  }
+  
+  .lentilles-title {
+    font-size: 2.2rem;
+    color: #1c3b58;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  
+  .lentilles-description {
+    font-size: 1.05rem;
+    color: #333;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  
+  .lentilles-image-container {
+    flex: 1;
+    max-width: 450px;
+    animation: slideInRight 1s ease both;
+    transition: transform 0.4s ease;
+  }
+  
+  .lentilles-image {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  
+  .lentilles-image:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Keyframes for subtle and elegant effects */
+  @keyframes slideInLeft {
+    0% {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .lentilles-section {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .lentilles-content,
+    .lentilles-image-container {
+      max-width: 100%;
+    }
+  
+    .lentilles-title {
+      font-size: 1.8rem;
+    }
+  
+    .lentilles-description {
+      font-size: 1rem;
+    }
+  }
+  
+  .section-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.8rem;
+    background-color: #1c3b58; /* Lina Optic brand color */
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .section-button:hover {
+    background-color: #285d88;
+    transform: translateY(-2px);
+  }
+  
+  
