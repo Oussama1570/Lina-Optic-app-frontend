@@ -62,7 +62,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         {/* Desktop Navigation */}
 <ul className="nav-links desktop-only">
-  <li><Link to="/">{t("home")}</Link></li>
+  <li><Link to="/">Accueil</Link></li>
 
   <li className="nav-item dropdown">
     <span>{t("solaire")}</span>
@@ -82,8 +82,8 @@ const Navbar = () => {
 
   <li><Link to="/products">{t("lentilles")}</Link></li>
   <li><Link to="/products">{t("enfants")}</Link></li>
-  <li><Link to="/about">{t("about-menu")}</Link></li>
-  <li><Link to="/contact">{t("contact-menu")}</Link></li>
+  <li><Link to="/about">A propos</Link></li>
+  <li><Link to="/contact">Contactez-nous</Link></li>
 </ul>
 
         {/* Icons */}

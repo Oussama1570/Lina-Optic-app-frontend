@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import ProductCard from "./products/ProductCard";
 import { useGetAllProductsQuery } from "../redux/features/products/productsApi";
-import "../Styles/StylesProducts.css"; // Optional: if separated from OurSellers styles
+import "../Styles/StylesProducts.css";
 
 const frameTypeOptions = [
   "Plein cadre",
@@ -23,44 +24,58 @@ const Products = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedFrameType, setSelectedFrameType] = useState("");
   const [selectedIndex, setSelectedIndex] = useState("");
-  const [visibleCount, setVisibleCount] = useState(6); // 👈 Load more state
+  const [visibleCount, setVisibleCount] = useState(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const { data: products = [] } = useGetAllProductsQuery();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const categoryFromUrl = queryParams.get("category");
+  const subCategoryFromUrl = queryParams.get("subCategory");
+
+  useEffect(() => {
+    if (categoryFromUrl) setSelectedCategory(categoryFromUrl);
+    if (subCategoryFromUrl) setSelectedSubCategory(subCategoryFromUrl);
+  }, [categoryFromUrl, subCategoryFromUrl]);
 
   const uniqueBrands = useMemo(() => {
     const brandsSet = new Set(products.map((p) => p.brand).filter(Boolean));
     return Array.from(brandsSet);
   }, [products]);
 
-  // 🧪 Apply filters
-  let filteredProducts = selectedCategory === ""
-    ? products
-    : products.filter((p) => p.mainCategory === selectedCategory);
+  let filteredProducts = selectedCategory
+    ? products.filter((p) => p.mainCategory === selectedCategory)
+    : products;
 
-  if (selectedSubCategory !== "") {
-    filteredProducts = filteredProducts.filter((p) => p.subCategory === selectedSubCategory);
+  if (selectedSubCategory) {
+    filteredProducts = filteredProducts.filter(
+      (p) => p.subCategory === selectedSubCategory
+    );
   }
-  if (selectedBrand !== "") {
+
+  if (selectedBrand) {
     filteredProducts = filteredProducts.filter((p) => p.brand === selectedBrand);
   }
-  if (selectedFrameType !== "") {
+
+  if (selectedFrameType) {
     filteredProducts = filteredProducts.filter((p) => p.frameType === selectedFrameType);
   }
-  if (selectedIndex !== "") {
+
+  if (selectedIndex) {
     filteredProducts = filteredProducts.filter((p) => p.indice === selectedIndex);
   }
 
-  const visibleProducts = filteredProducts.slice(0, visibleCount); // 👈 Slice visible products
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
 
   const handleLoadMore = () => {
     setIsLoadingMore(true);
     setTimeout(() => {
       setVisibleCount((prev) => prev + 6);
       setIsLoadingMore(false);
-    }, 800); // Delay for smooth effect
+    }, 800);
   };
-  
+
 
 
   return (

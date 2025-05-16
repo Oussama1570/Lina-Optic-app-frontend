@@ -50,42 +50,46 @@ const LinaCarousel = () => {
         showThumbs={false}
         showStatus={false}
         interval={5000}
-        showArrows={false}
+        showArrows
         swipeable
         emulateTouch
+        renderArrowPrev={(onClickHandler, hasPrev) =>
+          hasPrev && (
+            <button className="custom-arrow left" onClick={onClickHandler}>‹</button>
+          )
+        }
+        renderArrowNext={(onClickHandler, hasNext) =>
+          hasNext && (
+            <button className="custom-arrow right" onClick={onClickHandler}>›</button>
+          )
+        }
       >
-        <div className="carousel-slide new-layout">
-          <div className="carousel-text-block">
-            <p className="carousel-subtitle">GUSTO EYEWEAR</p>
-            <h2 className="carousel-title">Lunettes avec verres solaires</h2>
-            <a href="/products" className="carousel-button">Découvrir</a>
+        {[{
+          subtitle: "GUSTO EYEWEAR",
+          title: "Lunettes avec verres solaires",
+          image: Img1,
+        }, {
+          subtitle: "Lunettes Modulables",
+          title: "Clip-On Intelligents & Élégants",
+          image: Img2,
+        }, {
+          subtitle: "Collection JOW WAY",
+          title: "OLIVIA – Style & Douceur",
+          image: Img3,
+        }].map((slide, index) => (
+          <div className="carousel-slide" key={index}>
+            <div className="carousel-image-block">
+              <img src={slide.image} alt={slide.title} className="carousel-img" />
+            </div>
+            <div className="carousel-overlay">
+              <p className="carousel-subtitle">{slide.subtitle}</p>
+              <h2 className="carousel-title">{slide.title}</h2>
+              <a href="/products" className="carousel-button">
+                Découvrir
+              </a>
+            </div>
           </div>
-          <div className="carousel-image-block">
-            <img src={Img1} alt="Gusto Eyewear" />
-          </div>
-        </div>
-
-        <div className="carousel-slide new-layout">
-          <div className="carousel-text-block">
-            <p className="carousel-subtitle">Lunettes Modulables</p>
-            <h2 className="carousel-title">Clip-On Intelligents & Élégants</h2>
-            <a href="/products" className="carousel-button">Découvrir</a>
-          </div>
-          <div className="carousel-image-block">
-            <img src={Img2} alt="Clip On" />
-          </div>
-        </div>
-
-        <div className="carousel-slide new-layout">
-          <div className="carousel-text-block">
-            <p className="carousel-subtitle">Collection JOW WAY</p>
-            <h2 className="carousel-title">OLIVIA – Style & Douceur</h2>
-            <a href="/products" className="carousel-button">Découvrir</a>
-          </div>
-          <div className="carousel-image-block">
-            <img src={Img3} alt="JOW WAY" />
-          </div>
-        </div>
+        ))}
       </Carousel>
     </div>
   );

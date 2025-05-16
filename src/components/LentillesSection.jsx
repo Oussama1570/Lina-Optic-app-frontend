@@ -14,7 +14,12 @@ const LentillesSection = () => {
         <p className="lentilles-description">
           Disponibles en différentes corrections et coloris, elles sont idéales pour un usage quotidien ou occasionnel. Offrez à vos yeux une nouvelle vision !
         </p>
-        <Link to="/products" className="section-button">
+        <Link
+  to="/products?subCategory=Lentilles"
+  className="section-button"
+  onClick={() => window.scrollTo(0, 0)}
+>
+
             VOIR LA COLLECTION
           </Link>
       </div>

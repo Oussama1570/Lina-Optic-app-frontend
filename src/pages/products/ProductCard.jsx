@@ -65,16 +65,25 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="product-info-lina">
-        <Link to={`/products/${product._id}`} className="product-title-link">
-          <h3 className="product-title-lina">{product?.title}</h3>
-        </Link>
+  <Link to={`/products/${product._id}`} className="product-title-link">
+    <h3 className="product-title-lina">{product?.title}</h3>
+  </Link>
 
-        <div className="product-price-lina">
-          TND{product?.newPrice ?? "0.00"}
-          {product?.oldPrice && (
-            <span className="old-price-lina">TND{Math.round(product?.oldPrice)}</span>
-          )}
-        </div>
+  {product?.description && (
+    <p className="product-description-lina">
+      {product.description.length > 100
+        ? `${product.description.slice(0, 100)}...`
+        : product.description}
+    </p>
+  )}
+
+  <div className="product-price-lina">
+    TND{product?.newPrice ?? "0.00"}
+    {product?.oldPrice && (
+      <span className="old-price-lina">TND{Math.round(product?.oldPrice)}</span>
+    )}
+  </div>
+
 
         <div className="product-color-lina">
           Couleur: <strong>{selectedColor?.colorName?.en || "Default"}</strong>

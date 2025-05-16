@@ -6,7 +6,7 @@ export const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const { i18n } = useTranslation();
-  const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
+  const [language, setLanguage] = useState(localStorage.getItem("language") || "fr");
 
   // Function to change language
   const changeLanguage = (lang) => {
@@ -14,7 +14,7 @@ export const LanguageProvider = ({ children }) => {
     i18n.changeLanguage(lang);
     localStorage.setItem("language", lang);
     document.documentElement.lang = lang;
-    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = "ltr";
 
   };
 
