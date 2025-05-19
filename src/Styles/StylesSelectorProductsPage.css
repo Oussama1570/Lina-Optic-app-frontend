@@ -1,0 +1,51 @@
+.selector-sidebar-lina {
+  width: 100%;
+  max-width: 260px;
+  padding: 1.7rem 1.4rem;
+  background-color: #f7fcfd;
+  border: 1px solid #cfe9f1;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.selector-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #123a6c;
+  margin-bottom: 1rem;
+}
+
+.selector-options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+.selector-option-card {
+  background-color: #ffffff;
+  border: 1px solid #dbeff2;
+  border-radius: 8px;
+  padding: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.selector-option-card:hover {
+  background-color: #eaf9fc;
+  transform: translateY(-1px);
+}
+
+.selector-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: #007a99;
+}
+
+.selector-label {
+  font-size: 0.95rem;
+  color: #2c3e50;
+}

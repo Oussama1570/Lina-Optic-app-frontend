@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import ProductCard from "./products/ProductCard";
 import { useGetAllProductsQuery } from "../redux/features/products/productsApi";
 import "../Styles/StylesProducts.css";
+import SelectorsPageProducts from './../components/SelectorProductsPage';  // adjust path if needed
+
 
 const frameTypeOptions = [
   "Plein cadre",
@@ -19,52 +21,73 @@ const frameTypeOptions = [
 ];
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubCategory, setSelectedSubCategory] = useState("");
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedFrameType, setSelectedFrameType] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(["All"]);
+const [selectedSubCategory, setSelectedSubCategory] = useState(["All"]);
+const [selectedBrand, setSelectedBrand] = useState(["All"]);
+const [selectedFrameType, setSelectedFrameType] = useState(["All"]);
+const [selectedIndex, setSelectedIndex] = useState(["All"]);
+
   const [visibleCount, setVisibleCount] = useState(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { data: products = [] } = useGetAllProductsQuery();
+  const {
+  data: products = [],
+  isLoading,
+  isFetching,
+  isError,
+} = useGetAllProductsQuery();
+
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const categoryFromUrl = queryParams.get("category");
   const subCategoryFromUrl = queryParams.get("subCategory");
 
+
   useEffect(() => {
-    if (categoryFromUrl) setSelectedCategory(categoryFromUrl);
-    if (subCategoryFromUrl) setSelectedSubCategory(subCategoryFromUrl);
-  }, [categoryFromUrl, subCategoryFromUrl]);
+  if (categoryFromUrl) setSelectedCategory([categoryFromUrl]);
+  if (subCategoryFromUrl) setSelectedSubCategory([subCategoryFromUrl]);
+}, [categoryFromUrl, subCategoryFromUrl]);
+
+    
 
   const uniqueBrands = useMemo(() => {
     const brandsSet = new Set(products.map((p) => p.brand).filter(Boolean));
     return Array.from(brandsSet);
   }, [products]);
 
-  let filteredProducts = selectedCategory
-    ? products.filter((p) => p.mainCategory === selectedCategory)
-    : products;
+  let filteredProducts = products;
 
-  if (selectedSubCategory) {
-    filteredProducts = filteredProducts.filter(
-      (p) => p.subCategory === selectedSubCategory
-    );
-  }
+if (selectedCategory.length && !selectedCategory.includes("All")) {
+  filteredProducts = filteredProducts.filter((p) =>
+    selectedCategory.includes(p.mainCategory)
+  );
+}
 
-  if (selectedBrand) {
-    filteredProducts = filteredProducts.filter((p) => p.brand === selectedBrand);
-  }
+if (selectedSubCategory.length && !selectedSubCategory.includes("All")) {
+  filteredProducts = filteredProducts.filter((p) =>
+    selectedSubCategory.includes(p.subCategory)
+  );
+}
 
-  if (selectedFrameType) {
-    filteredProducts = filteredProducts.filter((p) => p.frameType === selectedFrameType);
-  }
+if (selectedBrand.length && !selectedBrand.includes("All")) {
+  filteredProducts = filteredProducts.filter((p) =>
+    selectedBrand.includes(p.brand)
+  );
+}
 
-  if (selectedIndex) {
-    filteredProducts = filteredProducts.filter((p) => p.indice === selectedIndex);
-  }
+if (selectedFrameType.length && !selectedFrameType.includes("All")) {
+  filteredProducts = filteredProducts.filter((p) =>
+    selectedFrameType.includes(p.frameType)
+  );
+}
+
+if (selectedIndex.length && !selectedIndex.includes("All")) {
+  filteredProducts = filteredProducts.filter((p) =>
+    selectedIndex.includes(p.indice)
+  );
+}
+
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
@@ -76,104 +99,86 @@ const Products = () => {
     }, 800);
   };
 
-
-
+if (isLoading || isFetching) {
   return (
-    <div className="our-sellers">
-      <h2 className="our-sellers-title">Nos Produits</h2>
-  
-      <div
-        className="filters-wrapper"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          gap: "1rem",
-          marginBottom: "2rem",
-        }}
-      >
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="">Catégorie</option>
-          <option value="Hommes">Hommes</option>
-          <option value="Femmes">Femmes</option>
-          <option value="Enfants">Enfants</option>
-        </select>
-  
-        <select
-          value={selectedSubCategory}
-          onChange={(e) => setSelectedSubCategory(e.target.value)}
-        >
-          <option value="">Sous-catégorie</option>
-          <option value="Optique">Lunettes de vue</option>
-          <option value="Solaire">Lunettes de soleil</option>
-          <option value="Lentilles">Lentilles de contact</option>
-        </select>
-  
-        <select
-          value={selectedBrand}
-          onChange={(e) => setSelectedBrand(e.target.value)}
-        >
-          <option value="">Marque</option>
-          {uniqueBrands.map((brand, idx) => (
-            <option key={idx} value={brand}>
-              {brand}
-            </option>
-          ))}
-        </select>
-  
-        <select
-          value={selectedFrameType}
-          onChange={(e) => setSelectedFrameType(e.target.value)}
-        >
-          <option value="">Type de Cadre</option>
-          {frameTypeOptions.map((type, idx) => (
-            <option key={idx} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-  
-        <select
-        value={selectedIndex}
-        onChange={(e) => setSelectedIndex(e.target.value)}
-        >
-       <option value="">Indice</option>
-       <option value="1.5">1.5</option>
-       <option value="1.56">1.56</option>
-       <option value="1.59">1.59</option>
-       <option value="1.6">1.6</option>
-       <option value="1.67">1.67</option>
-       <option value="1.74">1.74</option>
-       </select>
-
-      </div>
-  
-      <div className="products-grid">
-      {visibleProducts.map((product, i) => (
-          <ProductCard key={i} product={product} />
-        ))}
-      </div>
-
-      
-
-{visibleCount < filteredProducts.length && (
-  <div className="load-more-wrapper">
-    {isLoadingMore ? (
-      <div className="loader-spinner"></div>
-    ) : (
-      <button onClick={handleLoadMore} className="load-more-btn">
-        Charger plus
-      </button>
-    )}
-  </div>
-)}
-
+    <div className="products-loader-container">
+      <div className="loader-circle" />
+      <p className="loading-text">Chargement des produits...</p>
     </div>
   );
-  
+}
+
+
+ 
+ return (
+  <div className="our-sellers">
+    <h2 className="our-sellers-title">Nos Produits</h2>
+
+    <div className="products-page-wrapper">
+      <div className="selectors-wrapper-left">
+        <div className="selector-row">
+          <SelectorsPageProducts
+            options={["Hommes", "Femmes", "Enfants"]}
+            label="Catégorie"
+            onSelect={setSelectedCategory}
+          />
+          <SelectorsPageProducts
+            options={["Optique", "Solaire", "Lentilles"]}
+            label="Sous-catégorie"
+            onSelect={setSelectedSubCategory}
+          />
+        </div>
+
+        <div className="selector-row">
+          <SelectorsPageProducts
+            options={uniqueBrands}
+            label="Marque"
+            onSelect={setSelectedBrand}
+          />
+          <SelectorsPageProducts
+            options={frameTypeOptions}
+            label="Type de Cadre"
+            onSelect={setSelectedFrameType}
+          />
+        </div>
+
+        <div className="selector-row">
+          <SelectorsPageProducts
+            options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
+            label="Indice"
+            onSelect={setSelectedIndex}
+          />
+        </div>
+      </div>
+
+      <div className="products-grid-wrapper">
+        <div className="products-grid">
+          {visibleProducts.map((product, i) => (
+            <ProductCard key={i} product={product} />
+          ))}
+        </div>
+
+        {visibleProducts.length === 0 && (
+          <p className="no-products">Aucun produit ne correspond aux filtres.</p>
+        )}
+
+        {visibleCount < filteredProducts.length && (
+          <div className="load-more-wrapper">
+            {isLoadingMore ? (
+              <div className="loader-spinner"></div>
+            ) : (
+              <button onClick={handleLoadMore} className="load-more-btn">
+                Charger plus
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+
 };
 
 export default Products;

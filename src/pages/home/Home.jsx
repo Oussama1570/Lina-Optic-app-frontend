@@ -6,6 +6,7 @@ import "../../Styles/StylesHome.css";
 import HeroCategoryCards from "../../components/HeroCategoryCards";
 import LentillesSection from './../../components/LentillesSection.jsx';
 import KidsEyewearSection from './../../components/KidsEyewearSection';
+import FadeInSection from "../../Animations/FadeInSection.jsx";
 
 const Home = () => {
   return (
@@ -17,7 +18,9 @@ const Home = () => {
         </Helmet>
 
         {/* ✨ Carousel Section */}
+        <FadeInSection>
         <LinaCarousel />
+        </FadeInSection>
 
         {/* 🏡 Hero Section */}
         <section className="hero-section">

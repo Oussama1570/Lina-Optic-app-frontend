@@ -5,7 +5,7 @@ const LinaLoader = () => {
   return (
     <div className="lina-loader-wrapper">
       <div className="lina-spinner"></div>
-      <p className="lina-loading-text">Chargement...</p>
+      <p className="lina-loading-text">En cours...</p>
     </div>
   );
 };

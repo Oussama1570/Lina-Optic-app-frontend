@@ -9,7 +9,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import "../Styles/StylesNavbar.css";
-
 import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
@@ -18,7 +17,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const { currentUser, logout } = useAuth();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
 
   useEffect(() => {
@@ -30,27 +29,29 @@ const Navbar = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsDropdownOpen(false);
       }
-      // ✅ Also close mobile menu on outside click
-      if (isMobileMenuOpen && !e.target.closest(".mobile-menu-panel") && !e.target.closest(".mobile-menu-btn")) {
+      if (
+        isMobileMenuOpen &&
+        !e.target.closest(".mobile-menu-panel") &&
+        !e.target.closest(".mobile-menu-btn")
+      ) {
         setIsMobileMenuOpen(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileMenuOpen]);
-  
 
   return (
     <header className="navbar-container">
       <nav className="navbar-content">
         {/* Logo */}
         <div className="navbar-left">
-          <Link to="/" className="logo">
+          <a href="/" className="logo">
             <div className="lina-optic-logo">LINA OPTIC</div>
-          </Link>
+          </a>
         </div>
-  
+
         {/* Mobile Toggle */}
         <button
           className="mobile-menu-btn"
@@ -58,43 +59,44 @@ const Navbar = () => {
         >
           <FaBars className="menu-icon" />
         </button>
-  
+
         {/* Desktop Navigation */}
-        {/* Desktop Navigation */}
-<ul className="nav-links desktop-only">
-  <li><Link to="/">Accueil</Link></li>
+        <ul className="nav-links desktop-only">
+          <li><a href="/">Accueil</a></li>
 
-  <li className="nav-item dropdown">
-    <span>{t("solaire")}</span>
-    <ul className="dropdown-menu">
-      <li><Link to="/products">{t("solaire homme")}</Link></li>
-      <li><Link to="/products">{t("solaire femme")}</Link></li>
-    </ul>
-  </li>
+          <li className="nav-item dropdown">
+            <a href="/products?subCategory=Solaire">solaire</a>
 
-  <li className="nav-item dropdown">
-    <span>{t("optique")}</span>
-    <ul className="dropdown-menu">
-      <li><Link to="/products">{t("vue homme")}</Link></li>
-      <li><Link to="/products">{t("vue femme")}</Link></li>
-    </ul>
-  </li>
+            <ul className="dropdown-menu">
+              <li><a href="/products?subCategory=Solaire">solaire homme</a></li>
+              <li><a href="/products?subCategory=Solaire">solaire femme</a></li>
+            </ul>
+          </li>
 
-  <li><Link to="/products">{t("lentilles")}</Link></li>
-  <li><Link to="/products">{t("enfants")}</Link></li>
-  <li><Link to="/about">A propos</Link></li>
-  <li><Link to="/contact">Contactez-nous</Link></li>
-</ul>
+          <li className="nav-item dropdown">
+            <a href="/products?subCategory=Optique">optique</a>
+
+            <ul className="dropdown-menu">
+              <li><a href="/products?subCategory=Optique">vue homme</a></li>
+              <li><a href="/products?subCategory=Optique">vue femme</a></li>
+            </ul>
+          </li>
+
+          <li><a href="/products?subCategory=Lentilles">lentilles</a></li>
+          <li><a href="/products?mainCategory=Enfants">enfants</a></li>
+          <li><a href="/about">A propos</a></li>
+          <li><a href="/contact">Contactez-nous</a></li>
+        </ul>
 
         {/* Icons */}
         <div className="nav-icons">
-          <Link to="/cart" className="cart-icon">
+          <a href="/cart" className="cart-icon">
             <FaShoppingCart className="icon" />
             {cartItems.length > 0 && (
               <span className="cart-badge">{cartItems.length}</span>
             )}
-          </Link>
-  
+          </a>
+
           <div className="user-section" ref={dropdownRef}>
             {currentUser ? (
               <>
@@ -104,55 +106,51 @@ const Navbar = () => {
                 >
                   <FaUserCircle className="user-icon logged-in" />
                 </button>
-  
+
                 {isDropdownOpen && (
                   <div className="user-dropdown">
                     <ul>
-                      <li><Link to="/user-dashboard">{t("dashboard")}</Link></li>
-                      <li><Link to="/orders">{t("orders")}</Link></li>
-                      <li><button onClick={logout}>{t("logout")}</button></li>
+                      <li><a href="/user-dashboard">Tableau de Bord</a></li>
+                      <li><a href="/orders">Ordres</a></li>
+                      <li><button onClick={logout}>Déconnexion</button></li>
                     </ul>
                   </div>
                 )}
               </>
             ) : (
-              <Link to="/login" className="login-icon">
+              <a href="/login" className="login-icon">
                 <FaUserCircle className="icon" />
-              </Link>
+              </a>
             )}
           </div>
-  
+
           <div className="language-switcher-wrapper">
             {/* Language Switcher Placeholder */}
           </div>
         </div>
       </nav>
-  
-      {/* Mobile Menu */}
-      {/* Mobile Menu */}
-{isMobileMenuOpen && (
-  <div className="mobile-menu-panel">
-    <button className="close-btn" onClick={() => setIsMobileMenuOpen(false)}>
-      <FaTimes />
-    </button>
-    <ul>
-      <li><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>{t("home")}</Link></li>
-      <li><Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>{t("solaire homme")}</Link></li>
-      <li><Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>{t("solaire femme")}</Link></li>
-      <li><Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>{t("vue homme")}</Link></li>
-      <li><Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>{t("vue femme")}</Link></li>
-      <li><Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>{t("lentilles")}</Link></li>
-      <li><Link to="/products" onClick={() => setIsMobileMenuOpen(false)}>{t("enfants")}</Link></li>
-      <li><Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>{t("about-menu")}</Link></li>
-      <li><Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>{t("contact-menu")}</Link></li>
-    </ul>
-  </div>
-)}
 
-   
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="mobile-menu-panel">
+          <button className="close-btn" onClick={() => setIsMobileMenuOpen(false)}>
+            <FaTimes />
+          </button>
+          <ul>
+            <li><a href="/" onClick={() => setIsMobileMenuOpen(false)}>Accueil</a></li>
+            <li><a href="/products?subCategory=Solaire" onClick={() => setIsMobileMenuOpen(false)}>solaire homme</a></li>
+            <li><a href="/products?subCategory=Solaire" onClick={() => setIsMobileMenuOpen(false)}>solaire femme</a></li>
+            <li><a href="/products?subCategory=Optique" onClick={() => setIsMobileMenuOpen(false)}>vue homme</a></li>
+            <li><a href="/products?subCategory=Optique" onClick={() => setIsMobileMenuOpen(false)}>vue femme</a></li>
+            <li><a href="/products?subCategory=Lentilles" onClick={() => setIsMobileMenuOpen(false)}>lentilles</a></li>
+            <li><a href="/products?mainCategory=Enfants" onClick={() => setIsMobileMenuOpen(false)}>enfants</a></li>
+            <li><a href="/about" onClick={() => setIsMobileMenuOpen(false)}>A propos</a></li>
+            <li><a href="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contactez-nous</a></li>
+          </ul>
+        </div>
+      )}
     </header>
   );
-  
 };
 
 export default Navbar;

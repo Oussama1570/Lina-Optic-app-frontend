@@ -13,6 +13,7 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -49,8 +50,26 @@ const SingleProduct = () => {
     }
   };
 
+  useEffect(() => {
+  if (isLoading) {
+    setShowContent(false);
+  } else {
+    const timer = setTimeout(() => {
+      setShowContent(true);
+    }, 2000); // ⏳ Force 2s loading minimum
+    return () => clearTimeout(timer);
+  }
+}, [isLoading]);
+
   if (isLoading)
-    return <div className="text-center py-10 text-gray-600">Loading...</div>;
+  return (
+    <div className="loader-container">
+      <div className="spinner" aria-label="Chargement en cours"></div>
+    </div>
+  );
+
+  
+
   if (isError || !product)
     return <div className="text-center py-10 text-red-600">Error loading product info</div>;
 

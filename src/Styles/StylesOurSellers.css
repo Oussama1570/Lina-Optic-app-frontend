@@ -69,37 +69,40 @@
 /* ===============================
    🔄 Custom Carousel Arrows
 ================================= */
+/* === Updated Carousel Arrows for Lina Optic === */
 .custom-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #3f3d3c;
-  color: white;
+  background-color: #1c3b58; /* Deep navy blue (Lina Optic theme) */
+  color: rgb(105, 95, 95);
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  font-size: 1.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 .custom-arrow:hover {
-  background-color: #1a1715;
+  background-color: #0f2a40; /* Darker navy on hover */
+  transform: translateY(-50%) scale(1.1);
 }
 
 .custom-arrow.left {
-  left: 10px;
+  left: 8px;
 }
 
 .custom-arrow.right {
-  right: 10px;
+  right: 8px;
 }
+
 
 /* ===============================
    📱 Mobile Responsiveness

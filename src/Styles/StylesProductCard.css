@@ -15,7 +15,7 @@
 
 .product-card-lina:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(133, 78, 78, 0.08);
 }
 
 /* === Image Section === */
@@ -121,7 +121,7 @@
 }
 
 .add-to-cart-btn-lina {
-  background-color: #1c3b58;
+  background-color: #8cbce0;
   color: #ffffff;
   padding: 6px 12px;
   font-size: 0.8rem;
