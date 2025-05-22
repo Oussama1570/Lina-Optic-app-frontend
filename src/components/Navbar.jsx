@@ -68,22 +68,25 @@ const Navbar = () => {
             <a href="/products?subCategory=Solaire">solaire</a>
 
             <ul className="dropdown-menu">
-              <li><a href="/products?subCategory=Solaire">solaire homme</a></li>
-              <li><a href="/products?subCategory=Solaire">solaire femme</a></li>
-            </ul>
-          </li>
+              <li><a href="/products?category=Hommes&subCategory=Solaire">solaire homme</a></li>
+              <li><a href="/products?category=Femmes&subCategory=Solaire">solaire femme</a></li>
+              </ul>
+           </li>
+        
+          
 
           <li className="nav-item dropdown">
             <a href="/products?subCategory=Optique">optique</a>
 
             <ul className="dropdown-menu">
-              <li><a href="/products?subCategory=Optique">vue homme</a></li>
-              <li><a href="/products?subCategory=Optique">vue femme</a></li>
+              <li><a href="/products?category=Hommes&subCategory=Optique">vue homme</a></li>
+              <li><a href="/products?category=Femmes&subCategory=Optique">vue femme</a></li>
             </ul>
           </li>
 
           <li><a href="/products?subCategory=Lentilles">lentilles</a></li>
-          <li><a href="/products?mainCategory=Enfants">enfants</a></li>
+          <li><a href="/products?category=Enfants">enfants</a>
+</li>
           <li><a href="/about">A propos</a></li>
           <li><a href="/contact">Contactez-nous</a></li>
         </ul>

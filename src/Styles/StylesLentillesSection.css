@@ -8,6 +8,7 @@
     gap: 2.5rem;
     overflow: hidden;
     animation: fadeInUp 1.2s ease both;
+    margin-bottom: 5%;
   }
   
   .lentilles-content {

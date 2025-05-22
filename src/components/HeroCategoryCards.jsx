@@ -14,13 +14,9 @@ const HeroCategoryCards = () => {
         <div className="card-overlay">
           <p className="card-subtitle">Lunettes pour Elle</p>
           <h3 className="card-title">Beauté Visuelle</h3>
-          <Link
-  to="/products?category=Femmes"
-  className="card-link"
-  onClick={() => window.scrollTo(0, 0)}
->
-  VOIR LA COLLECTION
-</Link>
+          <a href="/products?category=Femmes" className="card-link">
+            VOIR LA COLLECTION
+          </a>
 
         </div>
       </div>
@@ -32,14 +28,10 @@ const HeroCategoryCards = () => {
         <div className="card-overlay">
           <p className="card-subtitle">Lunettes pour Lui</p>
           <h3 className="card-title">Audace Élégante</h3>
-          <Link
-  to="/products?category=Hommes"
-  className="card-link"
-  onClick={() => window.scrollTo(0, 0)}
->
-
+          
+          <a href="/products?category=Hommes" className="card-link">
             VOIR LA COLLECTION
-          </Link>
+          </a>
         </div>
       </div>
     </div>

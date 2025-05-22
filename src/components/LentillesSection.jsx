@@ -14,14 +14,10 @@ const LentillesSection = () => {
         <p className="lentilles-description">
           Disponibles en différentes corrections et coloris, elles sont idéales pour un usage quotidien ou occasionnel. Offrez à vos yeux une nouvelle vision !
         </p>
-        <Link
-  to="/products?subCategory=Lentilles"
-  className="section-button"
-  onClick={() => window.scrollTo(0, 0)}
->
-  VOIR LA COLLECTION
-</Link>
-
+        
+<a href="/products?subCategory=Lentilles" className="section-button">
+            VOIR LA COLLECTION
+          </a>
       </div>
       <div className="lentilles-image-container">
         <img src={lentillesSectionImg1} alt="Lentilles de Contact Lina Optic" className="lentilles-image" />

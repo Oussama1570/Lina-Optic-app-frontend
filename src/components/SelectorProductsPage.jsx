@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FadeInSection from "../Animations/FadeInSection.jsx";
 import "../Styles/StylesSelectorProductsPage.css";
 
 const SelectorsPageProducts = ({ options = [], onSelect, label, selected: externalSelected }) => {
+  const isFirstRender = useRef(true);
   const [selected, setSelected] = useState(["All"]);
 
-  // Sync only if the external selected is different
+  // ✅ Sync from parent (URL param) only on first render
   useEffect(() => {
-    if (
-      externalSelected &&
-      Array.isArray(externalSelected) &&
-      JSON.stringify(externalSelected) !== JSON.stringify(selected)
-    ) {
+    if (isFirstRender.current && Array.isArray(externalSelected)) {
       setSelected(externalSelected);
+      isFirstRender.current = false;
     }
-  }, [externalSelected]); // ✅ only depends on externalSelected
+  }, [externalSelected]);
 
+  // ✅ Notify parent only on user interaction (not on first sync)
   useEffect(() => {
-    onSelect(selected);
-  }, [selected, onSelect]);
+    if (!isFirstRender.current && Array.isArray(selected)) {
+      onSelect(selected);
+    }
+  }, [selected]);
 
   const handleChange = (value) => {
     let updated = [];
@@ -50,7 +51,7 @@ const SelectorsPageProducts = ({ options = [], onSelect, label, selected: extern
               <input
                 type="checkbox"
                 value={option}
-                checked={selected.includes(option)}
+                checked={Array.isArray(selected) && selected.includes(option)}
                 onChange={() => handleChange(option)}
                 className="selector-checkbox"
               />
