@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import "../Styles/StylesNavbar.css";
 import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -128,6 +129,7 @@ const Navbar = () => {
           </div>
 
           <div className="language-switcher-wrapper">
+            
             {/* Language Switcher Placeholder */}
           </div>
         </div>

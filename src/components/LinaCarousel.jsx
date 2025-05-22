@@ -8,37 +8,38 @@ import Img2 from "../assets/Lunettes de carousel/Lunettes optiques pour femmes C
 import Img3 from "../assets/Lunettes de carousel/Lunettes divers cadres.jpg";
 
 const LinaCarousel = () => {
-  useEffect(() => {
-    const cursor = document.querySelector(".custom-hover-cursor");
-    const wrapper = document.querySelector(".lina-carousel-wrapper");
+ useEffect(() => {
+  const cursor = document.querySelector(".custom-hover-cursor");
+  const slides = document.querySelectorAll(".carousel-slide");
 
-    const moveCursor = (e) => {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
-    };
+  const moveCursor = (e) => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+  };
 
-    const showCursor = () => {
-      cursor.style.opacity = 1;
-    };
+  const showCursor = () => {
+    cursor.style.opacity = 1;
+  };
 
-    const hideCursor = () => {
-      cursor.style.opacity = 0;
-    };
+  const hideCursor = () => {
+    cursor.style.opacity = 0;
+  };
 
-    if (wrapper && cursor) {
-      wrapper.addEventListener("mousemove", moveCursor);
-      wrapper.addEventListener("mouseenter", showCursor);
-      wrapper.addEventListener("mouseleave", hideCursor);
-    }
+  slides.forEach((slide) => {
+    slide.addEventListener("mousemove", moveCursor);
+    slide.addEventListener("mouseenter", showCursor);
+    slide.addEventListener("mouseleave", hideCursor);
+  });
 
-    return () => {
-      if (wrapper && cursor) {
-        wrapper.removeEventListener("mousemove", moveCursor);
-        wrapper.removeEventListener("mouseenter", showCursor);
-        wrapper.removeEventListener("mouseleave", hideCursor);
-      }
-    };
-  }, []);
+  return () => {
+    slides.forEach((slide) => {
+      slide.removeEventListener("mousemove", moveCursor);
+      slide.removeEventListener("mouseenter", showCursor);
+      slide.removeEventListener("mouseleave", hideCursor);
+    });
+  };
+}, []);
+
 
   return (
     <div className="lina-carousel-wrapper">

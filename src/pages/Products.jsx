@@ -141,30 +141,19 @@ if (isLoading || isFetching) {
        <div className="selector-row">
   <div className="selector-column">
     <SelectorsPageProducts
-  options={uniqueBrands}
-  label="Marque"
-  onSelect={setSelectedBrand}
-  selected={selectedBrand}
-/>
+      options={uniqueBrands}
+      label="Marque"
+      onSelect={setSelectedBrand}
+      selected={selectedBrand}
+    />
 
-<SelectorsPageProducts
-  options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
-  label="Indice"
-  onSelect={setSelectedIndex}
-  selected={selectedIndex}
-/>
-
-<SelectorsPageProducts
-  options={frameTypeOptions}
-  label="Type de Cadre"
-  onSelect={setSelectedFrameType}
-  selected={selectedFrameType}
-/>
+    
 
     <SelectorsPageProducts
       options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
       label="Indice"
       onSelect={setSelectedIndex}
+      selected={selectedIndex}
     />
   </div>
 
@@ -176,6 +165,7 @@ if (isLoading || isFetching) {
     />
   </div>
 </div>
+
 
       </div>
 

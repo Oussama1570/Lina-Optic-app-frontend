@@ -311,8 +311,9 @@
 .selector-column {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.8rem; /* Slightly larger gap between selectors */
 }
+
 
 @media (max-width: 768px) {
   .selector-column {

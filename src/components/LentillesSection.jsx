@@ -7,7 +7,7 @@ const LentillesSection = () => {
   return (
     <div className="lentilles-section">
       <div className="lentilles-content">
-        <h2 className="lentilles-title">Lentilles de Contact</h2>
+       <a href="/products?subCategory=Lentilles" > <h2 className="lentilles-title">Lentilles de Contact</h2></a>
         <p className="lentilles-description">
           Découvrez notre gamme de lentilles de contact chez <strong>Lina Optic</strong>. Que vous cherchiez confort, clarté ou style, nos lentilles s’adaptent à votre quotidien avec précision. 
         </p>
@@ -20,7 +20,7 @@ const LentillesSection = () => {
           </a>
       </div>
       <div className="lentilles-image-container">
-        <img src={lentillesSectionImg1} alt="Lentilles de Contact Lina Optic" className="lentilles-image" />
+        <a href="/products?subCategory=Lentilles" ><img src={lentillesSectionImg1} alt="Lentilles de Contact Lina Optic" className="lentilles-image" /></a>
       </div>
     </div>
   );

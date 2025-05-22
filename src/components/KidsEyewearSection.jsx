@@ -7,7 +7,7 @@ const KidsEyewearSection = () => {
   return (
     <div className="kids-section">
       <div className="kids-text">
-        <h2 className="kids-title">Lunettes pour Enfants</h2>
+        <a href="/products?category=Enfants" ><h2 className="kids-title">Lunettes pour Enfants</h2></a>
         <p className="kids-description">
           Offrez à vos enfants une vision claire avec style ! Chez <strong>Lina Optic</strong>, nous avons sélectionné des montures légères, colorées et résistantes – idéales pour le quotidien des petits aventuriers.
         </p>
@@ -23,11 +23,11 @@ const KidsEyewearSection = () => {
       </div>
 
       <div className="kids-image-container">
-        <img
+        <a href="/products?category=Enfants" ><img
           src={kidsGlassesn2}
           alt="Enfant avec lunettes Lina Optic"
           className="kids-image"
-        />
+        /></a>
       </div>
     </div>
   );
