@@ -138,26 +138,29 @@ if (isLoading || isFetching) {
 
         </div>
 
-        <div className="selector-row">
-          <SelectorsPageProducts
-            options={uniqueBrands}
-            label="Marque"
-            onSelect={setSelectedBrand}
-          />
-          <SelectorsPageProducts
-            options={frameTypeOptions}
-            label="Type de Cadre"
-            onSelect={setSelectedFrameType}
-          />
-        </div>
+       <div className="selector-row">
+  <div className="selector-column">
+    <SelectorsPageProducts
+      options={uniqueBrands}
+      label="Marque"
+      onSelect={setSelectedBrand}
+    />
+    <SelectorsPageProducts
+      options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
+      label="Indice"
+      onSelect={setSelectedIndex}
+    />
+  </div>
 
-        <div className="selector-row">
-          <SelectorsPageProducts
-            options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
-            label="Indice"
-            onSelect={setSelectedIndex}
-          />
-        </div>
+  <div className="selector-column">
+    <SelectorsPageProducts
+      options={frameTypeOptions}
+      label="Type de Cadre"
+      onSelect={setSelectedFrameType}
+    />
+  </div>
+</div>
+
       </div>
 
       {/* 🛍 Product Grid */}

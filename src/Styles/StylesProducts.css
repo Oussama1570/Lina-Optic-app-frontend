@@ -307,3 +307,15 @@
     transform: rotate(360deg);
   }
 }
+
+.selector-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .selector-column {
+    width: 100%;
+  }
+}
