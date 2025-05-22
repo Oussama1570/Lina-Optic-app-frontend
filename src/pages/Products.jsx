@@ -45,8 +45,12 @@ const [selectedIndex, setSelectedIndex] = useState(["All"]);
 
 
   useEffect(() => {
-  if (categoryFromUrl) setSelectedCategory([categoryFromUrl]);
-  if (subCategoryFromUrl) setSelectedSubCategory([subCategoryFromUrl]);
+  if (categoryFromUrl) {
+    setSelectedCategory([categoryFromUrl]);
+  }
+  if (subCategoryFromUrl) {
+    setSelectedSubCategory([subCategoryFromUrl]);
+  }
 }, [categoryFromUrl, subCategoryFromUrl]);
 
     
@@ -115,18 +119,23 @@ if (isLoading || isFetching) {
     <h2 className="our-sellers-title">Nos Produits</h2>
 
     <div className="products-page-wrapper">
+      {/* 🔍 Left Filter Sidebar */}
       <div className="selectors-wrapper-left">
         <div className="selector-row">
           <SelectorsPageProducts
-            options={["Hommes", "Femmes", "Enfants"]}
-            label="Catégorie"
-            onSelect={setSelectedCategory}
-          />
+  options={["Hommes", "Femmes", "Enfants"]}
+  label="Catégorie"
+  onSelect={setSelectedCategory}
+  selected={selectedCategory}
+/>
+
           <SelectorsPageProducts
-            options={["Optique", "Solaire", "Lentilles"]}
-            label="Sous-catégorie"
-            onSelect={setSelectedSubCategory}
-          />
+  options={["Optique", "Solaire", "Lentilles"]}
+  label="Sous-catégorie"
+  onSelect={setSelectedSubCategory}
+  selected={selectedSubCategory}  // ✅ ADD THIS LINE
+/>
+
         </div>
 
         <div className="selector-row">
@@ -151,6 +160,7 @@ if (isLoading || isFetching) {
         </div>
       </div>
 
+      {/* 🛍 Product Grid */}
       <div className="products-grid-wrapper">
         <div className="products-grid">
           {visibleProducts.map((product, i) => (
@@ -177,8 +187,6 @@ if (isLoading || isFetching) {
     </div>
   </div>
 );
-
-
 };
 
 export default Products;

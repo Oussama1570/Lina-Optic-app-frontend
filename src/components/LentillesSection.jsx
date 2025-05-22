@@ -19,9 +19,9 @@ const LentillesSection = () => {
   className="section-button"
   onClick={() => window.scrollTo(0, 0)}
 >
+  VOIR LA COLLECTION
+</Link>
 
-            VOIR LA COLLECTION
-          </Link>
       </div>
       <div className="lentilles-image-container">
         <img src={lentillesSectionImg1} alt="Lentilles de Contact Lina Optic" className="lentilles-image" />

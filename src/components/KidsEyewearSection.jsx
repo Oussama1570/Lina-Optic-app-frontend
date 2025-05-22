@@ -16,9 +16,14 @@ const KidsEyewearSection = () => {
         </p>
 
         {/* ✅ Button that links to Products page */}
-        <Link to="/products" className="kids-button">
-          VOIR LA COLLECTION
-        </Link>
+        <Link 
+  to="/products?category=Enfants" 
+  className="kids-button" 
+  onClick={() => window.scrollTo(0, 0)}
+>
+  VOIR LA COLLECTION
+</Link>
+
       </div>
 
       <div className="kids-image-container">

@@ -5,9 +5,15 @@
   background-color: #f7fcfd;
   border: 1px solid #cfe9f1;
   border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+ 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  margin-left: -100%; /* ✅ or just remove this line entirely */
 }
+
+.selector-sidebar-lina {
+  margin-bottom: 1.5rem;      /* Was 2rem */
+}
+
 
 .selector-title {
   font-size: 1.2rem;

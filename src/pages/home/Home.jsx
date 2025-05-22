@@ -23,6 +23,7 @@ const Home = () => {
         </FadeInSection>
 
         {/* 🏡 Hero Section */}
+        <FadeInSection>
         <section className="hero-section">
           <h2 className="welcome-title">Bienvenue chez <span>Lina Optic</span></h2>
           <p className="welcome-text">
@@ -33,10 +34,14 @@ const Home = () => {
             Notre équipe d’opticiens diplômés est à votre écoute pour vous conseiller et vous garantir un confort visuel optimal au quotidien.
           </p>
         </section>
+        </FadeInSection>
 
+        <FadeInSection>
         <HeroCategoryCards/>
+        </FadeInSection>
 
         {/* 🛍️ Our Sellers Section */}
+        <FadeInSection>
         <section className="sellers-section">
           <div className="text-center">
             <h2 className="section-title">Nos Meilleures Ventes</h2>
@@ -46,17 +51,22 @@ const Home = () => {
           </div>
           <OurSellers />
         </section>
+        </FadeInSection>
 
 {/* Lentilles Section */}
+<FadeInSection>
 <section>
 <LentillesSection/>
 </section>
+</FadeInSection>
 
 
 {/*  Kids Eyewear Section */}
+<FadeInSection>
 <section>
 <KidsEyewearSection />
 </section>
+</FadeInSection>
 
       </div>
     </div>

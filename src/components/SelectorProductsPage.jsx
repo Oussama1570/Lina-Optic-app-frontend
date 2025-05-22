@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
-import FadeInSection from "../Animations/FadeInSection.jsx"; 
+import FadeInSection from "../Animations/FadeInSection.jsx";
 import "../Styles/StylesSelectorProductsPage.css";
 
-const SelectorsPageProducts = ({ options = [], onSelect, label }) => {
+const SelectorsPageProducts = ({ options = [], onSelect, label, selected: externalSelected }) => {
   const [selected, setSelected] = useState(["All"]);
+
+  // Sync only if the external selected is different
+  useEffect(() => {
+    if (
+      externalSelected &&
+      Array.isArray(externalSelected) &&
+      JSON.stringify(externalSelected) !== JSON.stringify(selected)
+    ) {
+      setSelected(externalSelected);
+    }
+  }, [externalSelected]); // ✅ only depends on externalSelected
 
   useEffect(() => {
     onSelect(selected);

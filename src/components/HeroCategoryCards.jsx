@@ -19,9 +19,9 @@ const HeroCategoryCards = () => {
   className="card-link"
   onClick={() => window.scrollTo(0, 0)}
 >
+  VOIR LA COLLECTION
+</Link>
 
-            VOIR LA COLLECTION
-          </Link>
         </div>
       </div>
 
