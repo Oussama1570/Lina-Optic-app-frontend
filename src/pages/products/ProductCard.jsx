@@ -47,36 +47,46 @@ const ProductCard = ({ product }) => {
 
   // 🖱️ Image hover cursor effect
   useEffect(() => {
-    const cursor = cursorRef.current;
-    const image = imageRef.current;
+  const image = imageRef.current;
+  const cursor = cursorRef.current;
 
-    const move = (e) => {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
-    };
+  const move = (e) => {
+    const rect = image.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    const show = () => {
-      cursor.style.opacity = 1;
-    };
+    image.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
+    image.style.transform = "scale(2)";
 
-    const hide = () => {
-      cursor.style.opacity = 0;
-    };
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+  };
 
+  const show = () => {
+    cursor.style.opacity = 1;
+  };
+
+  const hide = () => {
+    cursor.style.opacity = 0;
+    image.style.transform = "scale(1)";
+  };
+
+  if (image && cursor) {
+    image.addEventListener("mousemove", move);
+    image.addEventListener("mouseenter", show);
+    image.addEventListener("mouseleave", hide);
+  }
+
+  return () => {
     if (image && cursor) {
-      image.addEventListener("mousemove", move);
-      image.addEventListener("mouseenter", show);
-      image.addEventListener("mouseleave", hide);
+      image.removeEventListener("mousemove", move);
+      image.removeEventListener("mouseenter", show);
+      image.removeEventListener("mouseleave", hide);
     }
+  };
+}, []);
 
-    return () => {
-      if (image && cursor) {
-        image.removeEventListener("mousemove", move);
-        image.removeEventListener("mouseenter", show);
-        image.removeEventListener("mouseleave", hide);
-      }
-    };
-  }, []);
+
 
 
   if (!product) return null;
@@ -87,14 +97,14 @@ const ProductCard = ({ product }) => {
     <div className="product-image-wrapper">
       <div className="product-image-cursor" ref={cursorRef}></div>
 
-      <Link to={`/products/${product._id}`}>
-        <img
-          src={getImgUrl(selectedColor?.image ?? product.coverImage)}
-          alt={product?.title}
-          className="product-image"
-          ref={imageRef}
-        />
-      </Link>
+      <a href={`/products/${product._id}`}>
+          <img
+            src={getImgUrl(selectedColor?.image ?? product.coverImage)}
+            alt={product?.title}
+            className="product-image"
+            ref={imageRef}
+          />
+        </a>
 
       <div
         className={`stock-badge ${
@@ -108,9 +118,9 @@ const ProductCard = ({ product }) => {
     </div>
 
     <div className="product-info-lina">
-      <Link to={`/products/${product._id}`} className="product-title-link">
-        <h3 className="product-title-lina">{product?.title}</h3>
-      </Link>
+      <a href={`/products/${product._id}`} className="product-title-link">
+          <h3 className="product-title-lina">{product?.title}</h3>
+        </a>
 
       {product?.description && (
         <p className="product-description-lina">

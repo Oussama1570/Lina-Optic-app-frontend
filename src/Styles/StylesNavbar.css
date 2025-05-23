@@ -65,7 +65,9 @@
 ================================= */
 .nav-item {
   position: relative;
+  padding-bottom: 20px; /* gives buffer space under the item */
 }
+
 
 .nav-item > span {
   cursor: pointer;
@@ -80,7 +82,7 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 120%;
+  top: 100%; /* Previously 120%, changed to reduce jump */
   left: 0;
   background-color: #ffffff;
   min-width: 190px;
@@ -90,8 +92,8 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   display: none;
   z-index: 1000;
-  animation: dropdownFade 0.25s ease-in-out;
 }
+
 
 .dropdown-menu li {
   list-style: none;
@@ -113,9 +115,11 @@
   text-underline-offset: 4px;
 }
 
-.nav-item:hover .dropdown-menu {
+.nav-item:hover .dropdown-menu,
+.nav-item .dropdown-menu:hover {
   display: block;
 }
+
 
 /* ===============================
 🛍️ Icons

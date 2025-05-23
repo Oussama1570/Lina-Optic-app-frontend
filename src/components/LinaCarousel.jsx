@@ -10,11 +10,15 @@ import Img3 from "../assets/Lunettes de carousel/Lunettes divers cadres.jpg";
 const LinaCarousel = () => {
  useEffect(() => {
   const cursor = document.querySelector(".custom-hover-cursor");
-  const slides = document.querySelectorAll(".carousel-slide");
+  const wrapper = document.querySelector(".lina-carousel-wrapper");
 
   const moveCursor = (e) => {
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
+    const rect = wrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    cursor.style.left = `${x}px`;
+    cursor.style.top = `${y}px`;
   };
 
   const showCursor = () => {
@@ -25,20 +29,17 @@ const LinaCarousel = () => {
     cursor.style.opacity = 0;
   };
 
-  slides.forEach((slide) => {
-    slide.addEventListener("mousemove", moveCursor);
-    slide.addEventListener("mouseenter", showCursor);
-    slide.addEventListener("mouseleave", hideCursor);
-  });
+  wrapper.addEventListener("mousemove", moveCursor);
+  wrapper.addEventListener("mouseenter", showCursor);
+  wrapper.addEventListener("mouseleave", hideCursor);
 
   return () => {
-    slides.forEach((slide) => {
-      slide.removeEventListener("mousemove", moveCursor);
-      slide.removeEventListener("mouseenter", showCursor);
-      slide.removeEventListener("mouseleave", hideCursor);
-    });
+    wrapper.removeEventListener("mousemove", moveCursor);
+    wrapper.removeEventListener("mouseenter", showCursor);
+    wrapper.removeEventListener("mouseleave", hideCursor);
   };
 }, []);
+
 
 
   return (
