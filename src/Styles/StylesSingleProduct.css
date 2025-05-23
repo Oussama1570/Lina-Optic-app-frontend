@@ -34,9 +34,8 @@
 
 .product-image-box {
   position: relative;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  cursor: none;
 }
 
 .product-main-image {
@@ -47,9 +46,45 @@
   object-fit: contain;
   border-radius: 8px;
   transition: transform 0.4s ease;
-  display: block;
-  margin: 0 auto;
+  transform-origin: center center;
 }
+
+.product-image-cursor {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #d4af37;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 40%, transparent 80%);
+  backdrop-filter: blur(3px);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  opacity: 0;
+  mix-blend-mode: luminosity;
+  animation: zoomCursorPulse 2s infinite ease-in-out;
+  box-shadow:
+    0 0 8px rgba(212, 175, 55, 0.4),
+    0 0 16px rgba(212, 175, 55, 0.3),
+    inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes zoomCursorPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+}
+
 
 
 .product-image-box:hover .product-main-image {

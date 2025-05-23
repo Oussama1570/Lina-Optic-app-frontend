@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Already present
 import { FiShoppingCart } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { getImgUrl } from "../../utils/getImgUrl";
@@ -14,6 +14,11 @@ const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
   const [showContent, setShowContent] = useState(false);
+
+
+ 
+  const imageRef = useRef(null);
+  
 
   useEffect(() => {
     if (product) {
@@ -50,6 +55,37 @@ const SingleProduct = () => {
     }
   };
 
+useEffect(() => {
+  const image = imageRef.current;
+
+  const handleMouseMove = (e) => {
+    const rect = image.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    image.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
+    image.style.transform = "scale(2)";
+  };
+
+  const handleMouseLeave = () => {
+    image.style.transform = "scale(1)";
+  };
+
+  if (image) {
+    image.addEventListener("mousemove", handleMouseMove);
+    image.addEventListener("mouseleave", handleMouseLeave);
+  }
+
+  return () => {
+    if (image) {
+      image.removeEventListener("mousemove", handleMouseMove);
+      image.removeEventListener("mouseleave", handleMouseLeave);
+    }
+  };
+}, []);
+
+
+
   useEffect(() => {
   if (isLoading) {
     setShowContent(false);
@@ -80,17 +116,20 @@ const SingleProduct = () => {
       <div className="product-content">
         <div>
           <div className="product-image-box">
-            <img
-              src={getImgUrl(selectedColor?.image ?? "/assets/default-image.png")}
-              alt={product?.title}
-              className="product-main-image"
-            />
-            <div className={`stock-badge ${selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"}`}>
-              {selectedColor?.stock > 0
-                ? `Stock: ${selectedColor?.stock}`
-                : "Rupture de stock"}
-            </div>
-          </div>
+  
+  <img
+    src={getImgUrl(selectedColor?.image ?? "/assets/default-image.png")}
+    alt={product?.title}
+    className="product-main-image"
+    ref={imageRef}
+  />
+  <div className={`stock-badge ${selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"}`}>
+    {selectedColor?.stock > 0
+      ? `Stock: ${selectedColor?.stock}`
+      : "Rupture de stock"}
+  </div>
+</div>
+
 
           <div className="product-colors">
             <label>Couleurs disponibles:</label>
