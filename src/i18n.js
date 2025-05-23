@@ -4,7 +4,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
   .use(initReactI18next)
-  .use(LanguageDetector)
+  
   .init({
     resources: { 
       en: {
@@ -952,10 +952,7 @@ i18n
          lng: localStorage.getItem("language") || "fr", // ✅ force fr by default
   fallbackLng: "fr",                             // ✅ fallback in fr
 
-  detection: {
-    order: ["localStorage"],                    // ✅ only localStorage
-    caches: ["localStorage"]
-  },
+  
 
   interpolation: {
     escapeValue: false

@@ -3,9 +3,8 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
-import { LanguageProvider } from "./contextLanguage/LanguageContext";
 import { useState, useEffect } from "react";
-import Loading from "../src/components/Loading.jsx"
+import Loading from "../src/components/Loading.jsx";
 import "../src/i18n.js";
 import { useTranslation } from "react-i18next";
 import FreeShippingBanner from "./components/FreeShippingBanner.jsx";
@@ -14,7 +13,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   const { i18n } = useTranslation();
 
-  // ✅ Set <html lang="" dir=""> dynamically
   useEffect(() => {
     const currentLang = i18n.language;
     document.documentElement.lang = currentLang;
@@ -29,20 +27,18 @@ function App() {
   }, []);
 
   if (loading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <FreeShippingBanner />
-        <Navbar />
-        <main className="min-h-screen max-w-screen-2xl mx-auto px-4 py-6 font-primary">
-          <Outlet />
-        </main>
-        <Footer />
-      </AuthProvider>
-    </LanguageProvider>
+    <AuthProvider>
+      <FreeShippingBanner />
+      <Navbar />
+      <main className="min-h-screen max-w-screen-2xl mx-auto px-4 py-6 font-primary">
+        <Outlet />
+      </main>
+      <Footer />
+    </AuthProvider>
   );
 }
 
