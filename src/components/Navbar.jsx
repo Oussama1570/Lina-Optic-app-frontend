@@ -135,7 +135,6 @@ const Navbar = () => {
           <div className="language-switcher-wrapper">
             
             {/* Language Switcher Placeholder */}
-            <LanguageSwitcher/>
           </div>
         </div>
       </nav>
