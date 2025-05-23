@@ -949,8 +949,8 @@ i18n
         }
       }
     },
-    lng: localStorage.getItem("language") || "en",
-    fallbackLng: "en",
+    lng: localStorage.getItem("language") || "fr",  // ✅ set default to French
+    fallbackLng: "fr",  
     interpolation: {
       escapeValue: false
     }
