@@ -949,8 +949,12 @@ i18n
         }
       }
     },
-    lng: localStorage.getItem("language") || "fr",  // ✅ set default to French
-    fallbackLng: "fr",  
+    lng: localStorage.getItem("language") || "fr",
+    fallbackLng: "fr",
+    detection: {
+      order: ["localStorage", "navigator"],
+      caches: ["localStorage"]
+    },  
     interpolation: {
       escapeValue: false
     }
