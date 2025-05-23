@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-// Create Language Context
+// ✅ Correct named export
+export const LanguageContext = createContext();
+
 export const LanguageProvider = ({ children }) => {
   const { i18n } = useTranslation();
   const localLang = localStorage.getItem("language");
