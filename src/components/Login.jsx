@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h2 className="login-title">{t("login.title")}</h2>
+        <h2 className="login-title">Bienvenue , veuillez vous connecter</h2>
 
         {message && <p className="login-message">{message}</p>}
 
