@@ -949,15 +949,17 @@ i18n
         }
       }
     },
-    lng: localStorage.getItem("language") || "fr",
-    fallbackLng: "fr",
-    detection: {
-      order: ["localStorage", "navigator"],
-      caches: ["localStorage"]
-    },  
-    interpolation: {
-      escapeValue: false
-    }
-  });
+         lng: localStorage.getItem("language") || "fr", // ✅ force fr by default
+  fallbackLng: "fr",                             // ✅ fallback in fr
+
+  detection: {
+    order: ["localStorage"],                    // ✅ only localStorage
+    caches: ["localStorage"]
+  },
+
+  interpolation: {
+    escapeValue: false
+  }
+});
 
 export default i18n;
