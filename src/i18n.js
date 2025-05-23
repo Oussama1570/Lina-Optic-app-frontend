@@ -606,8 +606,8 @@ i18n
           },
           
           checkout: {
-            title: "Paiement sécurisé",
-            payment_method: "Paiement à la livraison",
+            
+            title: "Paiement à la livraison",
             total_price: "Prix total:",
             items: "Articles",
             personal_details: "Informations personnelles",

@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
-
 import { useTranslation } from "react-i18next";
+import "../../Styles/StylesCheckoutPage.css"
 
 const CheckoutPage = () => {
   const { t } = useTranslation();
@@ -59,7 +59,7 @@ const CheckoutPage = () => {
           title: t("checkout.order_confirmed"),
           text: t("checkout.success_message"),
           icon: "success",
-          confirmButtonColor: "#A67C52",
+          confirmButtonColor: "#1c3b58",
           confirmButtonText: t("checkout.go_to_orders"),
         }).then(() => {
           navigate("/orders");
@@ -77,137 +77,104 @@ const CheckoutPage = () => {
 
   if (isLoading)
     return (
-      <div className="text-center text-lg font-semibold py-10 text-[#A67C52]">
+      <div className="text-center text-lg font-semibold py-10 text-[#1c3b58]">
         {t("checkout.processing")}
       </div>
     );
 
-    return (
-      <section className="checkout-page">
-        <div className="checkout-box">
-          <h2 className="checkout-title">{t("checkout.title")}</h2>
-  
-          <div className="checkout-summary">
-            <h3 className="checkout-subtitle">{t("checkout.payment_method")}</h3>
-            <p>{t("checkout.total_price")}: <strong>${totalPrice}</strong></p>
-            <p>{t("checkout.items")}: <strong>{totalItems}</strong></p>
+ return (
+  <section className="checkout-wrapper">
+    <div className="checkout-container">
+      <h2 className="checkout-title">{t("checkout.title")}</h2>
+
+      <div className="checkout-summary">
+        <h3>{t("checkout.payment_method")}</h3>
+        <p>{t("checkout.total_price")}: <strong>{totalPrice} TND</strong></p>
+        <p>{t("checkout.items")}: <strong>{totalItems}</strong></p>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="checkout-form">
+        <div className="form-section">
+          <h3 className="form-section-title">{t("checkout.personal_details")}</h3>
+
+          <div className="form-group">
+            <label>{t("checkout.full_name")}</label>
+            <input {...register("name", { required: true })} type="text" className="form-input" />
+            {errors.name && <p className="error-text">{t("checkout.required")}</p>}
           </div>
-  
-          <form onSubmit={handleSubmit(onSubmit)} className="checkout-form">
-            {/* Left - Personal Details */}
-            <div className="form-column">
-              <h3 className="checkout-subtitle">{t("checkout.personal_details")}</h3>
-  
-              <div className="form-group">
-                <label>{t("checkout.full_name")}</label>
-                <input
-                  {...register("name", { required: true })}
-                  type="text"
-                  className="form-input"
-                />
-                {errors.name && <p className="error-text">{t("checkout.required")}</p>}
-              </div>
-  
-              <div className="form-group">
-                <label>{t("checkout.email")}</label>
-                <input
-                  type="email"
-                  value={currentUser?.email}
-                  disabled
-                  className="form-input bg-gray-100 cursor-not-allowed"
-                />
-              </div>
-  
-              <div className="form-group">
-                <label>{t("checkout.phone")}</label>
-                <input
-                  {...register("phone", { required: true })}
-                  type="text"
-                  className="form-input"
-                />
-                {errors.phone && <p className="error-text">{t("checkout.required")}</p>}
-              </div>
-            </div>
-  
-            {/* Right - Address Details */}
-            <div className="form-column">
-              <h3 className="checkout-subtitle">{t("checkout.shipping_address")}</h3>
-  
-              <div className="form-group">
-                <label>{t("checkout.address")}</label>
-                <input
-                  {...register("address", { required: true })}
-                  type="text"
-                  className="form-input"
-                />
-                {errors.address && <p className="error-text">{t("checkout.required")}</p>}
-              </div>
-  
-              <div className="form-row">
-                <div className="form-group">
-                  <label>{t("checkout.city")}</label>
-                  <input
-                    {...register("city", { required: true })}
-                    type="text"
-                    className="form-input"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>{t("checkout.country")}</label>
-                  <input
-                    {...register("country", { required: true })}
-                    type="text"
-                    className="form-input"
-                  />
-                </div>
-              </div>
-  
-              <div className="form-row">
-                <div className="form-group">
-                  <label>{t("checkout.state")}</label>
-                  <input
-                    {...register("state", { required: true })}
-                    type="text"
-                    className="form-input"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>{t("checkout.zipcode")}</label>
-                  <input
-                    {...register("zipcode", { required: true })}
-                    type="text"
-                    className="form-input"
-                  />
-                </div>
-              </div>
-            </div>
-  
-            {/* Footer - Terms and Submit */}
-            <div className="form-footer">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  onChange={(e) => setIsChecked(e.target.checked)}
-                  className="checkbox"
-                />
-                {t("checkout.agree")}{" "}
-                <Link className="link">{t("checkout.terms")}</Link>{" "}
-                {t("checkout.and")}{" "}
-                <Link className="link">{t("checkout.policy")}</Link>.
-              </label>
-  
-              <button
-                type="submit"
-                disabled={!isChecked}
-                className={`checkout-button ${isChecked ? "enabled" : "disabled"}`}
-              >
-                {t("checkout.place_order")}
-              </button>
-            </div>
-          </form>
+
+          <div className="form-group">
+            <label>{t("checkout.email")}</label>
+            <input type="email" value={currentUser?.email} disabled className="form-input disabled" />
+          </div>
+
+          <div className="form-group">
+            <label>{t("checkout.phone")}</label>
+            <input {...register("phone", { required: true })} type="text" className="form-input" />
+            {errors.phone && <p className="error-text">{t("checkout.required")}</p>}
+          </div>
         </div>
-      </section>
-    );
-  };
+
+        <div className="form-section">
+          <h3 className="form-section-title">{t("checkout.shipping_address")}</h3>
+
+          <div className="form-group">
+            <label>{t("checkout.address")}</label>
+            <input {...register("address", { required: true })} type="text" className="form-input" />
+            {errors.address && <p className="error-text">{t("checkout.required")}</p>}
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>{t("checkout.city")}</label>
+              <input {...register("city", { required: true })} type="text" className="form-input" />
+            </div>
+            <div className="form-group">
+              <label>{t("checkout.country")}</label>
+              <input {...register("country", { required: true })} type="text" className="form-input" />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>{t("checkout.state")}</label>
+              <input {...register("state", { required: true })} type="text" className="form-input" />
+            </div>
+            <div className="form-group">
+              <label>{t("checkout.zipcode")}</label>
+              <input {...register("zipcode", { required: true })} type="text" className="form-input" />
+            </div>
+          </div>
+        </div>
+
+        <div className="form-footer">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              onChange={(e) => setIsChecked(e.target.checked)}
+              className="checkbox"
+            />
+            {t("checkout.agree")}{" "}
+            <Link className="link">{t("checkout.terms")}</Link> {t("checkout.and")}{" "}
+            <Link className="link">{t("checkout.policy")}</Link>.
+          </label>
+
+          <button
+            type="submit"
+            disabled={!isChecked}
+            className={`checkout-button ${isChecked ? "enabled" : "disabled"}`}
+          >
+            {t("checkout.place_order")}
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+);
+
+
+
   
+};
+
 export default CheckoutPage;

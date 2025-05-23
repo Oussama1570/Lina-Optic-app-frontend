@@ -86,7 +86,6 @@ useEffect(() => {
 
 
 
-
   useEffect(() => {
   if (isLoading) {
     setShowContent(false);
