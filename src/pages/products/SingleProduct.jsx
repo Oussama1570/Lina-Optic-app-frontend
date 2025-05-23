@@ -86,6 +86,7 @@ useEffect(() => {
 
 
 
+
   useEffect(() => {
   if (isLoading) {
     setShowContent(false);
@@ -213,3 +214,5 @@ useEffect(() => {
 };
 
 export default SingleProduct;
+
+

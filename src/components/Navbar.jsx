@@ -94,12 +94,16 @@ const Navbar = () => {
 
         {/* Icons */}
         <div className="nav-icons">
-          <a href="/cart" className="cart-icon">
-            <FaShoppingCart className="icon" />
-            {cartItems.length > 0 && (
-              <span className="cart-badge">{cartItems.length}</span>
-            )}
-          </a>
+          <Link
+    to="/cart"
+    className="cart-icon"
+    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+  >
+    <FaShoppingCart className="icon" />
+    {cartItems.length > 0 && (
+      <span className="cart-badge">{cartItems.length}</span>
+    )}
+  </Link>
 
           <div className="user-section" ref={dropdownRef}>
             {currentUser ? (
