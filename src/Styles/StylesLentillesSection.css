@@ -5,6 +5,7 @@
   justify-content: center;
   padding: 5rem 2rem;
   background: linear-gradient(135deg, #f5fbff, #e6f1f9);
+  border-radius: 1%;
   gap: 3rem;
   position: relative;
   overflow: hidden;

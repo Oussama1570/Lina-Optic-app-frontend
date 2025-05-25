@@ -57,61 +57,70 @@ const Register = () => {
     }
   };
 
-  return (
-    <div className="register-page">
-      <div className="register-container">
-        <h2 className="register-title">{t("register.create_account")}</h2>
+  
+   return (
+  <div className="register-page">
+    <div className="register-container">
+      <h2 className="register-title">{t("register.create_account")}</h2>
 
-        {message && <p className="register-message">{message}</p>}
+      {message && <p className="register-message">{message}</p>}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="register-form">
-          <div className="form-group">
-            <label htmlFor="email">{t("register.email_label")}</label>
-            <input
-              {...register("email", { required: true })}
-              type="email"
-              id="email"
-              placeholder={t("register.email_placeholder")}
-              className="input"
-            />
-            {errors.email && <p className="input-error">{t("register.email_required")}</p>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">{t("register.password_label")}</label>
-            <input
-              {...register("password", { required: true })}
-              type="password"
-              id="password"
-              placeholder={t("register.password_placeholder")}
-              className="input"
-            />
-            {errors.password && <p className="input-error">{t("register.password_required")}</p>}
-          </div>
-
-          <button type="submit" className="btn-primary">
-            {t("register.register_btn")}
-          </button>
-        </form>
-
-        <p className="register-footer-link">
-          {t("register.have_account")}{" "}
-          <Link to="/login" className="text-link">{t("register.login_link")}</Link>
-        </p>
-
-        <div className="google-login">
-          <button onClick={handleGoogleSignIn} className="btn-google">
-            <FaGoogle className="google-icon" />
-            {t("register.google_btn")}
-          </button>
+      <form onSubmit={handleSubmit(onSubmit)} className="register-form">
+        <div className="form-group">
+          <label htmlFor="email">{t("register.email_label")}</label>
+          <input
+            {...register("email", { required: true })}
+            type="email"
+            id="email"
+            placeholder={t("register.email_placeholder")}
+            className="input"
+          />
+          {errors.email && <p className="input-error">{t("register.email_required")}</p>}
         </div>
 
-        <p className="register-rights">
-          ©2025 Lina Optic. {t("register.rights")}
-        </p>
+        <div className="form-group">
+          <label htmlFor="password">{t("register.password_label")}</label>
+          <input
+            {...register("password", { required: true })}
+            type="password"
+            id="password"
+            placeholder={t("register.password_placeholder")}
+            className="input"
+          />
+          {errors.password && <p className="input-error">{t("register.password_required")}</p>}
+        </div>
+
+        <button type="submit" className="btn-primary">
+          {t("register.register_btn")}
+        </button>
+      </form>
+
+      <p className="register-footer-link">
+        <Link to="/forgot-password" className="text-link">
+          Mot de passe oublié ?
+        </Link>
+      </p>
+
+      <p className="register-footer-link">
+        {t("register.have_account")}{" "}
+        <Link to="/login" className="text-link">{t("register.login_link")}</Link>
+      </p>
+
+      <div className="google-login">
+        <button onClick={handleGoogleSignIn} className="btn-google">
+          <FaGoogle className="google-icon" />
+          {t("register.google_btn")}
+        </button>
       </div>
+
+      <p className="register-rights">
+        ©2025 Lina Optic. {t("register.rights")}
+      </p>
     </div>
-  );
+  </div>
+);
+
+  
 };
 
 export default Register;

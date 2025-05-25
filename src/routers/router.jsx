@@ -16,12 +16,17 @@ import ManageProducts from "../pages/dashboard/manageProducts/ManageProducts";
 import AddProduct from "../pages/dashboard/addProduct/AddProduct";
 import UpdateProduct from "../pages/dashboard/EditProduct/UpdateProduct";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
-import ProductsPage from "../pages/Products.jsx"
+import ProductsPage from "../pages/Products.jsx";
 import ContactPage from "../pages/Contact.jsx";
 import AboutPage from "../pages/About.jsx";
 import UpdateOrder from "../pages/dashboard/EditOrder/UpdateOrder.jsx";
 import AddOrder from "../pages/dashboard/addOrder/addOrder.jsx";
 import ManageOrders from "../pages/dashboard/manageOrders/manageOrder";
+
+// ✅ Newly added password reset pages
+
+import ResetPassword from "../components/ResetPassword.jsx";
+import ForgotPassword from './../components/ForgotPassword';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +43,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      { path: "/about", element: <div><AboutPage/></div> },
+      { path: "/about", element: <AboutPage /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/cart", element: <CartPage /> },
@@ -60,6 +65,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      // ✅ Password reset routes
+      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/reset-password/:token", element: <ResetPassword /> },
     ],
   },
   {
@@ -74,7 +82,14 @@ const router = createBrowserRouter([
       </AdminRoute>
     ),
     children: [
-      { path: "", element: <AdminRoute><Dashboard /></AdminRoute> },
+      {
+        path: "",
+        element: (
+          <AdminRoute>
+            <Dashboard />
+          </AdminRoute>
+        ),
+      },
       {
         path: "add-new-product",
         element: (
@@ -84,7 +99,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "edit-product/:id",  // Edit product route
+        path: "edit-product/:id",
         element: (
           <AdminRoute>
             <UpdateProduct />
@@ -103,12 +118,12 @@ const router = createBrowserRouter([
         path: "manage-orders",
         element: (
           <AdminRoute>
-            <ManageOrders/>
+            <ManageOrders />
           </AdminRoute>
         ),
       },
       {
-        path: "add-order",  // Add order route
+        path: "add-order",
         element: (
           <AdminRoute>
             <AddOrder />
@@ -116,7 +131,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "edit-order/:id", // Edit order route
+        path: "edit-order/:id",
         element: (
           <AdminRoute>
             <UpdateOrder />

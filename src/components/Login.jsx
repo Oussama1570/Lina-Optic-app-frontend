@@ -64,60 +64,67 @@ const Login = () => {
 
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <h2 className="login-title">Bienvenue , veuillez vous connecter</h2>
+  <div className="login-page">
+    <div className="login-container">
+      <h2 className="login-title">Bienvenue , veuillez vous connecter</h2>
 
-        {message && <p className="login-message">{message}</p>}
+      {message && <p className="login-message">{message}</p>}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-          <div className="form-group">
-            <label htmlFor="email">{t("login.email_label")}</label>
-            <input
-              {...register("email", { required: true })}
-              type="email"
-              id="email"
-              placeholder={t("login.email_placeholder")}
-            />
-            {errors.email && <p className="error-text">{t("login.email_required")}</p>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">{t("login.password_label")}</label>
-            <input
-              {...register("password", { required: true })}
-              type="password"
-              id="password"
-              placeholder={t("login.password_placeholder")}
-            />
-            {errors.password && <p className="error-text">{t("login.password_required")}</p>}
-          </div>
-
-          <button type="submit" className="login-btn">
-            {t("login.login_btn")}
-          </button>
-        </form>
-
-        <p className="login-footer-link">
-          {t("login.no_account")}{" "}
-          <Link to="/register" className="login-link">
-            {t("login.register_link")}
-          </Link>
-        </p>
-
-        <div className="google-login">
-          <button onClick={handleGoogleSignIn} className="google-btn">
-            <FaGoogle className="google-icon" />
-            {t("login.google_btn")}
-          </button>
+      <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+        <div className="form-group">
+          <label htmlFor="email">{t("login.email_label")}</label>
+          <input
+            {...register("email", { required: true })}
+            type="email"
+            id="email"
+            placeholder={t("login.email_placeholder")}
+          />
+          {errors.email && <p className="error-text">{t("login.email_required")}</p>}
         </div>
 
-        <p className="login-rights">
-          ©2025 Lina Optic. {t("login.rights")}
-        </p>
+        <div className="form-group">
+          <label htmlFor="password">{t("login.password_label")}</label>
+          <input
+            {...register("password", { required: true })}
+            type="password"
+            id="password"
+            placeholder={t("login.password_placeholder")}
+          />
+          {errors.password && <p className="error-text">{t("login.password_required")}</p>}
+        </div>
+
+        <button type="submit" className="login-btn">
+          {t("login.login_btn")}
+        </button>
+      </form>
+
+      <p className="login-footer-link">
+        <Link to="/forgot-password" className="login-link">
+          Mot de passe oublié ?
+        </Link>
+      </p>
+
+      <p className="login-footer-link">
+        {t("login.no_account")}{" "}
+        <Link to="/register" className="login-link">
+          {t("login.register_link")}
+        </Link>
+      </p>
+
+      <div className="google-login">
+        <button onClick={handleGoogleSignIn} className="google-btn">
+          <FaGoogle className="google-icon" />
+          {t("login.google_btn")}
+        </button>
       </div>
+
+      <p className="login-rights">
+        ©2025 Lina Optic. {t("login.rights")}
+      </p>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Login;
