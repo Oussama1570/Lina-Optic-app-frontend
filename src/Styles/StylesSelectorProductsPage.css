@@ -7,7 +7,7 @@
   border-radius: 12px;
  
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-  margin-left: -250px;  /* ✅ Good */
+  margin-left: -200px;  /* ✅ Good */
   margin-bottom: 1.5rem; /* Keep this */
 }
 
