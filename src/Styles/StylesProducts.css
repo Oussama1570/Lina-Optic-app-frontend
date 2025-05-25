@@ -5,11 +5,13 @@
 .products-page-wrapper {
   display: flex;
   align-items: flex-start;
-  gap: 0rem;                       /* No gap at all */
-  padding: 2rem 0rem;              /* No side padding */
-  max-width: 1100px;              /* Reduced width to pull things together */
+  gap: 2rem; /* Keep a small gap between filter and grid */
+  padding: 2rem 2rem 2rem 3rem; /* Left padding for breathing space */
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
 }
+
 
 
 .selectors-wrapper-left {

@@ -68,9 +68,23 @@
 
 
 
-.product-image-box:hover .product-main-image {
-  transform: scale(1.1);
+.product-image-box {
+  position: relative;
+  overflow: hidden;
+  cursor: none; /* hide the system cursor in zoom area */
 }
+
+.product-main-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+}
+
 
 .stock-badge {
   position: absolute;

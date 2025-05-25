@@ -69,6 +69,7 @@ useEffect(() => {
 
   const handleMouseLeave = () => {
     image.style.transform = "scale(1)";
+    image.style.transformOrigin = "center center";
   };
 
   if (image) {
@@ -83,6 +84,7 @@ useEffect(() => {
     }
   };
 }, []);
+
 
 
 
