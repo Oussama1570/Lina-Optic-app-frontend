@@ -4,7 +4,7 @@ import { removeFromWishlist } from "../redux/features/wishlist/wishlistSlice";
 import { getImgUrl } from "../utils/getImgUrl";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import "../Styles/StylesWishlist.css";
+import "../Styles/StylesWishList.css";
 
 // 🧡 WishlistPage Component
 // Displays the user's favorite products stored in the Redux wishlist state
