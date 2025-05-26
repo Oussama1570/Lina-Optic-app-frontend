@@ -1,76 +1,205 @@
 /* ================================
-   📄 General Screen Wrapper
-================================ */
-.UserDashboard-screen {
-  margin-top: 8%;
-}
-
-/* ================================
-   🧾 Dashboard Page Styling
+🌟 GENERAL LAYOUT
 ================================ */
 .user-dashboard {
-  background-color: #fdfbf9;
-  padding: 2rem 1rem;
-  min-height: 100vh;
+  background: url('/assets/bg-texture.png'), linear-gradient(to bottom right, #fefefe, #f0f4fa);
+  background-size: cover;
+  background-blend-mode: overlay;
+  padding: 3rem 1.5rem;
 }
 
 .dashboard-content {
   max-width: 1000px;
   margin: 0 auto;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+  animation: fadeInUp 0.5s ease;
+  position: relative;
 }
 
 /* ================================
-   🏷️ Dashboard Headers
+👤 HEADER: AVATAR + NAME + MENU
+================================ */
+.dashboard-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.user-info-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar-circle {
+  width: 38px;
+  height: 38px;
+  background: #007a99;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.user-full-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1c3b58;
+}
+
+/* ================================
+📂 DROPDOWN MENU
+================================ */
+.dashboard-dropdown-wrapper {
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+.dashboard-dropdown-toggle {
+  background-color: #007a99;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  position: relative;
+  z-index: 11;
+}
+
+.dashboard-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 0.4rem 0;
+  min-width: 180px;
+  animation: fadeIn 0.2s ease;
+  z-index: 99;
+}
+
+.dashboard-dropdown-wrapper:hover .dashboard-dropdown-menu {
+  display: block;
+}
+
+.dashboard-dropdown-menu li {
+  list-style: none;
+}
+
+.dashboard-dropdown-menu li a,
+.dashboard-dropdown-menu li button {
+  display: block;
+  padding: 12px 22px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: none;
+  color: #1c3b58;
+  text-align: left;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.dashboard-dropdown-menu li a:hover,
+.dashboard-dropdown-menu li button:hover {
+  background-color: #f1f5f8;
+  color: #007a99;
+}
+
+/* ================================
+🏷️ TITLES & SUBTITLES
 ================================ */
 .dashboard-title {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #444;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2a2a2a;
   text-align: center;
   margin-bottom: 0.5rem;
+  animation: fadeIn 0.6s ease-in;
 }
 
 .dashboard-subtitle {
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: #666;
-  margin-bottom: 2rem;
-}
-
-.orders-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  animation: fadeIn 0.6s ease-in;
 }
 
 /* ================================
-   📦 Orders Section
+📋 SECTION: ORDERS TITLE
+================================ */
+.orders-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2d2d2d;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.orders-title .orders-underline {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  height: 3px;
+  width: 50px;
+  background: #4e8acf; /* Light blue underline */
+  border-radius: 6px;
+  animation: underlineGrow 0.8s ease-out forwards;
+}
+
+/* ================================
+📦 ORDER CARDS
 ================================ */
 .orders-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .order-card {
-  background-color: #fafafa;
-  border-left: 4px solid #a67c52;
-  padding: 1.5rem;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(6px);
+  border-left: 5px solid #4e8acf;
+  padding: 1.5rem 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
 }
 
-/* Header Row in Order Card */
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* ================================
+📌 ORDER HEADER
+================================ */
 .order-header {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.8rem;
 }
 
 .order-id {
@@ -80,46 +209,58 @@
 
 .order-date {
   font-size: 0.85rem;
-  color: #777;
+  color: #888;
 }
 
 .order-total {
-  font-weight: 500;
-  margin-bottom: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.1rem;
 }
 
 /* ================================
-   🛍️ Product Items in Orders
+🛍️ PRODUCT LIST IN ORDERS
 ================================ */
 .order-products-title {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 0.75rem;
-  color: #5a382d;
+  color: #0077b6; /* Deep blue title */
 }
 
 .product-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .product-item {
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   align-items: center;
   padding: 1rem;
-  border: 1px solid #e2e2e2;
-  border-radius: 8px;
-  background-color: #ffffff;
+  border: 1px solid #4e8acf;
+  border-radius: 10px;
+  background: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.product-item:hover {
+  transform: scale(1.01);
 }
 
 .product-img {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 8px;
-  border: 2px solid #a67c52;
+  border-radius: 10px;
+  border: 2px solid #4e8acf;
+  box-shadow: 0 0 10px rgba(153, 194, 255, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 16px rgba(153, 194, 255, 0.3);
 }
 
 .product-info {
@@ -130,29 +271,36 @@
 
 .product-title {
   font-weight: 600;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
 }
 
 /* ================================
-   🚫 No Orders Message
+🚫 NO ORDERS MESSAGE
 ================================ */
 .no-orders {
   text-align: center;
   color: #999;
-  font-size: 1rem;
-  margin-top: 1rem;
-}
-
-/* 🎯 Highlight Utility */
-.highlight {
-  color: #a67c52;
-  font-weight: 600;
+  font-size: 1.05rem;
+  margin-top: 1.5rem;
 }
 
 /* ================================
-   📱 Responsive Adjustments
+🌟 PRICE HIGHLIGHT
+================================ */
+.highlight {
+  color: #0077b6;
+  font-weight: 700;
+}
+
+/* ================================
+📱 RESPONSIVE STYLES
 ================================ */
 @media (max-width: 768px) {
+  .dashboard-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .dashboard-content {
     padding: 1.5rem;
   }
@@ -164,11 +312,47 @@
 
   .product-img {
     width: 100%;
-    max-width: 180px;
+    max-width: 160px;
     height: auto;
   }
 
   .product-info {
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
+  }
+}
+
+/* ================================
+🎞️ ANIMATIONS
+================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes underlineGrow {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 50px;
+    opacity: 1;
   }
 }

@@ -1,225 +1,214 @@
-/* === Product Card Wrapper === */
-.product-card-lina {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 14px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-  padding: 1.5rem;
-  max-width: 300px;
-  min-height: 420px;
+/* ===============================
+   🔲 Product Card Wrapper
+=============================== */
+.product-card-optic {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+  padding-bottom: 1.5rem;
+  max-width: 340px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 20px; /* ⬅️ increased from 10px to 20px */
 }
 
-.product-card-lina:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(133, 78, 78, 0.08);
+
+.product-card-optic:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* === Image Section === */
-.product-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
+/* ===============================
+   🏷️ Discount Badge
+=============================== */
+.discount-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #c9202a;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+/* ===============================
+   🖼️ Image Section
+=============================== */
+.image-box {
   display: block;
+  padding: 1.2rem 1.2rem 0;
 }
 
-.product-image {
-  width: 100%;
-  height: 220px;
-  object-fit: contain;
+.product-img {
+  width: 300px !important;
+  height: 220px !important;  /* Keep current height */
+  object-fit: contain;        /* ✅ Show full product without cutting */
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 8px;               /* ✅ Add padding inside the image box */
   transition: transform 0.3s ease;
 }
 
-.product-image-wrapper:hover .product-image {
+
+
+.product-card-optic {
+  max-width: 420px; /* ⬅️ wider card */
+  margin: 30px;     /* ⬅️ more spacing between cards */
+}
+
+
+.product-card-optic:hover .product-img {
   transform: scale(1.05);
 }
 
-/* === Stock Badge === */
-.stock-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 10px;
-  font-size: 0.7rem;
-  border-radius: 4px;
-  font-weight: 500;
-  color: #ffffff;
-  z-index: 2;
-}
-
-.stock-badge.in-stock {
-  background-color: #198754;
-}
-
-.stock-badge.out-of-stock {
-  background-color: #dc3545;
-}
-
-/* === Product Info === */
-.product-info-lina {
-  margin-top: 1rem;
+/* ===============================
+   📝 Product Info Section
+=============================== */
+.product-details-box {
+  padding: 1rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-}
-
-.product-title-link {
-  text-decoration: none;
-}
-
-.product-title-lina {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1c3b58;
-  margin: 0;
-}
-
-.product-title-link:hover .product-title-lina {
-  color: #0f2a40;
-}
-
-.product-color-lina {
-  font-size: 0.85rem;
-  color: #4b5563;
-}
-
-/* === Price === */
-.product-price-lina {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #111827;
-}
-
-.old-price-lina {
-  margin-left: 0.4rem;
-  font-size: 0.85rem;
-  color: #9ca3af;
-  text-decoration: line-through;
-  font-weight: 400;
-}
-
-/* === Controls === */
-.product-controls-lina {
-  margin-top: 0.8rem;
-  display: flex;
   justify-content: flex-start;
-  align-items: center;
-  gap: 0.6rem;
 }
 
-.quantity-input-lina {
-  width: 55px;
-  padding: 6px;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  text-align: center;
-  background: #f9fafb;
+.product-title-optic {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  color: #222;
+  text-transform: uppercase;
+  line-height: 1.3;
 }
 
-.add-to-cart-btn-lina {
-  background-color: #8cbce0;
-  color: #ffffff;
-  padding: 6px 12px;
+.product-sub-info {
   font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 2px;
+}
+
+.product-brand {
+  font-size: 0.8rem;
+  color: #444;
   font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.product-price-optic {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: auto;
+}
+
+.old-price {
+  color: #b3b3b3;
+  text-decoration: line-through;
+  font-size: 0.85rem;
+}
+
+.new-price {
+  color: #d42b1f;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ===============================
+   🛒 Hover Buttons & Icons
+=============================== */
+.hover-icons {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 1rem;
+}
+
+.product-card-optic:hover .hover-icons {
+  opacity: 1;
+}
+
+.add-btn {
+  background-color: #c9202a;
+  color: white;
   border: none;
-  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   gap: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.add-to-cart-btn-lina:hover {
-  background-color: #0f2a40;
-}
-
-.add-to-cart-btn-lina.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* 🌟 Custom hover cursor for image */
-
-
-/* 🖼️ Image zoom on hover */
-/* 🖼️ Only hide the cursor inside image wrapper */
-.product-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  display: block;
-  cursor: none; /* ✅ Hides default pointer only on image area */
-}
-
-
-
-.product-image {
-  transition: transform 0.4s ease;
-  transform-origin: center center;
-}
-
-
-
-
-
-@keyframes zoomCursorPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.15);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.85;
-  }
-}
-
-
-.add-to-cart-btn-lina,
-.product-title-link {
+  transition: background-color 0.3s ease;
   cursor: pointer;
 }
 
-
-
-.product-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  display: block;
-  cursor: none;
+.add-btn:hover {
+  background-color: #9e1d1d;
 }
 
-.product-image {
-  width: 100%;
-  height: 220px;
-  object-fit: contain;
-  transition: transform 0.4s ease;
-  transform-origin: center center;
+.icon {
+  font-size: 1.2rem;
+  color: #444;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: #c9202a;
+  transform: scale(1.2);
 }
 
 
 
-@keyframes zoomCursorPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.85;
+/* ===============================
+   📱 Responsive (Mobile)
+=============================== */
+@media (max-width: 480px) {
+  .product-card-optic {
+    max-width: 100%;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.15);
-    opacity: 1;
+
+  .product-img {
+    height: 200px;
   }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.85;
+
+  .product-title-optic {
+    font-size: 0.9rem;
+  }
+
+  .add-btn {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+
+  .icon {
+    font-size: 1rem;
   }
 }
+
+
+
+
+
+
+/* ===============================
+   🧱 Grid Layout Helper (for Products.jsx)
+=============================== */
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px; /* ⬅️ increased from 30px to 40px */
+  padding: 2rem 1rem;
+}
+

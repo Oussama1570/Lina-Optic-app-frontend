@@ -57,6 +57,7 @@ const SingleProduct = () => {
 
 useEffect(() => {
   const image = imageRef.current;
+  if (!image) return;
 
   const handleMouseMove = (e) => {
     const rect = image.getBoundingClientRect();
@@ -72,18 +73,14 @@ useEffect(() => {
     image.style.transformOrigin = "center center";
   };
 
-  if (image) {
-    image.addEventListener("mousemove", handleMouseMove);
-    image.addEventListener("mouseleave", handleMouseLeave);
-  }
+  image.addEventListener("mousemove", handleMouseMove);
+  image.addEventListener("mouseleave", handleMouseLeave);
 
   return () => {
-    if (image) {
-      image.removeEventListener("mousemove", handleMouseMove);
-      image.removeEventListener("mouseleave", handleMouseLeave);
-    }
+    image.removeEventListener("mousemove", handleMouseMove);
+    image.removeEventListener("mouseleave", handleMouseLeave);
   };
-}, []);
+}, [selectedColor]);
 
 
 
@@ -113,7 +110,10 @@ useEffect(() => {
 
   return (
     <div className="single-product-container">
-      <h1 className="product-title">{product?.title}</h1>
+      <h1 className="product-title-lina">
+      {product?.title}
+      </h1>
+
 
       <div className="product-content">
         <div>

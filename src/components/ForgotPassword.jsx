@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
-import getBaseUrl from "../utils/baseURL";
 import { Link } from "react-router-dom";
-import "../Styles/StylesLogin.css"; // Optional: reuse login styles
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
+import "../Styles/StylesLogin.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -13,11 +13,13 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
+
     try {
-      await axios.post(`${getBaseUrl()}/api/auth/reset-password-request`, { email });
-      setMessage("✅ Lien de réinitialisation envoyé à votre email.");
-    } catch (err) {
-      setMessage("❌ Utilisateur introuvable ou erreur serveur.");
+      await sendPasswordResetEmail(auth, email);
+      setMessage("✅ Un lien de réinitialisation a été envoyé à votre adresse email.");
+    } catch (error) {
+      console.error("Erreur de réinitialisation:", error);
+      setMessage("❌ Adresse email invalide ou utilisateur introuvable.");
     } finally {
       setLoading(false);
     }

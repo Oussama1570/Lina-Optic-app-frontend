@@ -6,15 +6,31 @@
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
 }
 
-.product-title {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1f2937;
+
+.product-title-lina {
+  font-size: 35px !important;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 35px !important;
+  padding: 1rem 2rem;
+  margin-bottom: 50px !important;
+  border-radius: 12px;
+    color: #3f6fd6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
 }
+
+@media (max-width: 768px) {
+  .product-title-lina {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.5rem;
+  }
+}
+
 
 .product-content {
   display: grid;
@@ -35,8 +51,9 @@
 .product-image-box {
   position: relative;
   overflow: hidden;
-  cursor: none;
+  cursor: none; /* hide default cursor */
 }
+
 
 .product-main-image {
   width: 100%;
@@ -49,7 +66,10 @@
   transform-origin: center center;
 }
 
-
+.product-main-image {
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
 
 @keyframes zoomCursorPulse {
   0% {

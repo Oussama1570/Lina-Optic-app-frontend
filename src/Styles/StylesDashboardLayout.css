@@ -123,43 +123,71 @@
   gap: 0.75rem;
 }
 
+/* 🔘 Universal Button Base Style */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
+  gap: 8px;
   font-size: 0.95rem;
   font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  text-transform: capitalize;
 }
 
-.btn-blue {
-  background-color: #3b82f6;
+/* 🔵 Add Product Button */
+.btn.blue {
+  background-color: #005fa3;
+  color: white;
+}
+.btn.blue:hover {
+  background-color: #0070cc;
 }
 
-.btn-blue:hover {
-  background-color: #2563eb;
+/* 🟢 Manage Products Button */
+.btn.green {
+  background-color: #28a745;
+  color: white;
+}
+.btn.green:hover {
+  background-color: #218838;
 }
 
-.btn-green {
-  background-color: #10b981;
+/* 🔴 Logout Button */
+.btn.red {
+  background-color: #dc3545;
+  color: white;
+}
+.btn.red:hover {
+  background-color: #c82333;
 }
 
-.btn-green:hover {
-  background-color: #059669;
+/* 🟣 Responsive layout container for header buttons */
+.dashboard-header-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.btn-red {
-  background-color: #ef4444;
+/* 🧭 Optional: For sidebar logout icon button */
+.logout-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1.2rem;
+  margin-top: auto;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.logout-btn:hover {
+  color: #b02a37;
 }
 
-.btn-red:hover {
-  background-color: #dc2626;
-}
 
 /* ===================== 🧾 Main Content ===================== */
 .dashboard-content {

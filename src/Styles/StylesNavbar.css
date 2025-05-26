@@ -205,16 +205,17 @@
 .user-dropdown {
   position: absolute;
   top: calc(100% + 12px);
-  left: 0;
+  right: 0;
   background: #ffffff;
-  border: 1px solid #e3e9ef;
+  border: 1px solid #e1e8ee;
   border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  padding: 0.4rem 0;
-  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  min-width: 200px;
   z-index: 1001;
-  animation: dropdownFade 0.2s ease;
+  animation: dropdownFade 0.25s ease-out;
   text-align: left;
+  overflow: hidden;
 }
 
 .user-dropdown ul {
@@ -224,32 +225,35 @@
 }
 
 .user-dropdown ul li {
-  padding: 10px 16px;
+  padding: 0;
 }
 
 .user-dropdown ul li a,
 .user-dropdown ul li button {
-  text-decoration: none;
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 0.95rem;
   color: #1c3b58;
   background: none;
   border: none;
-  font-family: inherit;
-  font-size: 0.95rem;
-  width: 100%;
   text-align: left;
-  display: block;
+  font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.user-dropdown ul li:hover {
-  background-color: #f2f6f8;
+  transition: background 0.25s, color 0.25s;
 }
 
 .user-dropdown ul li a:hover,
 .user-dropdown ul li button:hover {
+  background-color: #f5f9fb;
   color: #007a99;
+  text-decoration: none;
 }
+
+.user-dropdown ul li:not(:last-child) {
+  border-bottom: 1px solid #e9edf2;
+}
+
 
 /* ===============================
 📱 Mobile Styles

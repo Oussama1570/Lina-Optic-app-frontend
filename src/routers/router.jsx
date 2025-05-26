@@ -22,11 +22,9 @@ import AboutPage from "../pages/About.jsx";
 import UpdateOrder from "../pages/dashboard/EditOrder/UpdateOrder.jsx";
 import AddOrder from "../pages/dashboard/addOrder/addOrder.jsx";
 import ManageOrders from "../pages/dashboard/manageOrders/manageOrder";
-
-// ✅ Newly added password reset pages
-
-import ResetPassword from "../components/ResetPassword.jsx";
-import ForgotPassword from './../components/ForgotPassword';
+import ForgotPassword from "../components/ForgotPassword";
+import ResetPassword from "../components/ResetPassword";
+import WishlistPage from "../pages/WishlistPage.jsx"; // ✅ Import wishlist page
 
 const router = createBrowserRouter([
   {
@@ -40,6 +38,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <OrderPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/wishlist", // ✅ Wishlist is protected
+        element: (
+          <PrivateRoute>
+            <WishlistPage />
           </PrivateRoute>
         ),
       },
@@ -65,9 +71,8 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      // ✅ Password reset routes
       { path: "/forgot-password", element: <ForgotPassword /> },
-      { path: "/reset-password/:token", element: <ResetPassword /> },
+      { path: "/reset-password", element: <ResetPassword /> },
     ],
   },
   {
@@ -82,14 +87,7 @@ const router = createBrowserRouter([
       </AdminRoute>
     ),
     children: [
-      {
-        path: "",
-        element: (
-          <AdminRoute>
-            <Dashboard />
-          </AdminRoute>
-        ),
-      },
+      { path: "", element: <Dashboard /> },
       {
         path: "add-new-product",
         element: (

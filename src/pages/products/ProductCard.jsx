@@ -1,178 +1,190 @@
-import React, { useState, useEffect, useRef } from "react";
-import { FiShoppingCart } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
 import { getImgUrl } from "../../utils/getImgUrl";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
-import "../../Styles/StylesSingleProduct.css";
+import { FiShoppingCart, FiEye, FiHeart } from "react-icons/fi";
+import { HiOutlineSparkles } from "react-icons/hi";
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../redux/features/wishlist/wishlistSlice";
 import "../../Styles/StylesProductCard.css";
 
+// 🛍️ Main product card component
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
 
-  const imageRef = useRef(null);
-  const cursorRef = useRef(null);
+  // 🌟 Access wishlist from Redux store
+  const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+  const isInWishlist = wishlistItems.some((item) => item._id === product._id);
 
+  // 🎨 Set initial selected color or fallback to default image
   useEffect(() => {
     if (product) {
       setSelectedColor(
         product.colors?.[0] || {
-          colorName: "Default",
-          image: product?.coverImage || "/assets/default-image.png",
-          stock: product?.stockQuantity || 0,
+          image: product.coverImage || "/assets/default-image.png",
+          stock: product.stockQuantity || 0,
         }
       );
     }
   }, [product]);
 
-  const handleQuantityChange = (e) => {
-    const value = Number(e.target.value);
-    const maxStock = selectedColor?.stock ?? 0;
-    setQuantity(value > maxStock ? maxStock : value);
-  };
-
+  // ➕ Add product to cart with selected color
   const handleAddToCart = () => {
-    if ((selectedColor?.stock ?? 0) > 0 && quantity > 0) {
-      dispatch(
-        addToCart({
-          ...product,
-          quantity,
-          color: selectedColor,
-        })
-      );
+    dispatch(
+      addToCart({
+        ...product,
+        quantity: 1,
+        color: selectedColor,
+      })
+    );
+  };
+
+  // 💖 Toggle wishlist state (add/remove)
+  const handleToggleWishlist = () => {
+    if (isInWishlist) {
+      dispatch(removeFromWishlist(product._id));
+      Swal.fire({
+        icon: "info",
+        title: "Retiré des favoris",
+        text: `${product.title} a été retiré de votre liste.`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } else {
+      dispatch(addToWishlist(product));
+      Swal.fire({
+        icon: "success",
+        title: "Ajouté aux favoris",
+        text: `${product.title} a été ajouté à votre liste.`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
-  // 🖱️ Image hover cursor effect
-  useEffect(() => {
-  const image = imageRef.current;
-  const cursor = cursorRef.current;
-
-  const move = (e) => {
-    const rect = image.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    image.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
-    image.style.transform = "scale(2)";
-
-    cursor.style.left = `${e.clientX}px`;
-    cursor.style.top = `${e.clientY}px`;
-  };
-
-  const show = () => {
-    cursor.style.opacity = 1;
-  };
-
-  const hide = () => {
-    cursor.style.opacity = 0;
-    image.style.transform = "scale(1)";
-  };
-
-  if (image && cursor) {
-    image.addEventListener("mousemove", move);
-    image.addEventListener("mouseenter", show);
-    image.addEventListener("mouseleave", hide);
-  }
-
-  return () => {
-    if (image && cursor) {
-      image.removeEventListener("mousemove", move);
-      image.removeEventListener("mouseenter", show);
-      image.removeEventListener("mouseleave", hide);
-    }
-  };
-}, []);
-
-
-
-
-  if (!product) return null;
+  // 🔢 Calculate discount percentage if applicable
+  const discountPercent = product.oldPrice
+    ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
+    : 0;
 
   return (
-  <div className="product-card-lina">
-    {/* 🌟 Hover Cursor (Image Only) */}
-    <div className="product-image-wrapper">
-      <div className="product-image-cursor" ref={cursorRef}></div>
-
-      <a href={`/products/${product._id}`}>
-          <img
-            src={getImgUrl(selectedColor?.image ?? product.coverImage)}
-            alt={product?.title}
-            className="product-image"
-            ref={imageRef}
-          />
-        </a>
-
-      <div
-        className={`stock-badge ${
-          selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
-        }`}
-      >
-        {selectedColor?.stock > 0
-          ? `Stock: ${selectedColor?.stock}`
-          : "Rupture de stock"}
-      </div>
-    </div>
-
-    <div className="product-info-lina">
-      <a href={`/products/${product._id}`} className="product-title-link">
-          <h3 className="product-title-lina">{product?.title}</h3>
-        </a>
-
-      {product?.description && (
-        <p className="product-description-lina">
-          {product.description.length > 100
-            ? `${product.description.slice(0, 100)}...`
-            : product.description}
-        </p>
+    <div className="product-card-optic">
+      {/* 🏷️ Discount Badge */}
+      {discountPercent > 0 && (
+        <span className="discount-badge">-{discountPercent}%</span>
       )}
 
-      <div className="product-price-lina">
-        TND{product?.newPrice ?? "0.00"}
-        {product?.oldPrice && (
-          <span className="old-price-lina">
-            TND{Math.round(product?.oldPrice)}
-          </span>
-        )}
+      {/* 🔗 Product Image + Badges */}
+      <a href={`/products/${product._id}`} className="image-box" style={{ position: "relative" }}>
+  {/* ✨ Trending + Stock */}
+  {product?.trending && (
+    <>
+      <div
+        style={{
+          position: "absolute",
+          top: "8px",
+          right: "8px",
+          backgroundColor: "#005fa3",
+          color: "#fff",
+          fontSize: "0.75rem",
+          padding: "3px 8px",
+          borderRadius: "4px",
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+          gap: "4px",
+          zIndex: 1,
+        }}
+      >
+        <HiOutlineSparkles style={{ fontSize: "1rem" }} />
+        Tendance
       </div>
 
-      <div className="product-color-lina">
-        Couleur: <strong>{selectedColor?.colorName?.en || "Default"}</strong>
+      <div
+        style={{
+          position: "absolute",
+          top: "34px",
+          right: "8px",
+          backgroundColor: selectedColor?.stock > 0 ? "#28a745" : "#dc3545",
+          color: "#fff",
+          fontSize: "0.7rem",
+          padding: "2px 6px",
+          borderRadius: "4px",
+          fontWeight: "normal",
+          zIndex: 1,
+        }}
+      >
+        {selectedColor?.stock > 0
+          ? `Stock: ${selectedColor.stock}`
+          : "Rupture de stock"}
+      </div>
+    </>
+  )}
+  <img
+    src={getImgUrl(selectedColor?.image)}
+    alt={product?.title}
+    className="product-img"
+  />
+</a>
+
+
+      {/* 📊 Stock Info Below Image */}
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "0.75rem",
+          marginTop: "4px",
+        }}
+      >
+        {selectedColor?.stock > 0
+          ? `Stock: ${selectedColor.stock}`
+          : "Rupture de stock"}
       </div>
 
-      <div className="product-controls-lina">
-        <input
-          type="number"
-          min="1"
-          max={selectedColor?.stock ?? 0}
-          value={quantity}
-          onChange={handleQuantityChange}
-          disabled={(selectedColor?.stock ?? 0) === 0}
-          className="quantity-input-lina"
-        />
+      {/* 📄 Product Details */}
+      <div className="product-details-box">
+        <h3 className="product-title-optic">{product?.title}</h3>
+        <p className="product-sub-info">
+          {product?.subCategory}, {product?.mainCategory}
+        </p>
+        <p className="product-brand">{product?.brand}</p>
 
-        <button
-          onClick={handleAddToCart}
-          disabled={(selectedColor?.stock ?? 0) === 0}
-          className={`add-to-cart-btn-lina ${
-            selectedColor?.stock > 0 ? "" : "disabled"
-          }`}
-        >
-          <FiShoppingCart className="icon" />
-          {selectedColor?.stock > 0
-            ? "Ajouter au panier"
-            : "Rupture de stock"}
+        {/* 💵 Pricing */}
+        <div className="product-price-optic">
+          {product.oldPrice && (
+            <span className="old-price">TND{Math.round(product.oldPrice)}</span>
+          )}
+          <span className="new-price">TND{product?.newPrice}</span>
+        </div>
+      </div>
+
+      {/* 🎯 Hover Icons (cart, wishlist, view) */}
+      <div className="hover-icons">
+        <button className="add-btn" onClick={handleAddToCart}>
+          <FiShoppingCart />
+          ADD TO CART
         </button>
+
+        <span
+          className="icon"
+          onClick={handleToggleWishlist}
+          style={{ cursor: "pointer" }}
+        >
+          <FiHeart className="icon" />
+        </span>
+
+        <a href={`/products/${product._id}`} className="icon">
+        <FiEye />
+        </a>
+
       </div>
     </div>
-  </div>
-);
-
-
- 
+  );
 };
 
 export default ProductCard;

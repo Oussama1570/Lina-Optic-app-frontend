@@ -10,6 +10,8 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  padding-bottom: 2rem !important;
+  margin-bottom: 0 !important;
 }
 
 
@@ -37,7 +39,7 @@
 .products-grid-wrapper {
   flex: 1;
   padding: 0;
-  margin-left: -150px; /* 🔥 MAGIC: shifts grid 250px left */
+  margin-left: -200px; /* 🔥 MAGIC: shifts grid 250px left */
 }
 
 
@@ -45,9 +47,11 @@
 .products-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
   justify-content: start;
   padding: 0;
+  justify-content: center;
+
 }
 
 
@@ -81,6 +85,8 @@
   .products-page-wrapper {
     flex-direction: column;
     padding: 1.5rem;
+    padding-bottom: 2rem !important;
+    margin-bottom: 0 !important;
   }
 
   .selectors-wrapper-left {

@@ -171,11 +171,15 @@ if (isLoading || isFetching) {
 
       {/* 🛍 Product Grid */}
       <div className="products-grid-wrapper">
-        <div className="products-grid">
-          {visibleProducts.map((product, i) => (
-            <ProductCard key={i} product={product} />
-          ))}
-        </div>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+  <div className="products-grid">
+  {visibleProducts.map(p => (
+    <ProductCard key={p._id} product={p} />
+  ))}
+</div>
+
+</div>
+
 
         {visibleProducts.length === 0 && (
           <p className="no-products">Aucun produit ne correspond aux filtres.</p>

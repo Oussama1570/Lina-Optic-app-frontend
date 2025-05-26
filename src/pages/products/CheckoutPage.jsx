@@ -88,7 +88,7 @@ const CheckoutPage = () => {
       <h2 className="checkout-title">{t("checkout.title")}</h2>
 
       <div className="checkout-summary">
-        <h3>{t("checkout.payment_method")}</h3>
+        
         <p>{t("checkout.total_price")}: <strong>{totalPrice} TND</strong></p>
         <p>{t("checkout.items")}: <strong>{totalItems}</strong></p>
       </div>
