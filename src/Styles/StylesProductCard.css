@@ -208,7 +208,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px; /* ⬅️ increased from 30px to 40px */
-  padding: 2rem 1rem;
+  gap: 40px;
+  padding: 2rem 1rem 0; /* ⬅️ Remove bottom padding */
 }
+
+
+
 

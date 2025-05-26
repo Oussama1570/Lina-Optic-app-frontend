@@ -3,12 +3,12 @@
 ================================= */
 .our-sellers {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem 1rem;
+  margin: 2rem auto 0 auto;  /* Remove bottom margin */
+  padding: 2rem 1rem 0 1rem;  /* Remove bottom padding */
   text-align: center;
   border-radius: 12px;
-  
 }
+
 
 /* ===============================
    🏷️ Section Title
