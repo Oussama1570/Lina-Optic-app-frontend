@@ -24,7 +24,8 @@ import AddOrder from "../pages/dashboard/addOrder/addOrder.jsx";
 import ManageOrders from "../pages/dashboard/manageOrders/manageOrder";
 import ForgotPassword from "../components/ForgotPassword";
 import ResetPassword from "../components/ResetPassword";
-import WishlistPage from "../pages/WishlistPage.jsx"; // ✅ Import wishlist page
+import WishlistPage from "../pages/WishlistPage.jsx";
+import ChangePassword from "../pages/dashboard/users/ChangePassword"; // ✅ New import
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/wishlist", // ✅ Wishlist is protected
+        path: "/wishlist",
         element: (
           <PrivateRoute>
             <WishlistPage />
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UserDashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/change-password", // ✅ New secured route
+        element: (
+          <PrivateRoute>
+            <ChangePassword />
           </PrivateRoute>
         ),
       },

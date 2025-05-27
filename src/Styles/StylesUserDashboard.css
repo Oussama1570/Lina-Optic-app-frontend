@@ -94,9 +94,20 @@
   z-index: 99;
 }
 
-.dashboard-dropdown-wrapper:hover .dashboard-dropdown-menu {
-  display: block;
+.dashboard-dropdown-menu {
+  display: block; /* always block, visibility controlled by React state */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.25s ease;
 }
+
+.dashboard-dropdown-wrapper.open .dashboard-dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .dashboard-dropdown-menu li {
   list-style: none;

@@ -1,21 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-
-// 🧠 Auth context to access the current logged-in user
 import { useAuth } from "../../../context/AuthContext";
-
-// 📦 RTK Query to fetch orders linked to the current user
 import { useGetOrderByEmailQuery } from "../../../redux/features/orders/ordersApi";
-
-// 🖼️ Utility to format image URLs
 import { getImgUrl } from "../../../utils/getImgUrl";
-
-// 🧢 Document head control
+import { auth } from "../../../firebase/firebase.config";
 import { Helmet } from "react-helmet";
-
-// 🔄 Loading spinner while fetching
 import LoadingSpinner from "../../../components/Loading";
-
-// 🌍 Multilingual support
 import "../../../Styles/StylesUserDashboard.css";
 
 const UserDashboard = () => {
@@ -33,6 +22,9 @@ const UserDashboard = () => {
   // 🔽 Dropdown state and ref for click-outside logic
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const providerId = auth.currentUser?.providerData[0]?.providerId;
+
 
   // ❌ Close dropdown if user clicks outside of it
   useEffect(() => {
@@ -72,31 +64,37 @@ const UserDashboard = () => {
         </div>
 
         {/* Dropdown menu toggle and content */}
-        <div className="dashboard-dropdown-wrapper" ref={dropdownRef}>
-          <button
-            className="dashboard-dropdown-toggle"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            Menu <span className="arrow">&#9662;</span>
-          </button>
+       <div
+  className={`dashboard-dropdown-wrapper ${isDropdownOpen ? "open" : ""}`}
+  ref={dropdownRef}
+>
+  <button
+    className="dashboard-dropdown-toggle"
+    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+  >
+    Menu <span className="arrow">&#9662;</span>
+  </button>
 
-          {/* Dropdown menu items, shown only when isDropdownOpen is true */}
-          {isDropdownOpen && (
-            <ul className="dashboard-dropdown-menu">
-              <li>
-                <a href="/user-dashboard">Tableau de bord</a>
-              </li>
-              <li>
-                <a href="/orders">Mes commandes</a>
-              </li>
-              <li>
-                <button onClick={() => window.location.href = "/login"}>
-                  Déconnexion
-                </button>
-              </li>
-            </ul>
-          )}
-        </div>
+  <ul className="dashboard-dropdown-menu">
+    <li>
+      <a href="/user-dashboard">Tableau de bord</a>
+    </li>
+    <li>
+      <a href="/orders">Mes commandes</a>
+    </li>
+    {auth.currentUser?.providerData[0]?.providerId === "password" && (
+      <li>
+        <a href="/change-password">Changer le mot de passe</a>
+      </li>
+    )}
+    <li>
+      <button onClick={() => window.location.href = "/login"}>
+        Déconnexion
+      </button>
+    </li>
+  </ul>
+</div>
+
       </div>
 
       {/* Welcome title */}
