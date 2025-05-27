@@ -8,8 +8,8 @@ const PriceSlider = ({ min, max, priceRange, onChange }) => {
       <h3 className="price-slider-title">Prix</h3>
 
       <div className="price-slider-labels">
-        <span>{priceRange[0]} €</span>
-        <span>{priceRange[1]} €</span>
+        <span>{priceRange[0]} TND</span>
+        <span>{priceRange[1]} TND</span>
       </div>
 
       <input
