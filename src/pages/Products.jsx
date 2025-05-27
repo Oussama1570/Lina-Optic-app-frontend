@@ -4,6 +4,7 @@ import ProductCard from "./products/ProductCard";
 import { useGetAllProductsQuery } from "../redux/features/products/productsApi";
 import "../Styles/StylesProducts.css";
 import SelectorsPageProducts from './../components/SelectorProductsPage';  // adjust path if needed
+import PriceSlider from "../components/PriceSlider";
 
 
 const frameTypeOptions = [
@@ -42,6 +43,8 @@ const [selectedIndex, setSelectedIndex] = useState(["All"]);
   const queryParams = new URLSearchParams(location.search);
   const categoryFromUrl = queryParams.get("category");
   const subCategoryFromUrl = queryParams.get("subCategory");
+
+  const [priceRange, setPriceRange] = useState([0, 600]); // default range
 
 
   useEffect(() => {
@@ -92,6 +95,10 @@ if (selectedIndex.length && !selectedIndex.includes("All")) {
   );
 }
 
+filteredProducts = filteredProducts.filter((p) => {
+  const price = p.newPrice || p.oldPrice || 0;
+  return price >= priceRange[0] && price <= priceRange[1];
+});
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
@@ -121,65 +128,72 @@ if (isLoading || isFetching) {
     <div className="products-page-wrapper">
       {/* 🔍 Left Filter Sidebar */}
       <div className="selectors-wrapper-left">
+        {/* Row: Catégorie + Sous-catégorie */}
         <div className="selector-row">
           <SelectorsPageProducts
-  options={["Hommes", "Femmes", "Enfants"]}
-  label="Catégorie"
-  onSelect={setSelectedCategory}
-  selected={selectedCategory}
-/>
+            options={["Hommes", "Femmes", "Enfants"]}
+            label="Catégorie"
+            onSelect={setSelectedCategory}
+            selected={selectedCategory}
+          />
 
           <SelectorsPageProducts
-  options={["Optique", "Solaire", "Lentilles"]}
-  label="Sous-catégorie"
-  onSelect={setSelectedSubCategory}
-  selected={selectedSubCategory}  // ✅ ADD THIS LINE
-/>
-
+            options={["Optique", "Solaire", "Lentilles"]}
+            label="Sous-catégorie"
+            onSelect={setSelectedSubCategory}
+            selected={selectedSubCategory}
+          />
         </div>
 
-       <div className="selector-row">
-  <div className="selector-column">
-    <SelectorsPageProducts
-      options={uniqueBrands}
-      label="Marque"
-      onSelect={setSelectedBrand}
-      selected={selectedBrand}
-    />
+        {/* Row: Marque + Indice + Cadre + Prix */}
+        <div className="selector-row">
+          <div className="selector-column">
+            <SelectorsPageProducts
+              options={uniqueBrands}
+              label="Marque"
+              onSelect={setSelectedBrand}
+              selected={selectedBrand}
+            />
 
-    
+            <SelectorsPageProducts
+              options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
+              label="Indice"
+              onSelect={setSelectedIndex}
+              selected={selectedIndex}
+            />
+          </div>
 
-    <SelectorsPageProducts
-      options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
-      label="Indice"
-      onSelect={setSelectedIndex}
-      selected={selectedIndex}
-    />
-  </div>
+          <div className="selector-column">
+            <SelectorsPageProducts
+              options={frameTypeOptions}
+              label="Type de Cadre"
+              onSelect={setSelectedFrameType}
+              selected={selectedFrameType}
+            />
 
-  <div className="selector-column">
-    <SelectorsPageProducts
-      options={frameTypeOptions}
-      label="Type de Cadre"
-      onSelect={setSelectedFrameType}
-    />
-  </div>
+          <div className="selector-sidebar-lina fade-in-price-slider">
+  <PriceSlider
+    min={0}
+    max={600}
+    priceRange={priceRange}
+    onChange={setPriceRange}
+  />
 </div>
 
 
+          </div>
+        </div>
       </div>
 
       {/* 🛍 Product Grid */}
       <div className="products-grid-wrapper">
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-  <div className="products-grid">
-  {visibleProducts.map(p => (
-    <ProductCard key={p._id} product={p} />
-  ))}
-</div>
-
-</div>
-
+          <div className="products-grid">
+            {visibleProducts.map((p) => (
+              <ProductCard key={p._id} product={p} />
+            ))}
+          </div>
+        </div>
 
         {visibleProducts.length === 0 && (
           <p className="no-products">Aucun produit ne correspond aux filtres.</p>
@@ -200,6 +214,7 @@ if (isLoading || isFetching) {
     </div>
   </div>
 );
+
 };
 
 export default Products;

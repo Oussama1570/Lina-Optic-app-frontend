@@ -141,7 +141,7 @@ const ManageProducts = () => {
                     </td>
 
                     <td className="p-4 border border-gray-300 align-middle text-green-600 font-semibold">
-                      ${product.newPrice}
+                      TND{product.newPrice}
                     </td>
 
                     <td className="p-4 border border-gray-300 align-middle">
