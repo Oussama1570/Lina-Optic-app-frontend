@@ -85,7 +85,6 @@ const Navbar = () => {
 
         <li><a href="/products?subCategory=Lentilles">lentilles</a></li>
         <li><a href="/products?category=Enfants">enfants</a></li>
-        <li><a href="/about">A propos</a></li>
         <li><a href="/contact">Contactez-nous</a></li>
       </ul>
 
@@ -161,7 +160,6 @@ const Navbar = () => {
           <li><a href="/products?subCategory=Lentilles" onClick={() => setIsMobileMenuOpen(false)}>lentilles</a></li>
           <li><a href="/products?mainCategory=Enfants" onClick={() => setIsMobileMenuOpen(false)}>enfants</a></li>
           <li><a href="/wishlist" onClick={() => setIsMobileMenuOpen(false)}>Mes favoris</a></li> {/* ✅ Mobile wishlist */}
-          <li><a href="/about" onClick={() => setIsMobileMenuOpen(false)}>A propos</a></li>
           <li><a href="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contactez-nous</a></li>
         </ul>
       </div>

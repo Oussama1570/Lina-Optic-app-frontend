@@ -42,16 +42,18 @@ const Home = () => {
 
         {/* 🛍️ Our Sellers Section */}
         <FadeInSection>
-        <section className="sellers-section">
-          <div className="text-center">
-            <h2 className="section-title">Nos Meilleures Ventes</h2>
-            <p className="section-subtitle">
-              Découvrez les montures les plus populaires choisies par nos clients.
-            </p>
-          </div>
-          <OurSellers />
-        </section>
-        </FadeInSection>
+  <section className="sellers-section">
+    <div className="text-center">
+      <h2 className="section-title">Notre Collection Complète</h2>
+      <p className="section-subtitle">
+        Parcourez l’ensemble de nos montures disponibles pour hommes, femmes et enfants – des modèles soigneusement sélectionnés pour allier style, confort et qualité visuelle.
+      </p>
+    </div>
+    <OurSellers />
+  </section>
+</FadeInSection>
+
+
 
 {/* Lentilles Section */}
 <FadeInSection>
