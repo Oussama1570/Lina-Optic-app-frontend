@@ -424,3 +424,69 @@
     width: 100%;
   }
 }
+
+/* ================================
+   📱 Mobile/Android Optimization
+================================ */
+
+/* Make entire filter section stack on mobile */
+@media (max-width: 600px) {
+  .products-page-wrapper {
+    flex-direction: column;
+    padding: 1rem 1rem 2rem;
+  }
+
+  
+
+  .selectors-wrapper-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .selector-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .selector-column {
+    width: 100%;
+    align-items: center;
+  }
+
+  .selector-sidebar-lina {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .price-slider-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .products-grid-wrapper {
+    margin-left: 0 !important;
+    padding: 0 1rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  
+
+  .load-more-btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 2rem auto 0;
+  }
+}
+
+

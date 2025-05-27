@@ -14,9 +14,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 20px; /* ⬅️ increased from 10px to 20px */
+  margin: 20px;
 }
-
 
 .product-card-optic:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
@@ -48,22 +47,14 @@
 
 .product-img {
   width: 300px !important;
-  height: 220px !important;  /* Keep current height */
-  object-fit: contain;        /* ✅ Show full product without cutting */
+  height: 220px !important;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
   border-radius: 8px;
-  padding: 8px;               /* ✅ Add padding inside the image box */
+  padding: 8px;
   transition: transform 0.3s ease;
 }
-
-
-
-.product-card-optic {
-  max-width: 420px; /* ⬅️ wider card */
-  margin: 30px;     /* ⬅️ more spacing between cards */
-}
-
 
 .product-card-optic:hover .product-img {
   transform: scale(1.05);
@@ -89,19 +80,17 @@
   line-height: 1.3;
 }
 
-.product-sub-info {
-  font-size: 0.8rem;
-  color: #777;
-  margin-bottom: 2px;
-}
-
+.product-sub-info,
 .product-brand {
   font-size: 0.8rem;
   color: #444;
   font-weight: 500;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.4rem;
 }
 
+/* ===============================
+   💰 Price Section
+=============================== */
 .product-price-optic {
   display: flex;
   justify-content: center;
@@ -168,38 +157,40 @@
   transform: scale(1.2);
 }
 
-
-
 /* ===============================
-   📱 Responsive (Mobile)
+   📱 Responsive (Mobile & Android)
 =============================== */
 @media (max-width: 480px) {
   .product-card-optic {
     max-width: 100%;
+    margin: 16px;
   }
 
   .product-img {
-    height: 200px;
+    width: 100% !important;
+    max-width: 320px;
+    height: auto !important;
+    object-fit: contain;
   }
 
   .product-title-optic {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   .add-btn {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     padding: 5px 10px;
   }
 
   .icon {
     font-size: 1rem;
   }
+
+  .product-price-optic {
+    flex-direction: column;
+    gap: 4px;
+  }
 }
-
-
-
-
-
 
 /* ===============================
    🧱 Grid Layout Helper (for Products.jsx)
@@ -209,9 +200,5 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 40px;
-  padding: 2rem 1rem 0; /* ⬅️ Remove bottom padding */
+  padding: 2rem 1rem 0;
 }
-
-
-
-
