@@ -27,6 +27,8 @@ const ContactForm = ({ onSuccess }) => {
       // 🌐 Send message to your backend endpoint
       await axios.post('https://lina-optic-app-backend.vercel.app/api/contact', formData);
 
+
+
       onSuccess("✅ Votre message a été envoyé avec succès !");
       setFormData({
         name: '',
