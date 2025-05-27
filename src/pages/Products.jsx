@@ -124,7 +124,8 @@ if (isLoading || isFetching) {
  
  return (
   <div className="our-sellers">
-    <h2 className="our-sellers-title">Nos Produits</h2>
+    <h2 className="animated-products-title">Nos Produits</h2>
+
 
     <div className="products-page-wrapper">
       {/* 🔍 Left Filter Sidebar */}

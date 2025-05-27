@@ -93,6 +93,43 @@
   margin-bottom: 2rem;
 }
 
+/* 🌟 Cool Animation for "Nos Produits" Title */
+.animated-products-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(90deg, #1e3a8a, #4f77a7, #1e3a8a);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerTitle 3s linear infinite, fadeInTitle 1s ease-in-out forwards;
+  opacity: 0;
+  letter-spacing: 1.2px;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+@keyframes shimmerTitle {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes fadeInTitle {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
 /* ================================
    🔽 Responsive Design
 ================================ */
