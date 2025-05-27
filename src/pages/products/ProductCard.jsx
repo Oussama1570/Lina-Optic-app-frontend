@@ -133,19 +133,7 @@ const ProductCard = ({ product }) => {
 </a>
 
 
-      {/* 📊 Stock Info Below Image */}
-      <div
-        style={{
-          textAlign: "center",
-          fontSize: "0.75rem",
-          marginTop: "4px",
-        }}
-      >
-        {selectedColor?.stock > 0
-          ? `Stock: ${selectedColor.stock}`
-          : "Rupture de stock"}
-      </div>
-
+      
       {/* 📄 Product Details */}
       <div className="product-details-box">
         <h3 className="product-title-optic">{product?.title}</h3>

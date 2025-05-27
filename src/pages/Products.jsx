@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import ProductCard from "./products/ProductCard";
 import { useGetAllProductsQuery } from "../redux/features/products/productsApi";
 import "../Styles/StylesProducts.css";
+import FadeInSection from "../Animations/FadeInSection";
 import SelectorsPageProducts from './../components/SelectorProductsPage';  // adjust path if needed
 import PriceSlider from "../components/PriceSlider";
 
@@ -171,14 +172,16 @@ if (isLoading || isFetching) {
               selected={selectedFrameType}
             />
 
-          <div className="selector-sidebar-lina fade-in-price-slider">
-  <PriceSlider
-    min={0}
-    max={600}
-    priceRange={priceRange}
-    onChange={setPriceRange}
-  />
-</div>
+         <FadeInSection delay={0.1}>
+  <div className="selector-sidebar-lina">
+    <PriceSlider
+      min={0}
+      max={600}
+      priceRange={priceRange}
+      onChange={setPriceRange}
+    />
+  </div>
+</FadeInSection>
 
 
           </div>
