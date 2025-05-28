@@ -54,7 +54,7 @@ const Footer = () => {
             292 Avenue Khaled Ebn El Walid, Douar Hicher 61, avenue Habib Bourguiba, Manouba
           </p>
           <p><FaPhoneAlt className="footer-icon" /> +216 22 344 803</p>
-          <p><FaEnvelope className="footer-icon" /> linaoptic@gmail.com</p>
+          <p><FaEnvelope className="footer-icon" /> linaopticlunettes@gmail.com</p>
 
           <div className="footer-socials">
             <a
