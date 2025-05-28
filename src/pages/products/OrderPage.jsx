@@ -160,7 +160,7 @@ const OrderPage = () => {
                   <strong>{t("ordersPage.orderNumber")}:</strong> {index + 1}
                 </p>
                 <p>{new Date(order?.createdAt).toLocaleDateString()}</p>
-              </div>
+              </div> 
 
               {/* Order details */}
               <p className="order-id">
@@ -170,7 +170,7 @@ const OrderPage = () => {
               <p>{t("ordersPage.email")}: {order.email}</p>
               <p>{t("ordersPage.phone")}: {order.phone}</p>
               <p className="order-total">
-                {t("ordersPage.total")}: <span>${order.totalPrice}</span>
+                {t("ordersPage.total")}: <span>TND{order.totalPrice}</span>
               </p>
 
               {/* Subtitle for product list */}
