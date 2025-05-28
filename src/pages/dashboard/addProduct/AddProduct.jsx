@@ -157,185 +157,178 @@ const frameTypeOptions = [
 
 
   return (
-    <div className="add-product-container">
-      <h2 className="add-product-title">Add New Product</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="add-product-form">
-  
-        <input
-          {...register("title")}
-          placeholder="Product Name"
-          required
-        />
-  
-        <textarea
-          {...register("description")}
-          placeholder="Description"
-          required
-        />
-  
-  <label>Catégorie principale</label>
-<select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)} required>
-  <option value="">Sélectionnez</option>
-  <option value="Hommes">Hommes</option>
-  <option value="Femmes">Femmes</option>
-  <option value="Enfants">Enfants</option>
-</select>
+  <div className="add-product-container">
+    <h2 className="add-product-title">Ajouter un nouveau produit</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="add-product-form">
 
+      <label>Nom du produit</label>
+      <input
+        {...register("title")}
+        placeholder="Nom du produit"
+        required
+      />
 
-{mainCategory && (
-  <>
-    <label>Sous-catégorie</label>
-    <select
-  value={subCategory}
-  onChange={(e) => setSubCategory(e.target.value)}
-  required
->
-<option value="">Sous-catégorie</option>
+      <label>Description du produit</label>
+      <textarea
+        {...register("description")}
+        placeholder="Description"
+        required
+      />
 
-  {subCategoryOptions.map((option, idx) => (
-    <option key={idx} value={option.value}>
-      {option.label}
-    </option>
-  ))}
-</select>
+      <label>Catégorie principale</label>
+      <select value={mainCategory} onChange={(e) => setMainCategory(e.target.value)} required>
+        <option value="">Sélectionner</option>
+        <option value="Hommes">Hommes</option>
+        <option value="Femmes">Femmes</option>
+        <option value="Enfants">Enfants</option>
+      </select>
 
-
-
-  </>
-)}
-
-<select {...register("frameType")}>
-  <option value="">Type de Cadre</option>
-  {frameTypeOptions.map((type, idx) => (
-    <option key={idx} value={type}>{type}</option>
-  ))}
-</select>
-
-<label>Indice</label>
-<select {...register("indice")}>
-  <option value="">Sélectionnez un indice</option>
-  <option value="1.5">1.5</option>
-  <option value="1.56">1.56</option>
-  <option value="1.59">1.59</option>
-  <option value="1.6">1.6</option>
-  <option value="1.67">1.67</option>
-  <option value="1.74">1.74</option>
-</select>
-
-
-
-<input
-  {...register("brand")}
-  placeholder="Marque du produit"
-  required
-/>
-
-  
-        <div className="price-grid">
-          <input
-            {...register("oldPrice")}
-            type="number"
-            placeholder="Old Price"
+      {mainCategory && (
+        <>
+          <label>Sous-catégorie</label>
+          <select
+            value={subCategory}
+            onChange={(e) => setSubCategory(e.target.value)}
             required
-          />
-          <input
-            {...register("newPrice")}
-            type="number"
-            placeholder="New Price"
-            required
-          />
-        </div>
-  
-        <div className="checkbox-wrapper">
-          <input type="checkbox" {...register("trending")} />
-          Mark as Trending
-        </div>
-  
-        <label>Main Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleCoverImageChange}
-          required
-        />
-        {coverPreviewURL && (
-          <img
-            src={coverPreviewURL}
-            alt="Main Preview"
-            className="cover-preview"
-          />
-        )}
-  
-        <label>Product Colors</label>
-        {colorInputs.map((input, index) => (
-          <div key={index} className="color-block">
-            <input
-              type="text"
-              placeholder="Color Name (EN)"
-              value={input.colorName}
-              onChange={(e) =>
-                handleColorInputChange(index, "colorName", e.target.value)
-              }
-              required
-            />
-  
-            <input
-              type="number"
-              placeholder="Stock Quantity"
-              value={input.stock}
-              onChange={(e) =>
-                handleColorInputChange(index, "stock", Number(e.target.value))
-              }
-              required
-            />
-  
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file && file.type.startsWith("image/")) {
-                  handleColorInputChange(index, "imageFile", file);
-                }
-              }}
-              required
-            />
-  
-            {input.previewURL && (
-              <img
-                src={input.previewURL}
-                alt="Color Preview"
-                className="color-preview"
-              />
-            )}
-  
-            <button
-              type="button"
-              onClick={() => deleteColorInput(index)}
-              className="btn-delete-color"
-            >
-              Remove Color
-            </button>
-          </div>
+          >
+            <option value="">Sous-catégorie</option>
+            {subCategoryOptions.map((option, idx) => (
+              <option key={idx} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
+
+      <label>Type de cadre</label>
+      <select {...register("frameType")}>
+        <option value="">Type de cadre</option>
+        {frameTypeOptions.map((type, idx) => (
+          <option key={idx} value={type}>{type}</option>
         ))}
-  
-        <button
-          type="button"
-          onClick={addColorInput}
-          className="btn-add-color"
-        >
-          Add Color
-        </button>
-  
-        <button
-          type="submit"
-          className="btn-submit"
-        >
-          {isLoading ? "Submitting..." : "Add Product"}
-        </button>
-      </form>
-    </div>
-  );
+      </select>
+
+      <label>Indice</label>
+      <select {...register("indice")}>
+        <option value="">Sélectionner un indice</option>
+        <option value="1.5">1.5</option>
+        <option value="1.56">1.56</option>
+        <option value="1.59">1.59</option>
+        <option value="1.6">1.6</option>
+        <option value="1.67">1.67</option>
+        <option value="1.74">1.74</option>
+      </select>
+
+      <label>Marque</label>
+      <input
+        {...register("brand")}
+        placeholder="Marque du produit"
+        required
+      />
+
+      <div className="price-grid">
+        <input
+          {...register("oldPrice")}
+          type="number"
+          placeholder="Prix initial"
+          required
+        />
+        <input
+          {...register("newPrice")}
+          type="number"
+          placeholder="Prix actuel"
+          required
+        />
+      </div>
+
+      <div className="checkbox-wrapper">
+        <input type="checkbox" {...register("trending")} />
+        Marquer comme tendance
+      </div>
+
+      <label>Image principale</label>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleCoverImageChange}
+        required
+      />
+      {coverPreviewURL && (
+        <img
+          src={coverPreviewURL}
+          alt="Aperçu"
+          className="cover-preview"
+        />
+      )}
+
+      <label>Couleurs du produit</label>
+      {colorInputs.map((input, index) => (
+        <div key={index} className="color-block">
+          <input
+            type="text"
+            placeholder="Nom de la couleur"
+            value={input.colorName}
+            onChange={(e) =>
+              handleColorInputChange(index, "colorName", e.target.value)
+            }
+            required
+          />
+          <input
+            type="number"
+            placeholder="Quantité en stock"
+            value={input.stock}
+            onChange={(e) =>
+              handleColorInputChange(index, "stock", Number(e.target.value))
+            }
+            required
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file && file.type.startsWith("image/")) {
+                handleColorInputChange(index, "imageFile", file);
+              }
+            }}
+            required
+          />
+          {input.previewURL && (
+            <img
+              src={input.previewURL}
+              alt="Aperçu couleur"
+              className="color-preview"
+            />
+          )}
+          <button
+            type="button"
+            onClick={() => deleteColorInput(index)}
+            className="btn-delete-color"
+          >
+            Supprimer
+          </button>
+        </div>
+      ))}
+
+      <button
+        type="button"
+        onClick={addColorInput}
+        className="btn-add-color"
+      >
+        Ajouter une couleur
+      </button>
+
+      <button
+        type="submit"
+        className="btn-submit"
+      >
+        {isLoading ? "Ajout en cours..." : "Ajouter le produit"}
+      </button>
+    </form>
+  </div>
+);
+
   
 }  
 

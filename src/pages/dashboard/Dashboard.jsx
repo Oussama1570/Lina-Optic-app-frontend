@@ -47,7 +47,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div dir="ltr" className="dashboard-main">
+    <div dir="ltr" className="dashboard-main enhanced-dashboard">
       {/* 📊 Stats */}
       <section className="dashboard-stats">
         {[
@@ -73,8 +73,7 @@ const Dashboard = () => {
           <RevenueChart />
         </div>
       </section>
-
-      </div>
+    </div>
   );
 };
 

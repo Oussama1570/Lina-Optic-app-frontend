@@ -1,106 +1,72 @@
-/* ===================== 🧭 Layout Structure ===================== */
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-  background-color: #f9fafb; /* Light background for the dashboard */
+/* ================================
+🌐 Dashboard Layout Base
+================================ */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.Dashboard-Title {
-  padding-left: 2.5%;
+/* ================================
+🧭 Sidebar Styling
+================================ */
+.admin-sidebar {
+  background-color: #e0f2fe; /* Light blue */
+  color: #374151;
 }
 
-/* ===================== 📚 Sidebar ===================== */
-.sidebar {
-  width: 60px;
-  background-color: #4a8654; /* Slate-800: Dark sidebar background */
-  color: #f1f5f9;             /* Light icon text */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 0.5rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  z-index: 30;
-  transition: transform 0.3s ease;
+.admin-sidebar a,
+.admin-sidebar button {
+  transition: all 0.3s ease;
 }
 
-.sidebar a,
-.sidebar button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 0.5rem;
-  color: #cbd5e1;             /* Slate-300 */
-  background: transparent;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+.admin-sidebar a:hover,
+.admin-sidebar button:hover {
+  background-color: #bae6fd;
+  color: #111827;
 }
 
-.sidebar a:hover,
-.sidebar button:hover {
-  background-color: #334155; /* Slate-700 */
-  color: #ffffff;
-}
-
-.sidebar a.active {
-  background-color: #3b82f6; /* Sky-500 for active */
-  color: #ffffff;
+.admin-sidebar .active {
+  background-color: #bfdbfe;
   font-weight: 600;
 }
 
-.logout-btn {
-  background-color: #ef4444; /* Red-500 for logout */
-  margin-top: auto;
-  color: white;
-}
-
-.logout-btn:hover {
-  background-color: #dc2626; /* Red-600 on hover */
-}
-
-/* ===================== 📱 Mobile Toggle ===================== */
-.mobile-toggle {
-  display: none;
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  background: #2e3a59;
-  color: white;
-  border-radius: 6px;
-  padding: 10px;
-  z-index: 50;
-}
-
+/* ================================
+📱 Sidebar Mobile Transitions
+================================ */
 @media (max-width: 768px) {
-  .mobile-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .admin-sidebar {
+    transform: translateX(-100%);
   }
 
-  .dashboard-content {
-    margin-left: 0;
+  .admin-sidebar.open {
+    transform: translateX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .dashboard-wrapper.sidebar-shifted {
+    filter: brightness(0.92);
+    transition: filter 0.3s ease;
   }
 }
 
-/* ===================== 🔝 Header ===================== */
+/* ================================
+🧾 Header and Buttons
+================================ */
 .dashboard-header {
-  background-color: white;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-  padding: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  max-width: 100vw;           /* ✅ prevents overflow */
+  box-sizing: border-box;
+  overflow-x: hidden;         /* ✅ disables any child overflow */
 }
+
+
 
 @media (min-width: 768px) {
   .dashboard-header {
@@ -108,30 +74,31 @@
     justify-content: space-between;
     align-items: center;
   }
+  @media (max-width: 768px) {
+  .dashboard-header {
+    padding: 1rem;
+  }
+}
+
 }
 
 .dashboard-header h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #2e2e2e;
+  color: #1e293b;
 }
 
-/* ===================== 🎛️ Header Buttons ===================== */
-.dashboard-header-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-/* 🔘 Universal Button Base Style */
+/* ================================
+🎛️ Utility Buttons
+================================ */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 9999px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -139,61 +106,38 @@
   text-transform: capitalize;
 }
 
-/* 🔵 Add Product Button */
-.btn.blue {
-  background-color: #005fa3;
+.btn.primary {
+  background-color: #3b82f6;
   color: white;
 }
-.btn.blue:hover {
-  background-color: #0070cc;
+.btn.primary:hover {
+  background-color: #2563eb;
 }
 
-/* 🟢 Manage Products Button */
-.btn.green {
-  background-color: #28a745;
+.btn.success {
+  background-color: #10b981;
   color: white;
 }
-.btn.green:hover {
-  background-color: #218838;
+.btn.success:hover {
+  background-color: #059669;
 }
 
-/* 🔴 Logout Button */
-.btn.red {
-  background-color: #dc3545;
+.btn.danger {
+  background-color: #ef4444;
   color: white;
 }
-.btn.red:hover {
-  background-color: #c82333;
+.btn.danger:hover {
+  background-color: #dc2626;
 }
 
-/* 🟣 Responsive layout container for header buttons */
-.dashboard-header-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* 🧭 Optional: For sidebar logout icon button */
-.logout-btn {
-  background: none;
-  border: none;
-  color: #dc3545;
-  font-size: 1.2rem;
-  margin-top: auto;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-.logout-btn:hover {
-  color: #b02a37;
-}
-
-
-/* ===================== 🧾 Main Content ===================== */
-.dashboard-content {
+/* ================================
+🧾 Main Content Area
+================================ */
+.dashboard-main {
   flex: 1;
   padding: 1.5rem;
-  margin-left: 60px; /* Matches sidebar width */
+  margin-left: 60px;
   overflow-y: auto;
-  box-sizing: border-box;
+  background-color: #f9fafb;
 }
+

@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import getBaseUrl from "../../../utils/baseURL";
 import "../../../Styles/StylesUpdateProduct.css"
-import "../../../Styles/StylesUpdateProduct.css"
 import { CATEGORY_OPTIONS } from "../../../utils/categoryFilters";
 
 
@@ -193,96 +192,94 @@ if (isError) return <div className="text-center text-red-500">Erreur lors de la 
 
 return (
   <div className="update-product-container">
-    <h2 className="update-product-title">Update Product</h2>
+    <h2 className="update-product-title">Mettre à jour le produit</h2>
     <form onSubmit={handleSubmit(onSubmit)} className="update-product-form">
       
-    <label>Nom du produit</label>
-<input {...register("title")} type="text" required />
+      <label>Nom du produit</label>
+      <input {...register("title")} type="text" required />
 
-<label>Description du produit</label>
-<textarea {...register("description")} rows="4" required />
+      <label>Description du produit</label>
+      <textarea {...register("description")} rows="4" required />
 
+      <label>Catégorie principale</label>
+      <select
+        value={mainCategory}
+        onChange={(e) => setMainCategory(e.target.value)}
+        required
+      >
+        <option value="">Sélectionnez une catégorie</option>
+        <option value="Hommes">Hommes</option>
+        <option value="Femmes">Femmes</option>
+        <option value="Enfants">Enfants</option>
+      </select>
 
-<label>Catégorie principale</label>
-<select
-  value={mainCategory}
-  onChange={(e) => setMainCategory(e.target.value)}
-  required
->
-  <option value="">Sélectionnez une catégorie</option>
-  <option value="Hommes">Hommes</option>
-  <option value="Femmes">Femmes</option>
-  <option value="Enfants">Enfants</option>
-</select>
+      {mainCategory && (
+        <>
+          <label>Sous-catégorie</label>
+          <select
+            value={subCategory}
+            onChange={(e) => setSubCategory(e.target.value)}
+            required
+          >
+            <option value="">Sélectionnez une sous-catégorie</option>
+            {subCategoryOptions.map((option, idx) => (
+              <option key={idx} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </>
+      )}
 
-{mainCategory && (
-  <>
-    <label>Sous-catégorie</label>
-    <select
-      value={subCategory}
-      onChange={(e) => setSubCategory(e.target.value)}
-      required
-    >
-      <option value="">Sélectionnez une sous-catégorie</option>
-      {subCategoryOptions.map((option, idx) => (
-        <option key={idx} value={option.value}>{option.label}</option>
-      ))}
-    </select>
-  </>
-)}
+      <label>Type de cadre</label>
+      <select {...register("frameType")}>
+        <option value="">Sélectionnez un type de cadre</option>
+        {frameTypeOptions.map((type, idx) => (
+          <option key={idx} value={type}>{type}</option>
+        ))}
+      </select>
 
-<label>Type de Cadre</label>
-<select {...register("frameType")}>
-  <option value="">Sélectionnez un type de cadre</option>
-  {frameTypeOptions.map((type, idx) => (
-    <option key={idx} value={type}>{type}</option>
-  ))}
-</select>
+      <label>Indice</label>
+      <select {...register("indice")}>
+        <option value="">Sélectionnez un indice</option>
+        <option value="1.5">1.5</option>
+        <option value="1.56">1.56</option>
+        <option value="1.59">1.59</option>
+        <option value="1.6">1.6</option>
+        <option value="1.67">1.67</option>
+        <option value="1.74">1.74</option>
+      </select>
 
-<label>Indice</label>
-<select {...register("indice")}>
-          <option value="">Sélectionnez un indice</option>
-          <option value="1.5">1.5</option>
-          <option value="1.56">1.56</option>
-          <option value="1.59">1.59</option>
-          <option value="1.6">1.6</option>
-          <option value="1.67">1.67</option>
-          <option value="1.74">1.74</option>
-</select>
+      <label>Marque</label>
+      <input
+        {...register("brand")}
+        placeholder="Entrez la marque du produit"
+        required
+      />
 
-<label>Marque</label>
-<input
-  {...register("brand")}
-  placeholder="Entrez la marque du produit"
-  required
-/>
+      <label>Prix ancien</label>
+      <input {...register("oldPrice")} type="number" placeholder="Ancien prix" required />
 
-<label>Prix Ancien</label>
-<input {...register("oldPrice")} type="number" placeholder="Ancien prix" required />
+      <label>Prix actuel</label>
+      <input {...register("newPrice")} type="number" placeholder="Nouveau prix" required />
 
-<label>Prix Nouveau</label>
-<input {...register("newPrice")} type="number" placeholder="Nouveau prix" required />
-
-<label>Quantité en Stock</label>
-<input {...register("stockQuantity")} type="number" min="0" required />
-
+      <label>Quantité en stock</label>
+      <input {...register("stockQuantity")} type="number" min="0" required />
 
       <div className="checkbox-wrapper">
         <input type="checkbox" {...register("trending")} />
-        Mark as Trending
+        Marquer comme tendance
       </div>
 
-      <label>Main Image</label>
+      <label>Image principale</label>
       <input type="file" accept="image/*" onChange={handleFileChange} />
       {previewURL && (
         <img
           src={previewURL}
-          alt="Main Preview"
+          alt="Aperçu"
           className="update-cover-preview"
         />
       )}
 
-      <label>Product Colors</label>
+      <label>Couleurs du produit</label>
       {colors.map((color, index) => (
         <div key={index} className="color-block">
           <input
@@ -291,7 +288,7 @@ return (
             onChange={(e) =>
               handleColorChange(index, "colorName", e.target.value)
             }
-            placeholder="Color Name (EN)"
+            placeholder="Nom de la couleur"
             required
           />
 
@@ -301,7 +298,7 @@ return (
             onChange={(e) =>
               handleColorChange(index, "stock", Number(e.target.value))
             }
-            placeholder="Stock Quantity"
+            placeholder="Quantité en stock"
             required
           />
 
@@ -316,7 +313,7 @@ return (
           {color.previewURL && (
             <img
               src={color.previewURL}
-              alt="Color Preview"
+              alt="Aperçu couleur"
               className="color-preview"
             />
           )}
@@ -326,7 +323,7 @@ return (
             onClick={() => deleteColor(index)}
             className="btn-delete-color"
           >
-            Remove Color
+            Supprimer
           </button>
         </div>
       ))}
@@ -336,18 +333,19 @@ return (
         onClick={addColor}
         className="btn-add-color"
       >
-        Add Color
+        Ajouter une couleur
       </button>
 
       <button
         type="submit"
         className="btn-submit"
       >
-        {updating ? "Updating..." : "Update Product"}
+        {updating ? "Mise à jour..." : "Mettre à jour le produit"}
       </button>
     </form>
   </div>
 );
+
 
 };
 
