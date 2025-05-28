@@ -130,7 +130,7 @@ const UserDashboard = () => {
 
                 {/* Total price */}
                 <p className="order-total">
-                  Total : <span className="highlight">TND{order.totalPrice}</span>
+                  Total : <span className="highlight">{order.totalPrice}TND</span>
                 </p>
 
                 {/* Title for list of ordered products */}

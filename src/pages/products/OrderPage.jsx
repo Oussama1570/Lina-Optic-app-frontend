@@ -170,7 +170,7 @@ const OrderPage = () => {
               <p>{t("ordersPage.email")}: {order.email}</p>
               <p>{t("ordersPage.phone")}: {order.phone}</p>
               <p className="order-total">
-                {t("ordersPage.total")}: <span>TND{order.totalPrice}</span>
+                {t("ordersPage.total")}: <span>{order.totalPrice}TND</span>
               </p>
 
               {/* Subtitle for product list */}
