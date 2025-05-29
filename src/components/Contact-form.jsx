@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const ContactForm = ({ onSuccess }) => {
+const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,7 +11,6 @@ const ContactForm = ({ onSuccess }) => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   // 🔄 Handle field changes
   const handleChange = (e) => {
@@ -21,15 +21,18 @@ const ContactForm = ({ onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
 
     try {
-      // 🌐 Send message to your backend endpoint
       await axios.post('https://lina-optic-app-backend.vercel.app/api/contact', formData);
 
+      // ✅ Success alert
+      Swal.fire({
+        icon: 'success',
+        title: 'Message envoyé !',
+        text: 'Votre message a été envoyé avec succès.',
+        confirmButtonColor: '#3085d6',
+      });
 
-
-      onSuccess("✅ Votre message a été envoyé avec succès !");
       setFormData({
         name: '',
         email: '',
@@ -37,7 +40,13 @@ const ContactForm = ({ onSuccess }) => {
         message: ''
       });
     } catch (err) {
-      setError("❌ Une erreur est survenue. Veuillez réessayer.");
+      // ❌ Error alert
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Une erreur est survenue. Veuillez réessayer.',
+        confirmButtonColor: '#d33',
+      });
     } finally {
       setLoading(false);
     }
@@ -45,13 +54,11 @@ const ContactForm = ({ onSuccess }) => {
 
   return (
     <div className="contact-form-container">
-      {/* 🎯 Animated Title with underline effect handled in CSS */}
       <h3 className="contact-title">Envoyez-nous un message</h3>
       <p className="contact-description">
         Pour toute demande de rendez-vous, question ou conseil optique, notre équipe vous répond rapidement.
       </p>
 
-      {/* 📝 Contact Form */}
       <form onSubmit={handleSubmit} className="contact-form">
         <input
           type="text"
@@ -85,13 +92,9 @@ const ContactForm = ({ onSuccess }) => {
           required
         />
 
-        {/* 🔘 Submit Button */}
         <button type="submit" disabled={loading}>
           {loading ? "Envoi en cours..." : "Envoyer le message"}
         </button>
-
-        {/* ✅ / ❌ Feedback */}
-        {error && <p className="error-message">{error}</p>}
       </form>
     </div>
   );
