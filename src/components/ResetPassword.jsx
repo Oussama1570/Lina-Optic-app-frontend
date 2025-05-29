@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { confirmPasswordReset } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import Swal from "sweetalert2";
 import "../Styles/StylesLogin.css";
 
 const ResetPassword = () => {
@@ -10,10 +11,9 @@ const ResetPassword = () => {
   const oobCode = query.get("oobCode");
 
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Redirect or show error if oobCode is missing
+  // ❗ If reset code is missing
   if (!oobCode) {
     return (
       <div className="login-page">
@@ -29,18 +29,36 @@ const ResetPassword = () => {
     );
   }
 
+  // 🔁 Handle password reset
   const handleReset = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     try {
       await confirmPasswordReset(auth, oobCode, password);
-      setMessage("✅ Mot de passe réinitialisé avec succès.");
+
+      // ✅ Success alert
+      Swal.fire({
+        icon: "success",
+        title: "Mot de passe modifié",
+        text: "Votre mot de passe a été réinitialisé avec succès.",
+        confirmButtonColor: "#3085d6",
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       console.error("Reset error:", err);
-      setMessage("❌ Lien invalide ou expiré.");
+
+      // ❌ Error alert
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "Lien invalide ou expiré. Veuillez demander un nouveau lien.",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setLoading(false);
     }
@@ -50,8 +68,6 @@ const ResetPassword = () => {
     <div className="login-page">
       <div className="login-container">
         <h2 className="login-title">Réinitialiser votre mot de passe</h2>
-
-        {message && <p className="login-message">{message}</p>}
 
         <form onSubmit={handleReset} className="login-form">
           <div className="form-group">
