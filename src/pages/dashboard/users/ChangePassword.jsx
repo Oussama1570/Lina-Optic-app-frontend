@@ -4,71 +4,83 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
-} from "firebase/auth"; // 🔐 Firebase methods for password update
-import { auth } from "../../../firebase/firebase.config"; // 🔗 Firebase config
-import "../../../Styles/StylesLogin.css"; // 🎨 Import form styles
-import { Helmet } from "react-helmet"; // 🧠 For dynamic page title
-import Swal from "sweetalert2"; // 💬 SweetAlert for messages
+} from "firebase/auth";
+import { auth } from "../../../firebase/firebase.config";
+import "../../../Styles/StylesLogin.css";
+import { Helmet } from "react-helmet";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
-  // 🔐 State to handle form inputs
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // 🧭 Navigate after success
-
-  // ✅ Main function to change password
   const handleChangePassword = async (e) => {
-    e.preventDefault(); // 🚫 Prevent default form behavior
-    setLoading(true);   // ⏳ Show loading state
+    e.preventDefault();
+    setLoading(true);
 
-    // ❗ Validate password confirmation
     if (newPassword !== confirmPassword) {
-      Swal.fire("Erreur", "❌ Les nouveaux mots de passe ne correspondent pas.", "error");
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "❌ Les nouveaux mots de passe ne correspondent pas.",
+        confirmButtonColor: "#d33",
+      });
       setLoading(false);
       return;
     }
 
     try {
-      const user = auth.currentUser; // ✅ Get current authenticated user
-
-      // 🔐 Reauthenticate with current password (Firebase requires this)
+      const user = auth.currentUser;
       const credential = EmailAuthProvider.credential(user.email, currentPassword);
       await reauthenticateWithCredential(user, credential);
-
-      // 🔁 Update to the new password
       await updatePassword(user, newPassword);
 
-      // ✅ Show success alert and redirect to dashboard
-      Swal.fire("Succès", "✅ Mot de passe mis à jour avec succès.", "success");
+      Swal.fire({
+        icon: "success",
+        title: "Mot de passe mis à jour",
+        text: "✅ Votre mot de passe a été changé avec succès.",
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+
       setTimeout(() => navigate("/user-dashboard"), 2000);
     } catch (error) {
       console.error("Erreur :", error);
-      // 🔥 Handle common Firebase error codes
+
       if (error.code === "auth/wrong-password") {
-        Swal.fire("Erreur", "❌ Le mot de passe actuel est incorrect.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Mot de passe incorrect",
+          text: "❌ Le mot de passe actuel est incorrect.",
+          confirmButtonColor: "#d33",
+        });
       } else {
-        Swal.fire("Erreur", "❌ Une erreur est survenue. Veuillez réessayer.", "error");
+        Swal.fire({
+          icon: "error",
+          title: "Erreur",
+          text: "❌ Une erreur est survenue. Veuillez réessayer.",
+          confirmButtonColor: "#d33",
+        });
       }
     } finally {
-      setLoading(false); // ✅ Reset loading
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
       <Helmet>
-        <title>Changer le mot de passe</title> {/* 🧠 SEO-friendly page title */}
+        <title>Changer le mot de passe</title>
       </Helmet>
 
       <div className="login-container">
         <h2 className="login-title">Changer le mot de passe</h2>
 
-        {/* 🔐 Password change form */}
         <form onSubmit={handleChangePassword} className="login-form">
-          {/* 🔑 Current password input */}
           <div className="form-group">
             <label>Mot de passe actuel</label>
             <input
@@ -79,7 +91,6 @@ const ChangePassword = () => {
             />
           </div>
 
-          {/* ✏️ New password input */}
           <div className="form-group">
             <label>Nouveau mot de passe</label>
             <input
@@ -90,7 +101,6 @@ const ChangePassword = () => {
             />
           </div>
 
-          {/* 🔁 Confirm new password input */}
           <div className="form-group">
             <label>Confirmer le nouveau mot de passe</label>
             <input
@@ -101,7 +111,6 @@ const ChangePassword = () => {
             />
           </div>
 
-          {/* ✅ Submit button */}
           <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Mise à jour..." : "Mettre à jour le mot de passe"}
           </button>

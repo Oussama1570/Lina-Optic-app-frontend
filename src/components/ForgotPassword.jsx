@@ -2,24 +2,42 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import Swal from "sweetalert2";
 import "../Styles/StylesLogin.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleRequest = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     try {
       await sendPasswordResetEmail(auth, email);
-      setMessage("✅ Un lien de réinitialisation a été envoyé à votre adresse email.");
+
+      // ✅ Success popup
+      Swal.fire({
+        icon: "success",
+        title: "Lien envoyé",
+        text: "Un lien de réinitialisation a été envoyé à votre adresse email.",
+        confirmButtonColor: "#3085d6",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+
+      setEmail(""); // Clear input
     } catch (error) {
       console.error("Erreur de réinitialisation:", error);
-      setMessage("❌ Adresse email invalide ou utilisateur introuvable.");
+
+      // ❌ Error popup
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "Adresse email invalide ou utilisateur introuvable.",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setLoading(false);
     }
@@ -29,8 +47,6 @@ const ForgotPassword = () => {
     <div className="login-page">
       <div className="login-container">
         <h2 className="login-title">Mot de passe oublié ?</h2>
-
-        {message && <p className="login-message">{message}</p>}
 
         <form onSubmit={handleRequest} className="login-form">
           <div className="form-group">
