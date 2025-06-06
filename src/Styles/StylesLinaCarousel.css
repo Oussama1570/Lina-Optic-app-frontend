@@ -1,4 +1,4 @@
-/* === Wrapper === */
+/* === Wrapper du carrousel === */
 .lina-carousel-wrapper {
   position: relative;
   overflow: hidden;
@@ -17,11 +17,11 @@
 
 @media (max-width: 768px) {
   .carousel-slide {
-    height: 330px;
+    height: 320px;
   }
 }
 
-/* === Slide image === */
+/* === Image du carrousel === */
 .carousel-img {
   width: 100%;
   height: 100%;
@@ -29,15 +29,15 @@
   border-radius: 12px;
 }
 
-/* === Overlay text block === */
+/* === Bloc overlay texte === */
 .carousel-overlay {
   position: absolute;
-  top: 50%;
+  bottom: 8%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.4);
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 1.2rem 1.5rem;
+  padding: 1rem 1.5rem;
   border-radius: 12px;
   text-align: center;
   max-width: 90%;
@@ -46,29 +46,31 @@
 
 @media (max-width: 768px) {
   .carousel-overlay {
-    padding: 1rem;
+    padding: 0.8rem 1rem;
+    max-width: 85%;
+    bottom: 5%;
     border-radius: 10px;
   }
 }
 
-/* === Subtitle === */
+/* === Sous-titre === */
 .carousel-subtitle {
-  font-size: 1rem;
-  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
   text-transform: uppercase;
   color: #f9d65c;
   font-weight: 600;
 }
 
-/* === Title === */
+/* === Titre principal === */
 .carousel-title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
   line-height: 1.4;
 }
 
-/* === CTA Button === */
+/* === Bouton d’action === */
 .carousel-button {
   display: inline-block;
   padding: 0.5rem 1.2rem;
@@ -85,7 +87,7 @@
   background-color: #ffce00;
 }
 
-/* === Arrows === */
+/* === Flèches personnalisées === */
 .custom-arrow {
   position: absolute;
   top: 50%;
@@ -118,7 +120,7 @@
   right: 12px;
 }
 
-/* === Hide glowing cursor on mobile === */
+/* === Curseur personnalisé désactivé sur mobile === */
 @media (hover: none) and (pointer: coarse) {
   .custom-hover-cursor {
     display: none !important;
