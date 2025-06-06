@@ -4,10 +4,10 @@ import ProductCard from "./products/ProductCard";
 import { useGetAllProductsQuery } from "../redux/features/products/productsApi";
 import "../Styles/StylesProducts.css";
 import FadeInSection from "../Animations/FadeInSection";
-import SelectorsPageProducts from './../components/SelectorProductsPage';  // adjust path if needed
+import SelectorsPageProducts from './../components/SelectorProductsPage';
 import PriceSlider from "../components/PriceSlider";
 
-
+// 🧩 Options for frame type filtering
 const frameTypeOptions = [
   "Plein cadre",
   "Demi-cadre (semi-cerclé)",
@@ -23,86 +23,82 @@ const frameTypeOptions = [
 ];
 
 const Products = () => {
+  // 🔧 State for selected filters
   const [selectedCategory, setSelectedCategory] = useState(["All"]);
-const [selectedSubCategory, setSelectedSubCategory] = useState(["All"]);
-const [selectedBrand, setSelectedBrand] = useState(["All"]);
-const [selectedFrameType, setSelectedFrameType] = useState(["All"]);
-const [selectedIndex, setSelectedIndex] = useState(["All"]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(["All"]);
+  const [selectedBrand, setSelectedBrand] = useState(["All"]);
+  const [selectedFrameType, setSelectedFrameType] = useState(["All"]);
 
   const [visibleCount, setVisibleCount] = useState(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+  // 📦 Fetch products from API
   const {
-  data: products = [],
-  isLoading,
-  isFetching,
-  isError,
-} = useGetAllProductsQuery();
-
+    data: products = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetAllProductsQuery();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const categoryFromUrl = queryParams.get("category");
   const subCategoryFromUrl = queryParams.get("subCategory");
 
-  const [priceRange, setPriceRange] = useState([0, 600]); // default range
+  const [priceRange, setPriceRange] = useState([0, 600]); // 💰 Default price range
 
-
+  // 🌐 Auto-select category/subCategory from URL
   useEffect(() => {
-  if (categoryFromUrl) {
-    setSelectedCategory([categoryFromUrl]);
-  }
-  if (subCategoryFromUrl) {
-    setSelectedSubCategory([subCategoryFromUrl]);
-  }
-}, [categoryFromUrl, subCategoryFromUrl]);
+    if (categoryFromUrl) {
+      setSelectedCategory([categoryFromUrl]);
+    }
+    if (subCategoryFromUrl) {
+      setSelectedSubCategory([subCategoryFromUrl]);
+    }
+  }, [categoryFromUrl, subCategoryFromUrl]);
 
-    
-
+  // 🧠 Get unique brand list for selector
   const uniqueBrands = useMemo(() => {
     const brandsSet = new Set(products.map((p) => p.brand).filter(Boolean));
     return Array.from(brandsSet);
   }, [products]);
 
+  // 🧹 Apply all filters
   let filteredProducts = products;
 
-if (selectedCategory.length && !selectedCategory.includes("All")) {
-  filteredProducts = filteredProducts.filter((p) =>
-    selectedCategory.includes(p.mainCategory)
-  );
-}
+  if (selectedCategory.length && !selectedCategory.includes("All")) {
+    filteredProducts = filteredProducts.filter((p) =>
+      selectedCategory.includes(p.mainCategory)
+    );
+  }
 
-if (selectedSubCategory.length && !selectedSubCategory.includes("All")) {
-  filteredProducts = filteredProducts.filter((p) =>
-    selectedSubCategory.includes(p.subCategory)
-  );
-}
+  if (selectedSubCategory.length && !selectedSubCategory.includes("All")) {
+    filteredProducts = filteredProducts.filter((p) =>
+      selectedSubCategory.includes(p.subCategory)
+    );
+  }
 
-if (selectedBrand.length && !selectedBrand.includes("All")) {
-  filteredProducts = filteredProducts.filter((p) =>
-    selectedBrand.includes(p.brand)
-  );
-}
+  if (selectedBrand.length && !selectedBrand.includes("All")) {
+    filteredProducts = filteredProducts.filter((p) =>
+      selectedBrand.includes(p.brand)
+    );
+  }
 
-if (selectedFrameType.length && !selectedFrameType.includes("All")) {
-  filteredProducts = filteredProducts.filter((p) =>
-    selectedFrameType.includes(p.frameType)
-  );
-}
+  if (selectedFrameType.length && !selectedFrameType.includes("All")) {
+    filteredProducts = filteredProducts.filter((p) =>
+      selectedFrameType.includes(p.frameType)
+    );
+  }
 
-if (selectedIndex.length && !selectedIndex.includes("All")) {
-  filteredProducts = filteredProducts.filter((p) =>
-    selectedIndex.includes(p.indice)
-  );
-}
+  filteredProducts = filteredProducts.filter((p) => {
+    const price = p.newPrice || p.oldPrice || 0;
+    return price >= priceRange[0] && price <= priceRange[1];
+  });
 
-filteredProducts = filteredProducts.filter((p) => {
-  const price = p.newPrice || p.oldPrice || 0;
-  return price >= priceRange[0] && price <= priceRange[1];
-});
-
+  // ✂️ Slice visible products for pagination
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
+  // ⬇️ Load more handler
   const handleLoadMore = () => {
     setIsLoadingMore(true);
     setTimeout(() => {
@@ -111,21 +107,22 @@ filteredProducts = filteredProducts.filter((p) => {
     }, 800);
   };
 
-if (isLoading || isFetching) {
-  return (
-    <div className="products-loader-container">
-      <div className="loader-circle" />
-      <p className="loading-text">Chargement des produits...</p>
-    </div>
-  );
-}
+  // ⏳ Loading state
+  if (isLoading || isFetching) {
+    return (
+      <div className="products-loader-container">
+        <div className="loader-circle" />
+        <p className="loading-text">Chargement des produits...</p>
+      </div>
+    );
+  }
+
 
 
  
- return (
+   return (
   <div className="our-sellers">
     <h2 className="animated-products-title">Nos Produits</h2>
-
 
     <div className="products-page-wrapper">
       {/* 🔍 Left Filter Sidebar */}
@@ -147,7 +144,7 @@ if (isLoading || isFetching) {
           />
         </div>
 
-        {/* Row: Marque + Indice + Cadre + Prix */}
+        {/* Row: Marque + Cadre + Prix */}
         <div className="selector-row">
           <div className="selector-column">
             <SelectorsPageProducts
@@ -157,12 +154,16 @@ if (isLoading || isFetching) {
               selected={selectedBrand}
             />
 
-            <SelectorsPageProducts
-              options={["1.5", "1.56", "1.59", "1.6", "1.67", "1.74"]}
-              label="Indice"
-              onSelect={setSelectedIndex}
-              selected={selectedIndex}
-            />
+            <FadeInSection delay={0.1}>
+              <div className="selector-sidebar-lina">
+                <PriceSlider
+                  min={0}
+                  max={600}
+                  priceRange={priceRange}
+                  onChange={setPriceRange}
+                />
+              </div>
+            </FadeInSection>
           </div>
 
           <div className="selector-column">
@@ -172,19 +173,6 @@ if (isLoading || isFetching) {
               onSelect={setSelectedFrameType}
               selected={selectedFrameType}
             />
-
-         <FadeInSection delay={0.1}>
-  <div className="selector-sidebar-lina">
-    <PriceSlider
-      min={0}
-      max={600}
-      priceRange={priceRange}
-      onChange={setPriceRange}
-    />
-  </div>
-</FadeInSection>
-
-
           </div>
         </div>
       </div>

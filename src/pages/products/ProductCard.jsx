@@ -17,11 +17,11 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [selectedColor, setSelectedColor] = useState(null);
 
-  // 🌟 Access wishlist from Redux store
+  // 💖 Access wishlist from Redux store
   const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
   const isInWishlist = wishlistItems.some((item) => item._id === product._id);
 
-  // 🎨 Set initial selected color or fallback to default image
+  // 🎨 Set initial color when product loads
   useEffect(() => {
     if (product) {
       setSelectedColor(
@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
     }
   }, [product]);
 
-  // ➕ Add product to cart with selected color
+  // 🛒 Add product with selected color to cart
   const handleAddToCart = () => {
     dispatch(
       addToCart({
@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
     );
   };
 
-  // 💖 Toggle wishlist state (add/remove)
+  // ❤️ Toggle wishlist state
   const handleToggleWishlist = () => {
     if (isInWishlist) {
       dispatch(removeFromWishlist(product._id));
@@ -67,74 +67,80 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  // 🔢 Calculate discount percentage if applicable
+  // 📉 Discount percentage if applicable
   const discountPercent = product.oldPrice
     ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
     : 0;
 
-  return (
+
+    return (
     <div className="product-card-optic">
       {/* 🏷️ Discount Badge */}
       {discountPercent > 0 && (
         <span className="discount-badge">-{discountPercent}%</span>
       )}
 
-      {/* 🔗 Product Image + Badges */}
-      <a href={`/products/${product._id}`} className="image-box" style={{ position: "relative" }}>
-  {/* ✨ Trending + Stock */}
-  {product?.trending && (
-    <>
-      <div
-        style={{
-          position: "absolute",
-          top: "8px",
-          right: "8px",
-          backgroundColor: "#005fa3",
-          color: "#fff",
-          fontSize: "0.75rem",
-          padding: "3px 8px",
-          borderRadius: "4px",
-          fontWeight: "bold",
-          display: "flex",
-          alignItems: "center",
-          gap: "4px",
-          zIndex: 1,
-        }}
+      {/* 🖼️ Image with trending + stock badges */}
+      <a
+        href={`/products/${product._id}`}
+        className="image-box"
+        style={{ position: "relative" }}
       >
-        <HiOutlineSparkles style={{ fontSize: "1rem" }} />
-        Tendance
-      </div>
+        {/* ✨ Trending */}
+        {product?.trending && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                top: "8px",
+                right: "8px",
+                backgroundColor: "#005fa3",
+                color: "#fff",
+                fontSize: "0.75rem",
+                padding: "3px 8px",
+                borderRadius: "4px",
+                fontWeight: "bold",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                zIndex: 1,
+              }}
+            >
+              <HiOutlineSparkles style={{ fontSize: "1rem" }} />
+              Tendance
+            </div>
 
-      <div
-        style={{
-          position: "absolute",
-          top: "34px",
-          right: "8px",
-          backgroundColor: selectedColor?.stock > 0 ? "#28a745" : "#dc3545",
-          color: "#fff",
-          fontSize: "0.7rem",
-          padding: "2px 6px",
-          borderRadius: "4px",
-          fontWeight: "normal",
-          zIndex: 1,
-        }}
-      >
-        {selectedColor?.stock > 0
-          ? `Stock: ${selectedColor.stock}`
-          : "Rupture de stock"}
-      </div>
-    </>
-  )}
-  <img
-    src={getImgUrl(selectedColor?.image)}
-    alt={product?.title}
-    className="product-img"
-  />
-</a>
+            {/* 📦 Stock Badge */}
+            <div
+              style={{
+                position: "absolute",
+                top: "34px",
+                right: "8px",
+                backgroundColor:
+                  selectedColor?.stock > 0 ? "#28a745" : "#dc3545",
+                color: "#fff",
+                fontSize: "0.7rem",
+                padding: "2px 6px",
+                borderRadius: "4px",
+                fontWeight: "normal",
+                zIndex: 1,
+              }}
+            >
+              {selectedColor?.stock > 0
+                ? `Stock: ${selectedColor.stock}`
+                : "Rupture de stock"}
+            </div>
+          </>
+        )}
 
+        <img
+          src={getImgUrl(selectedColor?.image)}
+          alt={product?.title}
+          className="product-img"
+        />
+      </a>
 
-      
-      {/* 📄 Product Details */}
+      {/* 📄 Product Info */}
       <div className="product-details-box">
         <h3 className="product-title-optic">{product?.title}</h3>
         <p className="product-sub-info">
@@ -142,21 +148,28 @@ const ProductCard = ({ product }) => {
         </p>
         <p className="product-brand">{product?.brand}</p>
 
-        {/* 💵 Pricing */}
+        {/* 💰 Price */}
         <div className="product-price-optic">
           {product.oldPrice && (
-            <span className="old-price">TND{Math.round(product.oldPrice)}</span>
+            <span className="old-price">
+              {Math.round(product.oldPrice)} TND
+            </span>
           )}
-          <span className="new-price">TND{product?.newPrice}</span>
+          <span className="new-price">{product?.newPrice} TND</span>
         </div>
       </div>
 
-      {/* 🎯 Hover Icons (cart, wishlist, view) */}
+      {/* 🎯 Action Buttons */}
       <div className="hover-icons">
-        <button className="add-btn" onClick={handleAddToCart}>
-          <FiShoppingCart />
-          ADD TO CART
-        </button>
+       <button
+  className={`add-btn ${selectedColor?.stock <= 0 ? "disabled-btn" : ""}`}
+  onClick={selectedColor?.stock > 0 ? handleAddToCart : undefined}
+  disabled={selectedColor?.stock <= 0}
+>
+  <FiShoppingCart />
+  {selectedColor?.stock > 0 ? "Ajouter au panier" : "en rupture de stock"}
+</button>
+
 
         <span
           className="icon"
@@ -167,9 +180,8 @@ const ProductCard = ({ product }) => {
         </span>
 
         <a href={`/products/${product._id}`} className="icon">
-        <FiEye />
+          <FiEye />
         </a>
-
       </div>
     </div>
   );

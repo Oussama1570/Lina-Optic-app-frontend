@@ -117,6 +117,7 @@ const AdminManageOrders = () => {
                                 <th className="px-6 py-3 border">Mail</th>
                                 <th className="px-6 py-3 border">Téléphone</th>
                                 <th className="px-6 py-3 border">Adresse</th>
+                                <th className="px-6 py-3 border">Date Création</th>
                                 <th className="px-6 py-3 border">Prix Total</th>
                                 <th className="px-6 py-3 border">Payé</th>
                                 <th className="px-6 py-3 border">Livré</th>
@@ -187,9 +188,18 @@ const AdminManageOrders = () => {
                                     <td className="px-6 py-3 border">{order.name}</td>
                                     <td className="px-6 py-3 border">{order.email}</td>
                                     <td className="px-6 py-3 border">{order.phone}</td>
+                                    
                                     <td className="px-6 py-3 border">
                                         {order.address.city}, {order.address.street}
                                     </td>
+                                    <td className="px-6 py-3 border">
+  {new Date(order.createdAt).toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })}
+</td>
+
                                     <td className="px-6 py-3 border">{order.totalPrice} TND</td>
                                     <td className="px-4 py-3 border">
   <div className="min-w-[90px]">

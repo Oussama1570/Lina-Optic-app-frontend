@@ -44,7 +44,6 @@ const OurSellers = () => {
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedFrameType, setSelectedFrameType] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState("");
 
   const { data: products = [] } = useGetAllProductsQuery();
 
@@ -53,6 +52,7 @@ const OurSellers = () => {
     return Array.from(brandsSet);
   }, [products]);
 
+  // ✅ Apply filters
   let filteredProducts = selectedCategory === ""
     ? products
     : products.filter((p) => p.mainCategory === selectedCategory);
@@ -60,14 +60,13 @@ const OurSellers = () => {
   if (selectedSubCategory !== "") {
     filteredProducts = filteredProducts.filter((p) => p.subCategory === selectedSubCategory);
   }
+
   if (selectedBrand !== "") {
     filteredProducts = filteredProducts.filter((p) => p.brand === selectedBrand);
   }
+
   if (selectedFrameType !== "") {
     filteredProducts = filteredProducts.filter((p) => p.frameType === selectedFrameType);
-  }
-  if (selectedIndex !== "") {
-    filteredProducts = filteredProducts.filter((p) => p.indice === selectedIndex);
   }
 
   return (
@@ -126,19 +125,6 @@ const OurSellers = () => {
               {type}
             </option>
           ))}
-        </select>
-
-        <select
-          value={selectedIndex}
-          onChange={(e) => setSelectedIndex(e.target.value)}
-        >
-          <option value="">Indice</option>
-          <option value="1.5">1.5</option>
-          <option value="1.56">1.56</option>
-          <option value="1.59">1.59</option>
-          <option value="1.6">1.6</option>
-          <option value="1.67">1.67</option>
-          <option value="1.74">1.74</option>
         </select>
       </div>
 

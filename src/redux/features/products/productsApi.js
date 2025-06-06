@@ -58,46 +58,49 @@ const productsApi = createApi({
     }),
 
     // ✅ Add a new product
-    addProduct: builder.mutation({
-      query: (newProduct) => ({
-        url: "/create-product",
-        method: "POST",
-        body: {
-          ...newProduct,
-          brand: newProduct.brand || "",
-          frameType: newProduct.frameType || "", // ✅ include frameType
-          colors: newProduct.colors?.length
-            ? newProduct.colors
-            : [{ colorName: "Default", image: newProduct.coverImage }],
-        },
-        headers: { "Content-Type": "application/json" },
-      }),
-      invalidatesTags: [{ type: "Products", id: "LIST" }],
-    }),
+    // ✅ Add a new product
+addProduct: builder.mutation({
+  query: (newProduct) => ({
+    url: "/create-product",
+    method: "POST",
+    body: {
+      ...newProduct,
+      brand: newProduct.brand || "",
+      frameType: newProduct.frameType || "",
+      colors: newProduct.colors?.length
+        ? newProduct.colors
+        : [{ colorName: "Default", image: newProduct.coverImage }],
+    },
+    headers: { "Content-Type": "application/json" },
+  }),
+  invalidatesTags: [{ type: "Products", id: "LIST" }],
+}),
+
 
     // ✅ Update a product
-    updateProduct: builder.mutation({
-      query: ({ id, ...rest }) => ({
-        url: `/edit/${id}`,
-        method: "PUT",
-        body: {
-          ...rest,
-          brand: rest.brand || "",
-          frameType: rest.frameType || "", // ✅ include frameType
-          mainCategory: rest.mainCategory,
-          subCategory: rest.subCategory,
-          indice: rest.indice,
-          colors: rest.colors?.length
-            ? rest.colors
-            : [{ colorName: "Default", image: rest.coverImage }],
-        },
-        headers: { "Content-Type": "application/json" },
-      }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: "Products", id },
-        { type: "Products", id: "LIST" },
-      ],
-    }),
+    // ✅ Update a product
+updateProduct: builder.mutation({
+  query: ({ id, ...rest }) => ({
+    url: `/edit/${id}`,
+    method: "PUT",
+    body: {
+      ...rest,
+      brand: rest.brand || "",
+      frameType: rest.frameType || "",
+      mainCategory: rest.mainCategory,
+      subCategory: rest.subCategory,
+      colors: rest.colors?.length
+        ? rest.colors
+        : [{ colorName: "Default", image: rest.coverImage }],
+    },
+    headers: { "Content-Type": "application/json" },
+  }),
+  invalidatesTags: (result, error, { id }) => [
+    { type: "Products", id },
+    { type: "Products", id: "LIST" },
+  ],
+}),
+
     
     
 

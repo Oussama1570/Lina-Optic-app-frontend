@@ -94,7 +94,6 @@
   font-weight: 600;
   color: white;
   z-index: 10;
-
 }
 
 /* 📦 Stock Badge */
@@ -237,14 +236,15 @@
 
 .color-stock {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  font-size: 0.7rem;
+  top: -6px;
+  left: -6px;
+  font-size: 0.55rem;
   background-color: #4b5563;
   color: white;
-  padding: 2px 5px;
+  padding: 2px 4px;
   border-radius: 4px;
   font-weight: bold;
+  z-index: 5;
 }
 
 .color-stock.in-stock {
@@ -253,14 +253,10 @@
 
 .color-stock.out-of-stock {
   background-color: #dc2626;
-}
-
-.selected-color {
-  margin-top: 0.5rem;
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #374151;
+  font-size: 0.5rem;
+  padding: 1px 3px;
+  top: 1px;
+  left: 1px;
 }
 
 /* ===============================

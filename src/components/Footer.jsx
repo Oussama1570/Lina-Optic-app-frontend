@@ -66,7 +66,7 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a
-              href="https://www.facebook.com/profile.php?id=100063746152338"
+              href="https://www.facebook.com/profile.php?id=100063696517447"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook Lina Optic"

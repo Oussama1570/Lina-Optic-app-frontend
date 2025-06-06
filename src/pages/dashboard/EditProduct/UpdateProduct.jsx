@@ -9,9 +9,8 @@ import Loading from "../../../components/Loading";
 import Swal from "sweetalert2";
 import axios from "axios";
 import getBaseUrl from "../../../utils/baseURL";
-import "../../../Styles/StylesUpdateProduct.css"
+import "../../../Styles/StylesUpdateProduct.css";
 import { CATEGORY_OPTIONS } from "../../../utils/categoryFilters";
-
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -29,7 +28,6 @@ const UpdateProduct = () => {
     { value: "Solaire", label: "Lunettes de soleil" },
     { value: "Lentilles", label: "Lentilles de contact" },
   ];
-  
 
   const frameTypeOptions = [
     "Plein cadre",
@@ -45,7 +43,6 @@ const UpdateProduct = () => {
     "Cadre ovale",
   ];
 
-
   useEffect(() => {
     if (productData) {
       setValue("title", productData.title);
@@ -55,20 +52,18 @@ const UpdateProduct = () => {
       setValue("newPrice", productData.newPrice);
       setValue("stockQuantity", productData.stockQuantity);
       setValue("trending", productData.trending);
-      setValue("indice", productData.indice || "");
-      setValue("frameType", productData.frameType || ""); // ✅ Add this line
-  
+      setValue("frameType", productData.frameType || "");
+
       setMainCategory(productData.mainCategory || "");
       setSubCategory(productData.subCategory || "");
-  
-  
+
       const coverImageUrl = productData.coverImage || "";
       setPreviewURL(
         coverImageUrl.startsWith("http")
           ? coverImageUrl
           : `${getBaseUrl()}${coverImageUrl}`
       );
-  
+
       if (Array.isArray(productData.colors)) {
         const formattedColors = productData.colors.map((color) => ({
           colorName:
@@ -87,8 +82,6 @@ const UpdateProduct = () => {
       }
     }
   }, [productData, setValue]);
-  
-  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -134,20 +127,18 @@ const UpdateProduct = () => {
       return;
     }
 
-    
-  
     let coverImage = productData.coverImage || "";
     if (imageFile) {
       coverImage = await uploadImage(imageFile);
     }
-  
+
     const updatedColors = await Promise.all(
       colors.map(async (color) => {
         let imageUrl = color.image || "";
         if (color.imageFile) {
           imageUrl = await uploadImage(color.imageFile);
         }
-  
+
         return {
           colorName: color.colorName,
           image: imageUrl,
@@ -155,13 +146,12 @@ const UpdateProduct = () => {
         };
       })
     );
-  
+
     const updatedProductData = {
       ...data,
       mainCategory,
       subCategory,
       frameType: data.frameType || "",
-      indice: data.indice || "",
       brand: data.brand || "",
       coverImage,
       colors: updatedColors,
@@ -169,10 +159,9 @@ const UpdateProduct = () => {
       newPrice: Number(data.newPrice),
       stockQuantity: updatedColors[0]?.stock || 0,
     };
-    
-  
+
     console.log("📦 Updating Product:", updatedProductData);
-  
+
     try {
       await updateProduct({ id, ...updatedProductData }).unwrap();
       Swal.fire("Succès !", "Produit mis à jour avec succès !", "success");
@@ -182,6 +171,7 @@ const UpdateProduct = () => {
       Swal.fire("Erreur !", "Échec de la mise à jour du produit.", "error");
     }
   };
+
   
 
 
@@ -235,17 +225,6 @@ return (
         {frameTypeOptions.map((type, idx) => (
           <option key={idx} value={type}>{type}</option>
         ))}
-      </select>
-
-      <label>Indice</label>
-      <select {...register("indice")}>
-        <option value="">Sélectionnez un indice</option>
-        <option value="1.5">1.5</option>
-        <option value="1.56">1.56</option>
-        <option value="1.59">1.59</option>
-        <option value="1.6">1.6</option>
-        <option value="1.67">1.67</option>
-        <option value="1.74">1.74</option>
       </select>
 
       <label>Marque</label>
