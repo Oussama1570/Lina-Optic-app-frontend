@@ -1,27 +1,27 @@
-/* === Wrapper for the entire carousel (positioned relative for cursor + arrows) === */
+/* === Wrapper === */
 .lina-carousel-wrapper {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-/* === Individual carousel slide container === */
+/* === Slide container === */
 .carousel-slide {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 600px;
+  height: 500px;
   background-color: #f9f9f9;
 }
 
 @media (max-width: 768px) {
   .carousel-slide {
-    height: 320px; /* Shorter for mobile screens */
+    height: 330px;
   }
 }
 
-/* === Slide image styling === */
+/* === Slide image === */
 .carousel-img {
   width: 100%;
   height: 100%;
@@ -29,97 +29,70 @@
   border-radius: 12px;
 }
 
-@media (max-width: 768px) {
-  .carousel-img {
-    border-radius: 8px;
-  }
-}
-
-/* === Text overlay on top of the image === */
+/* === Overlay text block === */
 .carousel-overlay {
   position: absolute;
   top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
-  color: white;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.4);
-  padding: 2rem;
+  color: white;
+  padding: 1.2rem 1.5rem;
   border-radius: 12px;
-  max-width: 500px;
+  text-align: center;
+  max-width: 90%;
   backdrop-filter: blur(4px);
 }
 
 @media (max-width: 768px) {
   .carousel-overlay {
-    left: 6%;
-    right: 6%;
-    max-width: 90%;
     padding: 1rem;
-    text-align: center;
     border-radius: 10px;
   }
 }
 
-/* === Slide subtitle (small text) === */
+/* === Subtitle === */
 .carousel-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
   text-transform: uppercase;
   color: #f9d65c;
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
-  .carousel-subtitle {
-    font-size: 1rem;
-  }
-}
-
-/* === Slide title (headline) === */
+/* === Title === */
 .carousel-title {
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
-@media (max-width: 768px) {
-  .carousel-title {
-    font-size: 1.3rem;
-    line-height: 1.4;
-  }
-}
-
-/* === Call-to-action button === */
+/* === CTA Button === */
 .carousel-button {
   display: inline-block;
-  padding: 0.6rem 1.4rem;
+  padding: 0.5rem 1.2rem;
   background-color: #f9d65c;
   color: #333;
   font-weight: bold;
   border-radius: 30px;
   text-decoration: none;
   transition: background-color 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .carousel-button:hover {
   background-color: #ffce00;
 }
 
-@media (max-width: 768px) {
-  .carousel-button {
-    font-size: 0.9rem;
-    padding: 0.5rem 1.2rem;
-  }
-}
-
-/* === Custom navigation arrows === */
+/* === Arrows === */
 .custom-arrow {
   position: absolute;
   top: 50%;
   z-index: 10;
-  width: 40px;
-  height: 40px;
-  font-size: 1.4rem;
+  width: 38px;
+  height: 38px;
+  font-size: 1.2rem;
   color: #1c3b58;
   background: rgba(255, 255, 255, 0.9);
   border: none;
@@ -130,7 +103,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
 }
 
 .custom-arrow:hover {
@@ -146,107 +118,7 @@
   right: 12px;
 }
 
-/* === Custom glowing cursor === */
-.custom-hover-cursor {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 2px solid #f9d65c;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  backdrop-filter: blur(3px);
-  box-shadow:
-    0 0 12px rgba(249, 214, 92, 0.6),
-    0 0 20px rgba(249, 214, 92, 0.3);
-  animation: cursorPulse 1.6s infinite ease-in-out;
-}
-
-/* === Hide cursor on mobile/touch screens === */
-@media (hover: none) and (pointer: coarse) {
-  .custom-hover-cursor {
-    display: none !important;
-  }
-}
-
-/* === Pulse animation for the custom cursor === */
-@keyframes cursorPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.25);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.7;
-  }
-}
-
-/* === Extra aura effect for custom cursor === */
-.custom-hover-cursor::after {
-  content: "";
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  background: radial-gradient(circle, rgba(249, 214, 92, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-
-@media (max-width: 768px) {
-  .carousel-slide {
-    height: 320px;
-  }
-
-  .carousel-overlay {
-    left: 6%;
-    right: 6%;
-    max-width: 90%;
-    padding: 1rem;
-    text-align: center;
-    border-radius: 10px;
-  }
-
-  .carousel-title {
-    font-size: 1.3rem;
-  }
-
-  .carousel-subtitle {
-    font-size: 1rem;
-  }
-
-  .carousel-button {
-    font-size: 0.9rem;
-    padding: 0.5rem 1.2rem;
-  }
-
-  .custom-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 1.4rem;
-  }
-
-  .custom-arrow.left {
-    left: 12px;
-  }
-
-  .custom-arrow.right {
-    right: 12px;
-  }
-}
-
+/* === Hide glowing cursor on mobile === */
 @media (hover: none) and (pointer: coarse) {
   .custom-hover-cursor {
     display: none !important;
