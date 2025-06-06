@@ -3,12 +3,11 @@
 ================================= */
 .our-sellers {
   max-width: 1200px;
-  margin: 2rem auto 0 auto;  /* Remove bottom margin */
-  padding: 2rem 1rem 0 1rem;  /* Remove bottom padding */
+  margin: 2rem auto 0 auto;
+  padding: 2rem 1rem 0 1rem;
   text-align: center;
   border-radius: 12px;
 }
-
 
 /* ===============================
    🏷️ Section Title
@@ -20,7 +19,7 @@
 }
 
 /* ===============================
-   🗂️ Category Selector
+   🗂️ Category Selector (legacy btns)
 ================================= */
 .category-selector {
   display: flex;
@@ -70,12 +69,11 @@
 /* ===============================
    🔄 Custom Carousel Arrows
 ================================= */
-/* === Updated Carousel Arrows for Lina Optic === */
 .custom-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #1c3b58; /* Deep navy blue (Lina Optic theme) */
+  background-color: #1c3b58;
   color: rgb(105, 95, 95);
   border: none;
   border-radius: 50%;
@@ -92,7 +90,7 @@
 }
 
 .custom-arrow:hover {
-  background-color: #0f2a40; /* Darker navy on hover */
+  background-color: #0f2a40;
   transform: translateY(-50%) scale(1.1);
 }
 
@@ -104,6 +102,38 @@
   right: 8px;
 }
 
+/* ===============================
+   🎯 Filtres Responsives & Uniformes
+================================= */
+.filters-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+  padding: 0 1rem;
+}
+
+.filters-wrapper select {
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  min-width: 200px;
+  max-width: 240px;
+  width: 100%;
+  transition: border 0.2s ease-in-out;
+}
+
+.filters-wrapper select:focus {
+  outline: none;
+  border-color: #1c3b58;
+  box-shadow: 0 0 0 3px rgba(28, 59, 88, 0.15);
+}
 
 /* ===============================
    📱 Mobile Responsiveness
@@ -121,23 +151,16 @@
   .our-sellers-title {
     font-size: 1.4rem;
   }
-}
 
-.filters-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Center the dropdowns */
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem auto;
-  max-width: 1000px;
-  padding: 1rem;
-}
+  .filters-wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+  }
 
-.filters-wrapper select {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  min-width: 150px;
-  font-size: 0.95rem;
+  .filters-wrapper select {
+    max-width: 100%;
+    min-width: 90%;
+    font-size: 1rem;
+  }
 }
