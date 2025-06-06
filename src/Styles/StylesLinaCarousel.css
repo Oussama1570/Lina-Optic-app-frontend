@@ -41,7 +41,8 @@
   border-radius: 12px;
   text-align: center;
   height: 150px;
-  width:270 px ;
+  width:320 px ;
+  margin-bottom: 15%;
   
   backdrop-filter: blur(4px);
 }
