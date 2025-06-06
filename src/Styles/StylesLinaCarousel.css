@@ -1,17 +1,17 @@
-/* === Wrapper du carrousel === */
+/* === Wrapper for the entire carousel === */
 .lina-carousel-wrapper {
   position: relative;
   overflow: hidden;
   height: auto;
 }
 
-/* === Slide container === */
+/* === Individual carousel slide container === */
 .carousel-slide {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 500px;
+  height: 600px;
   background-color: #f9f9f9;
 }
 
@@ -21,7 +21,7 @@
   }
 }
 
-/* === Image du carrousel === */
+/* === Slide image styling === */
 .carousel-img {
   width: 100%;
   height: 100%;
@@ -29,53 +29,74 @@
   border-radius: 12px;
 }
 
-/* === Bloc overlay texte === */
+@media (max-width: 768px) {
+  .carousel-img {
+    border-radius: 8px;
+  }
+}
+
+/* === Text overlay === */
 .carousel-overlay {
   position: absolute;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(102, 98, 98, 0.5);
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
   color: white;
-  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
   border-radius: 12px;
-  text-align: center;
-  width:320 px ;
-  margin-bottom: 28%;
-  
+  max-width: 500px;
   backdrop-filter: blur(4px);
 }
 
 @media (max-width: 768px) {
   .carousel-overlay {
-    padding: 0.8rem 1rem;
-    max-width: 85%;
-    bottom: 5%;
+    left: 6%;
+    right: 6%;
+    max-width: 90%;
+    padding: 1rem;
+    text-align: center;
     border-radius: 10px;
+    margin-bottom: 28%;
+    height: 150px;
+    width: 220px;
+    margin-left: 62px;
   }
 }
 
-/* === Sous-titre === */
+/* === Slide subtitle === */
 .carousel-subtitle {
-  font-size: 0.6rem;
-  margin-bottom: 0.3rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   color: #f9d65c;
   font-weight: 600;
 }
 
-/* === Titre principal === */
+@media (max-width: 768px) {
+  .carousel-subtitle {
+    font-size: 0.7rem;
+  }
+}
+
+/* === Slide title === */
 .carousel-title {
-  font-size: 0.8rem;
+  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 0.7rem;
+  margin-bottom: 1rem;
   line-height: 1.4;
 }
 
-/* === Bouton d’action === */
+@media (max-width: 768px) {
+  .carousel-title {
+    font-size: 1rem;
+  }
+}
+
+/* === Call-to-action button === */
 .carousel-button {
   display: inline-block;
-  padding: 0.5rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   background-color: #f9d65c;
   color: #333;
   font-weight: bold;
@@ -89,14 +110,20 @@
   background-color: #ffce00;
 }
 
-/* === Flèches personnalisées === */
+@media (max-width: 768px) {
+  .carousel-button {
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+/* === Custom navigation arrows === */
 .custom-arrow {
   position: absolute;
   top: 50%;
   z-index: 10;
-  width: 38px;
-  height: 38px;
-  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  font-size: 1.4rem;
   color: #1c3b58;
   background: rgba(255, 255, 255, 0.9);
   border: none;
@@ -107,6 +134,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
 }
 
 .custom-arrow:hover {
@@ -122,7 +150,55 @@
   right: 12px;
 }
 
-/* === Curseur personnalisé désactivé sur mobile === */
+/* === Custom glowing cursor === */
+.custom-hover-cursor {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid #f9d65c;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  backdrop-filter: blur(3px);
+  box-shadow:
+    0 0 12px rgba(249, 214, 92, 0.6),
+    0 0 20px rgba(249, 214, 92, 0.3);
+  animation: cursorPulse 1.6s infinite ease-in-out;
+}
+
+@keyframes cursorPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+}
+
+.custom-hover-cursor::after {
+  content: "";
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle, rgba(249, 214, 92, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
 @media (hover: none) and (pointer: coarse) {
   .custom-hover-cursor {
     display: none !important;

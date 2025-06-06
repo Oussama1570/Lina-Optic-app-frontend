@@ -1,0 +1,142 @@
+/* === Wrapper du carrousel === */
+.lina-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: auto;
+}
+
+/* === Slide container === */
+.carousel-slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  background-color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  .carousel-slide {
+    height: 320px;
+  }
+}
+
+/* === Image du carrousel === */
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* === Bloc overlay texte === */
+.carousel-overlay {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+  .carousel-overlay {
+    padding: 0.8rem 1rem;
+    max-width: 85%;
+    bottom: 5%;
+    border-radius: 10px;
+    
+  margin-bottom: 28%;
+  }
+}
+
+/* === Sous-titre === */
+.carousel-subtitle {
+  font-size: 0.6rem;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  color: #f9d65c;
+  font-weight: 600;
+}
+
+/* === Titre principal === */
+.carousel-title {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+  line-height: 1.4;
+}
+
+/* === Bouton d’action === */
+.carousel-button {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background-color: #f9d65c;
+  color: #333;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.carousel-button:hover {
+  background-color: #ffce00;
+}
+
+/* === Flèches personnalisées === */
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  font-size: 1.2rem;
+  color: #1c3b58;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-arrow:hover {
+  background: #f9d65c;
+  color: #0f2a40;
+}
+
+.custom-arrow.left {
+  left: 12px;
+}
+
+.custom-arrow.right {
+  right: 12px;
+}
+
+/* === Curseur personnalisé désactivé sur mobile === */
+@media (hover: none) and (pointer: coarse) {
+  .custom-hover-cursor {
+    display: none !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
