@@ -40,9 +40,9 @@
   padding: 1rem 1.5rem;
   border-radius: 12px;
   text-align: center;
-  height: 175px;
+  height: 160px;
   width:320 px ;
-  margin-bottom: 34%;
+  margin-bottom: 20%;
   
   backdrop-filter: blur(4px);
 }
