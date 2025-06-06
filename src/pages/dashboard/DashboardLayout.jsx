@@ -55,9 +55,8 @@ const DashboardLayout = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  return (
+    return (
     <div className="flex bg-gray-100 dark:bg-gray-900 min-h-screen">
-      
       <Helmet>
         <title>Admin | Lina Optic</title>
       </Helmet>
@@ -95,7 +94,9 @@ const DashboardLayout = () => {
             to="/dashboard"
             onClick={handleMobileNav}
             className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
-              isActive('/dashboard') ? 'bg-blue-200 dark:bg-blue-900 font-semibold' : 'hover:bg-sky-200 dark:hover:bg-blue-700'
+              isActive('/dashboard')
+                ? 'bg-blue-200 dark:bg-blue-900 font-semibold'
+                : 'hover:bg-sky-200 dark:hover:bg-blue-700'
             }`}
           >
             <FaTachometerAlt />
@@ -106,7 +107,9 @@ const DashboardLayout = () => {
             to="/dashboard/add-new-product"
             onClick={handleMobileNav}
             className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
-              isActive('/dashboard/add-new-product') ? 'bg-blue-200 dark:bg-blue-900 font-semibold' : 'hover:bg-sky-200 dark:hover:bg-blue-700'
+              isActive('/dashboard/add-new-product')
+                ? 'bg-blue-200 dark:bg-blue-900 font-semibold'
+                : 'hover:bg-sky-200 dark:hover:bg-blue-700'
             }`}
           >
             <FaPlusCircle />
@@ -117,7 +120,9 @@ const DashboardLayout = () => {
             to="/dashboard/manage-products"
             onClick={handleMobileNav}
             className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
-              isActive('/dashboard/manage-products') ? 'bg-blue-200 dark:bg-blue-900 font-semibold' : 'hover:bg-sky-200 dark:hover:bg-blue-700'
+              isActive('/dashboard/manage-products')
+                ? 'bg-blue-200 dark:bg-blue-900 font-semibold'
+                : 'hover:bg-sky-200 dark:hover:bg-blue-700'
             }`}
           >
             <MdProductionQuantityLimits />
@@ -128,14 +133,14 @@ const DashboardLayout = () => {
             to="/dashboard/manage-orders"
             onClick={handleMobileNav}
             className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
-              isActive('/dashboard/manage-orders') ? 'bg-blue-200 dark:bg-blue-900 font-semibold' : 'hover:bg-sky-200 dark:hover:bg-blue-700'
+              isActive('/dashboard/manage-orders')
+                ? 'bg-blue-200 dark:bg-blue-900 font-semibold'
+                : 'hover:bg-sky-200 dark:hover:bg-blue-700'
             }`}
           >
             <FaClipboardList />
             <span className="text-sm font-medium">Commandes</span>
           </Link>
-
-        
 
           {/* 🔴 Logout */}
           <button
@@ -151,9 +156,9 @@ const DashboardLayout = () => {
         </nav>
       </aside>
 
-      {/* 📄 Content */}
-      <div className="flex-1 flex flex-col md:ml-56">
-        {/* ☰ Mobile Open Toggle */}
+      {/* 📄 Main Content Wrapper */}
+      <div className="flex-1 w-full flex flex-col md:ml-56">
+        {/* ☰ Mobile Sidebar Toggle */}
         <div className="md:hidden p-4">
           <button
             onClick={() => setSidebarOpen(true)}
@@ -165,11 +170,11 @@ const DashboardLayout = () => {
 
         {/* 🔝 Header */}
         <header className="w-full bg-white dark:bg-gray-800 shadow px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-  <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Tableau de Bord</h1>
-
+          <h1 className="text-xl font-semibold text-gray-800 dark:text-white">
+            Tableau de Bord
+          </h1>
 
           <div className="flex flex-col md:flex-row w-full gap-3 items-center md:justify-end">
-
             <Link to="/dashboard/add-new-product">
               <button className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-full shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <FaPlusCircle className="text-base" />
@@ -194,7 +199,7 @@ const DashboardLayout = () => {
           </div>
         </header>
 
-        {/* Page Content */}
+        {/* 📄 Page Content */}
         <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-900 transition-all">
           <Outlet />
         </main>
@@ -204,3 +209,4 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
+

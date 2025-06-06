@@ -55,9 +55,12 @@ const ManageProducts = () => {
  return (
   <section className="w-full bg-gray-50 min-h-screen px-2 md:px-6 py-6">
     {/* Header bar that visually matches DashboardLayout.jsx */}
-    <div className="w-full bg-white shadow-md rounded-lg px-4 py-3 mb-6">
-      <h2 className="text-xl font-semibold text-gray-800">Gérer les Produits</h2>
-    </div>
+    <header className="w-full bg-white shadow px-4 md:px-6 py-4 mb-6 border-b border-gray-200">
+  <h2 className="text-xl font-semibold text-gray-800 text-center md:text-left">
+    Gérer les Produits
+  </h2>
+</header>
+
 
     {/* Responsive Table Wrapper */}
     <div className="w-full overflow-x-auto">
