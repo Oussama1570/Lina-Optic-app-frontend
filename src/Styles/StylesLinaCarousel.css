@@ -15,10 +15,9 @@
   background-color: #f9f9f9;
 }
 
-/* === Responsive height for mobile === */
 @media (max-width: 768px) {
   .carousel-slide {
-    height: 360px;
+    height: 320px; /* Shorter for mobile screens */
   }
 }
 
@@ -52,11 +51,12 @@
 
 @media (max-width: 768px) {
   .carousel-overlay {
-    left: 5%;
-    right: 5%;
+    left: 6%;
+    right: 6%;
     max-width: 90%;
     padding: 1rem;
     text-align: center;
+    border-radius: 10px;
   }
 }
 
@@ -84,7 +84,8 @@
 
 @media (max-width: 768px) {
   .carousel-title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+    line-height: 1.4;
   }
 }
 
@@ -106,7 +107,7 @@
 
 @media (max-width: 768px) {
   .carousel-button {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     padding: 0.5rem 1.2rem;
   }
 }
@@ -116,9 +117,9 @@
   position: absolute;
   top: 50%;
   z-index: 10;
-  width: 45px;
-  height: 45px;
-  font-size: 1.6rem;
+  width: 40px;
+  height: 40px;
+  font-size: 1.4rem;
   color: #1c3b58;
   background: rgba(255, 255, 255, 0.9);
   border: none;
@@ -138,11 +139,11 @@
 }
 
 .custom-arrow.left {
-  left: 20px;
+  left: 12px;
 }
 
 .custom-arrow.right {
-  right: 20px;
+  right: 12px;
 }
 
 /* === Custom glowing cursor === */
@@ -194,7 +195,7 @@
   position: absolute;
   width: 48px;
   height: 48px;
-  background: radial-gradient(circle, rgba(249,214,92,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(249, 214, 92, 0.15) 0%, transparent 70%);
   border-radius: 50%;
   z-index: -1;
   top: 50%;
