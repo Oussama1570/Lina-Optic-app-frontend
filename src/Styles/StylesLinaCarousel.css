@@ -35,14 +35,14 @@
   bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(102, 98, 98, 0.5);
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   text-align: center;
-  height: 150px;
+  height: 175px;
   width:320 px ;
-  margin-bottom: 30%;
+  margin-bottom: 34%;
   
   backdrop-filter: blur(4px);
 }
