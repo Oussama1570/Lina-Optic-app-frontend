@@ -138,71 +138,71 @@ const OrderPage = () => {
 
  return (
   <div className="order-page">
-    {/* 🔖 SEO page title */}
+    {/* SEO page title */}
     <Helmet>
       <title>{t("ordersPage.title")}</title>
     </Helmet>
 
     <div className="order-container">
-      {/* 🧾 Page Title */}
+      {/* Title */}
       <h2 className="order-title">{t("ordersPage.yourOrders")}</h2>
 
-      {/* 🚫 No Orders Case */}
+      {/* No orders case */}
       {orders.length === 0 ? (
         <p className="text-message">{t("ordersPage.noOrders")}</p>
       ) : (
         <div className="order-list">
           {orders.map((order, index) => (
             <div key={order._id} className="order-card">
-              {/* 🆔 Header */}
+              {/* Top header info */}
               <div className="order-info-top">
                 <p>
                   <strong>{t("ordersPage.orderNumber")}:</strong> {index + 1}
                 </p>
                 <p>{new Date(order?.createdAt).toLocaleDateString()}</p>
-              </div>
+              </div> 
 
+              {/* Order details */}
               <p className="order-id">
                 {t("ordersPage.orderId")}: {order._id.slice(0, 8)}...
               </p>
               <p>{t("ordersPage.name")}: {order.name}</p>
-              <p>{t("ordersPage.email")}: {order.email}</p>
+              <p className="order-email">{t("ordersPage.email")}: <span>{order.email}</span></p>
               <p>{t("ordersPage.phone")}: {order.phone}</p>
               <p className="order-total">
-                {t("ordersPage.total")}: <span>{order.totalPrice} TND</span>
+                {t("ordersPage.total")}: <span>{order.totalPrice}TND</span>
               </p>
 
-              {/* 📦 Products Title */}
+              {/* Subtitle for product list */}
               <h3 className="order-subtitle">{t("ordersPage.orderedProducts")}</h3>
 
-              {/* 🛍️ List of Ordered Products */}
+              {/* List of ordered products */}
               <ul className="order-products">
                 {order.products.map((product, idx) => {
                   if (!product.productId) return null;
+
                   const color =
-                    product.color?.colorName?.[lang] ||
-                    product.color?.colorName?.en ||
-                    t("ordersPage.original");
+                    product.color?.colorName?.[lang] || product.color?.colorName?.en;
 
                   return (
                     <li
                       key={`${product.productId._id}-${idx}`}
                       className="order-product-item"
                     >
-                      {/* 🖼️ Product Image */}
+                      {/* Product image */}
                       <img
                         src={getImgUrl(product.color?.image || product.productId.coverImage)}
                         alt={product.productId.title}
                         className="product-img"
                       />
 
-                      {/* 📝 Product Info */}
+                      {/* Product info */}
                       <div className="product-info">
                         <p className="product-title">{product.productId.title}</p>
                         <p>{t("ordersPage.quantity")}: {product.quantity}</p>
                         <p>{t("ordersPage.color")}: {color}</p>
 
-                        {/* ❌ Remove Product Button */}
+                        {/* Remove product button */}
                         <button
                           onClick={() =>
                             handleDeleteProduct(
@@ -222,7 +222,7 @@ const OrderPage = () => {
                 })}
               </ul>
 
-              {/* 🗑️ Delete Entire Order */}
+              {/* Delete order button */}
               <button
                 onClick={() => handleDelete(order._id)}
                 className={`btn-delete ${isDeleting ? "btn-disabled" : ""}`}

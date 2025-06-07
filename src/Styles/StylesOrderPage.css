@@ -80,6 +80,13 @@
   font-size: 0.95rem;
   color: #444;
 }
+.order-email span {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+  max-width: 100%;
+}
+
 
 .order-id,
 .order-total {
