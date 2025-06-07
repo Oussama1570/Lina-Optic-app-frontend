@@ -83,96 +83,146 @@ const CheckoutPage = () => {
     );
 
  return (
-  <section className="checkout-wrapper">
-    <div className="checkout-container">
-      <h2 className="checkout-title">{t("checkout.title")}</h2>
+  <div className="checkout-container min-h-screen bg-gradient-to-br from-white to-[#f0f6fc] py-10 px-4">
+    <div className="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-xl border border-[#c4d4e3]">
+      {/* Title */}
+      <h2 className="text-2xl font-bold text-[#1c3b58] mb-6 text-center">{t("checkout.title")}</h2>
 
-      <div className="checkout-summary">
-        <p>{t("checkout.total_price")}: <strong>{totalPrice} TND</strong></p>
-        <p>{t("checkout.items")}: <strong>{totalItems}</strong></p>
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="checkout-form">
-        <div className="form-section">
-          <h3 className="form-section-title">{t("checkout.personal_details")}</h3>
-
-          <div className="form-group">
-            <label>{t("checkout.full_name")}</label>
-            <input {...register("name", { required: true })} type="text" className="form-input" />
-            {errors.name && <p className="error-text">{t("checkout.required")}</p>}
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-10">
+        {/* Personal Info */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-lg font-semibold text-[#1c3b58] mb-2">{t("checkout.personalInfo")}</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium">{t("checkout.name")}</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">{t("checkout.email")}</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg shadow-sm break-all"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">{t("checkout.phone")}</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                  required
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="form-group">
-            <label>{t("checkout.email")}</label>
-            <input type="email" value={currentUser?.email} disabled className="form-input disabled" />
-          </div>
+          {/* Shipping Info */}
+          <div>
+            <h3 className="text-lg font-semibold text-[#1c3b58] mb-2">{t("checkout.shippingAddress")}</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium">{t("checkout.address")}</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                  required
+                />
+              </div>
 
-          <div className="form-group">
-            <label>{t("checkout.phone")}</label>
-            <input {...register("phone", { required: true })} type="text" className="form-input" />
-            {errors.phone && <p className="error-text">{t("checkout.required")}</p>}
+              {/* Responsive 2-cols */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium">{t("checkout.city")}</label>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">{t("checkout.country")}</label>
+                  <input
+                    type="text"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium">{t("checkout.region")}</label>
+                  <input
+                    type="text"
+                    value={region}
+                    onChange={(e) => setRegion(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">{t("checkout.postalCode")}</label>
+                  <input
+                    type="text"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg shadow-sm"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="form-section">
-          <h3 className="form-section-title">{t("checkout.shipping_address")}</h3>
-
-          <div className="form-group">
-            <label>{t("checkout.address")}</label>
-            <input {...register("address", { required: true })} type="text" className="form-input" />
-            {errors.address && <p className="error-text">{t("checkout.required")}</p>}
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>{t("checkout.city")}</label>
-              <input {...register("city", { required: true })} type="text" className="form-input" />
-            </div>
-            <div className="form-group">
-              <label>{t("checkout.country")}</label>
-              <input {...register("country", { required: true })} type="text" className="form-input" />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>{t("checkout.state")}</label>
-              <input {...register("state", { required: true })} type="text" className="form-input" />
-            </div>
-            <div className="form-group">
-              <label>{t("checkout.zipcode")}</label>
-              <input {...register("zipcode", { required: true })} type="text" className="form-input" />
-            </div>
-          </div>
-        </div>
-
-        <div className="form-footer">
-          <label className="checkbox-label">
+        {/* Conditions + Submit */}
+        <div className="mt-6">
+          <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
-              onChange={(e) => setIsChecked(e.target.checked)}
-              className="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+              required
             />
             <span>
-              {t("checkout.agree")}{" "}
-              <Link className="link">{t("checkout.terms")}</Link>{" "}
-              {t("checkout.and")}{" "}
-              <Link className="link">{t("checkout.policy")}</Link>.
+              {t("checkout.accept")}{" "}
+              <a href="/conditions" className="text-blue-600 underline">
+                {t("checkout.terms")}
+              </a>
             </span>
           </label>
-
-          <button
-            type="submit"
-            disabled={!isChecked}
-            className={`checkout-button ${isChecked ? "enabled" : "disabled"}`}
-          >
-            {t("checkout.place_order")}
-          </button>
         </div>
+
+        <button
+          type="submit"
+          className="mt-6 w-full bg-[#1c3b58] text-white py-3 rounded-lg font-semibold hover:bg-[#285d88] transition"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? t("checkout.submitting") : t("checkout.submitOrder")}
+        </button>
       </form>
     </div>
-  </section>
+  </div>
 );
+
 
   
 };
