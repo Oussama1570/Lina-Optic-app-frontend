@@ -16,6 +16,7 @@ import "../../Styles/StylesProductCard.css";
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [selectedColor, setSelectedColor] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // 💖 Access wishlist from Redux store
   const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
@@ -26,7 +27,7 @@ const ProductCard = ({ product }) => {
     if (product) {
       setSelectedColor(
         product.colors?.[0] || {
-          image: product.coverImage || "/assets/default-image.png",
+          images: [product.coverImage || "/assets/default-image.png"],
           stock: product.stockQuantity || 0,
         }
       );
@@ -67,10 +68,16 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  // 📉 Discount percentage if applicable
-  const discountPercent = product.oldPrice
-    ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
-    : 0;
+  // 🖼️ Select correct image based on hover
+  const mainImage = selectedColor?.images?.[0] || product.coverImage || "/assets/default-image.png";
+  const hoverImage = selectedColor?.images?.[1] || mainImage;
+
+  // 📉 Discount percentage
+  const discountPercent =
+    product.oldPrice && product.newPrice
+      ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
+      : 0;
+
 
 
     return (
@@ -134,10 +141,13 @@ const ProductCard = ({ product }) => {
         )}
 
         <img
-          src={getImgUrl(selectedColor?.image)}
-          alt={product?.title}
-          className="product-img"
-        />
+  src={getImgUrl(isHovered ? hoverImage : mainImage)}
+  alt={product?.title}
+  className="product-img"
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+/>
+
       </a>
 
       {/* 📄 Product Info */}

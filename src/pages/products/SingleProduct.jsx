@@ -14,19 +14,16 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [showContent, setShowContent] = useState(false);
-
   const imageRef = useRef(null);
 
+  // ✅ Set default color + first image on load
   useEffect(() => {
-    if (product) {
-      setSelectedColor(
-        product.colors?.[0] || {
-          colorName: "Default",
-          image: product?.coverImage || "/assets/default-image.png",
-          stock: product?.stockQuantity || 0,
-        }
-      );
+    if (product?.colors?.length > 0) {
+      const firstColor = product.colors[0];
+      setSelectedColor(firstColor);
+      setSelectedImage(firstColor?.images?.[0] || product?.coverImage);
     }
   }, [product]);
 
@@ -38,7 +35,12 @@ const SingleProduct = () => {
 
   const handleSelectColor = (color) => {
     setSelectedColor(color);
+    setSelectedImage(color?.images?.[0] || product?.coverImage);
     setQuantity(1);
+  };
+
+  const handleSelectImage = (imgUrl) => {
+    setSelectedImage(imgUrl);
   };
 
   const handleAddToCart = () => {
@@ -53,6 +55,7 @@ const SingleProduct = () => {
     }
   };
 
+  // ✅ Zoom effect
   useEffect(() => {
     const image = imageRef.current;
     if (!image) return;
@@ -61,7 +64,6 @@ const SingleProduct = () => {
       const rect = image.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-
       image.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
       image.style.transform = "scale(2)";
     };
@@ -78,8 +80,9 @@ const SingleProduct = () => {
       image.removeEventListener("mousemove", handleMouseMove);
       image.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [selectedColor]);
+  }, [selectedImage]);
 
+  // ✅ Delay content appearance
   useEffect(() => {
     if (isLoading) {
       setShowContent(false);
@@ -101,28 +104,25 @@ const SingleProduct = () => {
   if (isError || !product)
     return <div className="text-center py-10 text-red-600">Error loading product info</div>;
 
-  const discountPercent = product.oldPrice
-    ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
-    : 0;
-
+  const discountPercent =
+    product?.oldPrice && product?.newPrice
+      ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
+      : 0;
 
   return (
     <div className="single-product-container">
-      <h1 className="product-title-lina">
-        {product?.title}
-      </h1>
+      <h1 className="product-title-lina">{product?.title}</h1>
 
       <div className="product-content">
+        {/* Left side - images & colors */}
         <div>
           <div className="product-image-box">
-            {/* 🔥 Promotion Badge */}
+            {/* 🔥 Promo */}
             {product?.oldPrice && product?.newPrice && (
-              <div className="badge promotion-badge">
-                -{discountPercent}%
-              </div>
+              <div className="badge promotion-badge">-{discountPercent}%</div>
             )}
 
-            {/* ✨ Trending Badge */}
+            {/* ✨ Trending */}
             {product?.trending && (
               <div className="badge trending-badge">
                 <HiOutlineSparkles className="badge-icon" />
@@ -130,39 +130,65 @@ const SingleProduct = () => {
               </div>
             )}
 
-            {/* 📦 Stock Quantity Badge */}
+            {/* 📦 Stock badge */}
             <div
-              className={`badge stock-badge ${selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"}`}
+              className={`badge stock-badge ${
+                selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
+              }`}
               style={{ top: "46px", right: "10px" }}
             >
-              {selectedColor?.stock > 0 ? `Stock: ${selectedColor.stock}` : "Rupture de stock"}
+              {selectedColor?.stock > 0
+                ? `Stock: ${selectedColor.stock}`
+                : "Rupture de stock"}
             </div>
 
+            {/* 🖼️ Main image */}
             <img
-              src={getImgUrl(selectedColor?.image ?? "/assets/default-image.png")}
+              src={getImgUrl(selectedImage ?? product?.coverImage)}
               alt={product?.title}
               className="product-main-image"
               ref={imageRef}
             />
+
+            {/* 🖼️ Thumbnails */}
+            {selectedColor?.images?.length > 1 && (
+              <div className="thumbnail-gallery">
+                {selectedColor.images.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={getImgUrl(img)}
+                    alt={`Preview ${idx + 1}`}
+                    className={`thumbnail ${selectedImage === img ? "active" : ""}`}
+                    onClick={() => handleSelectImage(img)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
+          {/* 🎨 Colors */}
           <div className="product-colors">
             <label>Couleurs disponibles:</label>
             <div className="color-options">
               {product?.colors?.map((color, index) => {
                 const stock = color?.stock ?? 0;
                 const name = color?.colorName?.en || "Default";
-                const isSelected = selectedColor?.colorName?.en === color?.colorName?.en;
+                const isSelected =
+                  selectedColor?.colorName?.en === color?.colorName?.en;
 
                 return (
                   <div key={index} className="color-option">
                     <img
-                      src={getImgUrl(color?.image)}
+                      src={getImgUrl(color?.images?.[0])}
                       alt={name}
                       className={`color-image ${isSelected ? "selected" : ""}`}
                       onClick={() => handleSelectColor(color)}
                     />
-                    <div className={`color-stock ${stock > 0 ? "in-stock" : "out-of-stock"}`}>
+                    <div
+                      className={`color-stock ${
+                        stock > 0 ? "in-stock" : "out-of-stock"
+                      }`}
+                    >
                       {stock > 0 ? stock : "Rupture de stock"}
                     </div>
                   </div>
@@ -171,21 +197,32 @@ const SingleProduct = () => {
             </div>
 
             <p className="selected-color">
-              Couleur sélectionnée: <strong>{selectedColor?.colorName?.en || "Default"}</strong>
+              Couleur sélectionnée:{" "}
+              <strong>{selectedColor?.colorName?.en || "Default"}</strong>
             </p>
           </div>
         </div>
 
+        {/* Right side - info */}
         <div className="product-details">
           <p className="product-description">{product?.description}</p>
 
           <div className="product-meta">
-            <p><strong>Marque:</strong> {product?.brand || "Inconnu"}</p>
-            <p><strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnu"}</p>
-            <p><strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnu"}</p>
-            <p><strong>Publié:</strong> {product?.createdAt
-              ? new Date(product.createdAt).toLocaleDateString()
-              : "Inconnu"}</p>
+            <p>
+              <strong>Marque:</strong> {product?.brand || "Inconnu"}
+            </p>
+            <p>
+              <strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnu"}
+            </p>
+            <p>
+              <strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnu"}
+            </p>
+            <p>
+              <strong>Publié:</strong>{" "}
+              {product?.createdAt
+                ? new Date(product.createdAt).toLocaleDateString()
+                : "Inconnu"}
+            </p>
           </div>
 
           <div className="product-price">
@@ -215,7 +252,9 @@ const SingleProduct = () => {
           <button
             onClick={handleAddToCart}
             disabled={(selectedColor?.stock ?? 0) === 0}
-            className={`add-to-cart-btn ${selectedColor?.stock > 0 ? "enabled" : "disabled"}`}
+            className={`add-to-cart-btn ${
+              selectedColor?.stock > 0 ? "enabled" : "disabled"
+            }`}
           >
             <FiShoppingCart className="icon" />
             {selectedColor?.stock > 0 ? "Ajouter au panier" : "Rupture de stock"}

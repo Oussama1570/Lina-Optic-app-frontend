@@ -154,3 +154,12 @@
   margin-top: 0.3rem;
 }
 
+/* Prevent input overflow and ensure mobile friendliness */
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
