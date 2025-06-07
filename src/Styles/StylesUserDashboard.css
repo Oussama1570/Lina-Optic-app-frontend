@@ -331,7 +331,8 @@
     object-fit: contain;
     margin-bottom: 0.5rem;
     border-radius: 12px;
-    margin-right: 100 px;
+    align-items: center;
+    
   }
 
   .product-info {
