@@ -88,7 +88,6 @@ const CheckoutPage = () => {
       <h2 className="checkout-title">{t("checkout.title")}</h2>
 
       <div className="checkout-summary">
-        
         <p>{t("checkout.total_price")}: <strong>{totalPrice} TND</strong></p>
         <p>{t("checkout.items")}: <strong>{totalItems}</strong></p>
       </div>
@@ -154,9 +153,12 @@ const CheckoutPage = () => {
               onChange={(e) => setIsChecked(e.target.checked)}
               className="checkbox"
             />
-            {t("checkout.agree")}{" "}
-            <Link className="link">{t("checkout.terms")}</Link> {t("checkout.and")}{" "}
-            <Link className="link">{t("checkout.policy")}</Link>.
+            <span>
+              {t("checkout.agree")}{" "}
+              <Link className="link">{t("checkout.terms")}</Link>{" "}
+              {t("checkout.and")}{" "}
+              <Link className="link">{t("checkout.policy")}</Link>.
+            </span>
           </label>
 
           <button
@@ -171,8 +173,6 @@ const CheckoutPage = () => {
     </div>
   </section>
 );
-
-
 
   
 };

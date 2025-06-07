@@ -116,6 +116,13 @@
   height: 18px;
 }
 
+.terms-text {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.6;
+}
+
 .checkout-button {
   width: 100%;
   padding: 0.9rem;
@@ -146,3 +153,4 @@
   font-size: 0.85rem;
   margin-top: 0.3rem;
 }
+
