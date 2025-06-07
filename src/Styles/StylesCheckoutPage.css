@@ -108,6 +108,9 @@
   font-size: 0.95rem;
   color: #444;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  line-height: 1.4;
+  gap: 0.25rem;
 }
 
 .checkbox {
@@ -154,7 +157,7 @@
   margin-top: 0.3rem;
 }
 
-/* Prevent input overflow and ensure mobile friendliness */
+/* ✅ Prevent input overflow and ensure mobile friendliness */
 input[type="text"],
 input[type="email"],
 input[type="tel"] {
@@ -162,4 +165,60 @@ input[type="tel"] {
   word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
+}
+
+/* ✅ Styling for terms links */
+.checkbox-label .link {
+  color: #1c3b58;
+  font-weight: 500;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+/* ✅ Mobile responsive adjustments */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .checkbox-label {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.9rem;
+  }
+
+  .checkbox-label .link {
+    display: inline;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .checkout-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .checkout-title {
+    font-size: 1.5rem;
+  }
+
+  .checkout-summary {
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+
+  .form-input {
+    font-size: 0.95rem;
+  }
+
+  .form-section-title {
+    font-size: 1rem;
+  }
+
+  .checkout-button {
+    font-size: 1rem;
+  }
+
+  .form-group input {
+    min-width: 0;
+  }
 }

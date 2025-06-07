@@ -24,6 +24,24 @@
   transition: all 0.3s ease;
 }
 
+.product-description-section {
+  margin-bottom: 1.5rem;
+}
+
+.description-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1c3b58;
+  margin-bottom: 0.5rem;
+}
+
+.product-description-text {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+
 @media (max-width: 768px) {
   .product-title-lina {
     font-size: 1.5rem;
@@ -43,6 +61,7 @@
     grid-template-columns: 1fr;
   }
 }
+
 
 /* ===============================
    🖼️ Image Box + Badges
@@ -314,3 +333,5 @@
     transform: rotate(360deg);
   }
 }
+
+
