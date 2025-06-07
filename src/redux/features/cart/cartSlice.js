@@ -9,47 +9,64 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      const { _id, color, quantity, coverImage } = action.payload;
+   addToCart: (state, action) => {
+  const {
+    _id,
+    title,
+    newPrice,
+    mainCategory,
+    subCategory,
+    brand,
+    coverImage,
+    color,
+    quantity,
+  } = action.payload;
 
-      // ✅ Normalize colorName to multilingual format if needed
-      const colorName = color?.colorName;
-      const normalizedColor =
-        typeof colorName === "object"
-          ? color
-          : {
-              colorName: {
-                en: colorName || "Original",
-                fr: colorName || "Original",
-                ar: "أصلي",
-              },
-              image: color?.image || coverImage,
-            };
+  const colorName = color?.colorName;
+  const normalizedColor =
+    typeof colorName === "object"
+      ? color
+      : {
+          colorName: {
+            en: colorName || "Original",
+            fr: colorName || "Original",
+            ar: "أصلي",
+          },
+          image: color?.image || coverImage,
+        };
 
-      const existingItem = state.cartItems.find(
-        (item) =>
-          item._id === _id &&
-          JSON.stringify(item.color?.colorName) === JSON.stringify(normalizedColor.colorName)
-      );
+  const existingItem = state.cartItems.find(
+    (item) =>
+      item._id === _id &&
+      JSON.stringify(item.color?.colorName) ===
+        JSON.stringify(normalizedColor.colorName)
+  );
 
-      if (existingItem) {
-        existingItem.quantity += quantity;
-      } else {
-        state.cartItems.push({
-          ...action.payload,
-          quantity: quantity || 1,
-          color: normalizedColor,
-        });
-      }
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    state.cartItems.push({
+      _id,
+      title,
+      newPrice,
+      mainCategory,
+      subCategory,
+      brand,
+      coverImage,
+      quantity: quantity || 1,
+      color: normalizedColor,
+    });
+  }
 
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Product Added to the Cart",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    },
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "Produit ajouté au panier",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+},
+
 
     removeFromCart: (state, action) => {
       const { _id, color } = action.payload;

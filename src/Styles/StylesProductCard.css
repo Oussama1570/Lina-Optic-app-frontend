@@ -37,6 +37,18 @@
   z-index: 10;
 }
 
+.badge-quantity {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background-color: #f59e0b; /* yellow-500 */
+  color: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  z-index: 10;
+}
 /* ===============================
    🖼️ Image Section
 =============================== */

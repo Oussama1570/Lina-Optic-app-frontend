@@ -3,22 +3,25 @@ import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi";
 import { useParams } from "react-router-dom";
 import { getImgUrl } from "../../utils/getImgUrl";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { useGetProductByIdQuery } from "../../redux/features/products/productsApi";
+import Swal from "sweetalert2";
 import "../../Styles/StylesSingleProduct.css";
 
 const SingleProduct = () => {
   const { id } = useParams();
   const { data: product, isLoading, isError } = useGetProductByIdQuery(id);
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showContent, setShowContent] = useState(false);
   const imageRef = useRef(null);
 
-  // ✅ Set default color + first image on load
+  // ✅ Set default color + image on load
   useEffect(() => {
     if (product?.colors?.length > 0) {
       const firstColor = product.colors[0];
@@ -44,18 +47,42 @@ const SingleProduct = () => {
   };
 
   const handleAddToCart = () => {
-    if ((selectedColor?.stock ?? 0) > 0 && quantity > 0) {
-      dispatch(
-        addToCart({
-          ...product,
-          quantity,
-          color: selectedColor,
-        })
-      );
-    }
-  };
+  const colorName = selectedColor?.colorName?.en;
+  const colorStock = selectedColor?.stock ?? 0;
 
-  // ✅ Zoom effect
+  const itemInCart = cartItems.find(
+    (item) =>
+      item._id === product._id &&
+      item.color?.colorName?.en === colorName
+  );
+
+  const quantityInCart = itemInCart?.quantity || 0;
+
+  if (quantityInCart + quantity > colorStock) {
+    Swal.fire({
+      icon: "warning",
+      title: "Stock épuisé",
+      text: "Impossible d’ajouter plus. Quantité maximale atteinte.",
+      confirmButtonColor: "#1c3b58",
+    });
+    return;
+  }
+
+  dispatch(
+    addToCart({
+      _id: product._id,
+      title: product.title,
+      category: product.mainCategory,
+      coverImage: product.coverImage,
+      newPrice: product.newPrice,
+      color: selectedColor,
+      quantity,
+    })
+  );
+};
+
+
+  // ✅ Zoom on hover
   useEffect(() => {
     const image = imageRef.current;
     if (!image) return;
@@ -82,7 +109,7 @@ const SingleProduct = () => {
     };
   }, [selectedImage]);
 
-  // ✅ Delay content appearance
+  // ✅ Show content after delay
   useEffect(() => {
     if (isLoading) {
       setShowContent(false);
@@ -94,175 +121,168 @@ const SingleProduct = () => {
     }
   }, [isLoading]);
 
-  if (isLoading)
-    return (
-      <div className="loader-container">
-        <div className="spinner" aria-label="Chargement en cours"></div>
-      </div>
-    );
-
-  if (isError || !product)
-    return <div className="text-center py-10 text-red-600">Error loading product info</div>;
-
   const discountPercent =
     product?.oldPrice && product?.newPrice
       ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
       : 0;
 
-  return (
-    <div className="single-product-container">
-      <h1 className="product-title-lina">{product?.title}</h1>
 
-      <div className="product-content">
-        {/* Left side - images & colors */}
-        <div>
-          <div className="product-image-box">
-            {/* 🔥 Promo */}
-            {product?.oldPrice && product?.newPrice && (
-              <div className="badge promotion-badge">-{discountPercent}%</div>
-            )}
+ return (
+  <div className="single-product-container">
+    <h1 className="product-title-lina">{product?.title}</h1>
 
-            {/* ✨ Trending */}
-            {product?.trending && (
-              <div className="badge trending-badge">
-                <HiOutlineSparkles className="badge-icon" />
-                Tendance
-              </div>
-            )}
-
-            {/* 📦 Stock badge */}
-            <div
-              className={`badge stock-badge ${
-                selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
-              }`}
-              style={{ top: "46px", right: "10px" }}
-            >
-              {selectedColor?.stock > 0
-                ? `Stock: ${selectedColor.stock}`
-                : "Rupture de stock"}
+    <div className="product-content">
+      {/* Left side - images & colors */}
+      <div>
+        <div className="product-image-box">
+          {/* 🔥 Promo */}
+          {product?.oldPrice && product?.newPrice && (
+            <div className="badge promotion-badge">
+              -{discountPercent}%
             </div>
+          )}
 
-            {/* 🖼️ Main image */}
-            <img
-              src={getImgUrl(selectedImage ?? product?.coverImage)}
-              alt={product?.title}
-              className="product-main-image"
-              ref={imageRef}
-            />
+          {/* ✨ Trending */}
+          {product?.trending && (
+            <div className="badge trending-badge">
+              <HiOutlineSparkles className="badge-icon" />
+              Tendance
+            </div>
+          )}
 
-            {/* 🖼️ Thumbnails */}
-            {selectedColor?.images?.length > 1 && (
-              <div className="thumbnail-gallery">
-                {selectedColor.images.map((img, idx) => (
-                  <img
-                    key={idx}
-                    src={getImgUrl(img)}
-                    alt={`Preview ${idx + 1}`}
-                    className={`thumbnail ${selectedImage === img ? "active" : ""}`}
-                    onClick={() => handleSelectImage(img)}
-                  />
-                ))}
-              </div>
-            )}
+          {/* 📦 Stock badge */}
+          <div
+            className={`badge stock-badge ${
+              selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
+            }`}
+            style={{ top: "46px", right: "10px" }}
+          >
+            {selectedColor?.stock > 0
+              ? `Stock: ${selectedColor?.stock}`
+              : "Rupture de stock"}
           </div>
 
-          {/* 🎨 Colors */}
-          <div className="product-colors">
-            <label>Couleurs disponibles:</label>
-            <div className="color-options">
-              {product?.colors?.map((color, index) => {
-                const stock = color?.stock ?? 0;
-                const name = color?.colorName?.en || "Default";
-                const isSelected =
-                  selectedColor?.colorName?.en === color?.colorName?.en;
+          {/* 🖼️ Main image */}
+          <img
+            src={getImgUrl(selectedImage ?? product?.coverImage)}
+            alt={product?.title}
+            className="product-main-image"
+            ref={imageRef}
+          />
 
-                return (
-                  <div key={index} className="color-option">
-                    <img
-                      src={getImgUrl(color?.images?.[0])}
-                      alt={name}
-                      className={`color-image ${isSelected ? "selected" : ""}`}
-                      onClick={() => handleSelectColor(color)}
-                    />
-                    <div
-                      className={`color-stock ${
-                        stock > 0 ? "in-stock" : "out-of-stock"
-                      }`}
-                    >
-                      {stock > 0 ? stock : "Rupture de stock"}
-                    </div>
-                  </div>
-                );
-              })}
+          {/* 🖼️ Thumbnails */}
+          {selectedColor?.images?.length > 1 && (
+            <div className="thumbnail-gallery">
+              {selectedColor.images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={getImgUrl(img)}
+                  alt={`Preview ${idx + 1}`}
+                  className={`thumbnail ${
+                    selectedImage === img ? "active" : ""
+                  }`}
+                  onClick={() => handleSelectImage(img)}
+                />
+              ))}
             </div>
-
-            <p className="selected-color">
-              Couleur sélectionnée:{" "}
-              <strong>{selectedColor?.colorName?.en || "Default"}</strong>
-            </p>
-          </div>
+          )}
         </div>
 
-        {/* Right side - info */}
-        <div className="product-details">
-          <p className="product-description">{product?.description}</p>
+        {/* 🎨 Colors */}
+        <div className="product-colors">
+          <label>Couleurs disponibles:</label>
+          <div className="color-options">
+            {product?.colors?.map((color, index) => {
+              const stock = color?.stock ?? 0;
+              const name = color?.colorName?.en || "Default";
+              const isSelected =
+                selectedColor?.colorName?.en === color?.colorName?.en;
 
-          <div className="product-meta">
-            <p>
-              <strong>Marque:</strong> {product?.brand || "Inconnu"}
-            </p>
-            <p>
-              <strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnu"}
-            </p>
-            <p>
-              <strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnu"}
-            </p>
-            <p>
-              <strong>Publié:</strong>{" "}
-              {product?.createdAt
-                ? new Date(product.createdAt).toLocaleDateString()
-                : "Inconnu"}
-            </p>
+              return (
+                <div key={index} className="color-option">
+                  <img
+                    src={getImgUrl(color?.images?.[0])}
+                    alt={name}
+                    className={`color-image ${isSelected ? "selected" : ""}`}
+                    onClick={() => handleSelectColor(color)}
+                  />
+                  <div
+                    className={`color-stock ${
+                      stock > 0 ? "in-stock" : "out-of-stock"
+                    }`}
+                  >
+                    {stock > 0 ? stock : "Rupture de stock"}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="product-price">
-            <span className="new">{product?.newPrice ?? "0.00"} TND</span>
-            {product?.oldPrice && (
-              <span className="old">{Math.round(product?.oldPrice)} TND</span>
-            )}
-          </div>
-
-          <div className="product-stock-info">
-            <strong>Stock:</strong>{" "}
-            {selectedColor?.stock > 0 ? selectedColor.stock : "Rupture de stock"}
-          </div>
-
-          <div className="product-quantity">
-            <label>Quantité:</label>
-            <input
-              type="number"
-              min="1"
-              max={selectedColor?.stock ?? 0}
-              value={quantity}
-              onChange={handleQuantityChange}
-              disabled={(selectedColor?.stock ?? 0) === 0}
-            />
-          </div>
-
-          <button
-            onClick={handleAddToCart}
-            disabled={(selectedColor?.stock ?? 0) === 0}
-            className={`add-to-cart-btn ${
-              selectedColor?.stock > 0 ? "enabled" : "disabled"
-            }`}
-          >
-            <FiShoppingCart className="icon" />
-            {selectedColor?.stock > 0 ? "Ajouter au panier" : "Rupture de stock"}
-          </button>
+          <p className="selected-color">
+            Couleur sélectionnée:{" "}
+            <strong>{selectedColor?.colorName?.en || "Default"}</strong>
+          </p>
         </div>
       </div>
+
+      {/* Right side - info */}
+      <div className="product-details">
+        <p className="product-description">{product?.description}</p>
+
+        <div className="product-meta">
+          <p><strong>Marque:</strong> {product?.brand || "Inconnu"}</p>
+          <p><strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnu"}</p>
+          <p><strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnu"}</p>
+          <p>
+            <strong>Publié:</strong>{" "}
+            {product?.createdAt
+              ? new Date(product.createdAt).toLocaleDateString()
+              : "Inconnu"}
+          </p>
+        </div>
+
+        <div className="product-price">
+          <span className="new">{product?.newPrice ?? "0.00"} TND</span>
+          {product?.oldPrice && (
+            <span className="old">{Math.round(product?.oldPrice)} TND</span>
+          )}
+        </div>
+
+        <div className="product-stock-info">
+          <strong>Stock:</strong>{" "}
+          {selectedColor?.stock > 0 ? selectedColor.stock : "Rupture de stock"}
+        </div>
+
+        <div className="product-quantity">
+          <label>Quantité:</label>
+          <input
+            type="number"
+            min="1"
+            max={selectedColor?.stock ?? 0}
+            value={quantity}
+            onChange={handleQuantityChange}
+            disabled={(selectedColor?.stock ?? 0) === 0}
+          />
+        </div>
+
+        <button
+          onClick={handleAddToCart}
+          disabled={(selectedColor?.stock ?? 0) === 0}
+          className={`add-to-cart-btn ${
+            selectedColor?.stock > 0 ? "enabled" : "disabled"
+          }`}
+        >
+          <FiShoppingCart className="icon" />
+          {selectedColor?.stock > 0
+            ? "Ajouter au panier"
+            : "Rupture de stock"}
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default SingleProduct;
+

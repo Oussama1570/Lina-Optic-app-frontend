@@ -7,15 +7,14 @@ import {
   removeFromCart,
   updateQuantity,
 } from "../../redux/features/cart/cartSlice";
-import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 const CartPage = () => {
-  const { t, i18n } = useTranslation();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
 
   const totalPrice = cartItems
-    .reduce((acc, item) => acc + item.newPrice * item.quantity, 0)
+    .reduce((acc, item) => acc + (item.newPrice || 0) * (item.quantity || 0), 0)
     .toFixed(2);
 
   const handleRemoveFromCart = (product) => {
@@ -27,6 +26,16 @@ const CartPage = () => {
   };
 
   const handleQuantityChange = (product, quantity) => {
+    const maxStock = product.color?.stock ?? 0;
+    if (quantity > maxStock) {
+      Swal.fire({
+        icon: "warning",
+        title: "Stock insuffisant",
+        text: `Quantité maximale disponible: ${maxStock}`,
+        confirmButtonColor: "#1c3b58",
+      });
+      return;
+    }
     if (quantity > 0) {
       dispatch(
         updateQuantity({
@@ -38,20 +47,20 @@ const CartPage = () => {
     }
   };
 
-  return (
+ return (
   <div className="min-h-screen bg-gradient-to-br from-white to-[#f0f6fc] py-10 px-4 sm:px-10">
     <div className="max-w-5xl mx-auto bg-white p-6 sm:p-10 rounded-2xl shadow-xl border border-[#c4d4e3]">
       {/* ✅ Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 border-b pb-4 mb-6">
         <h2 className="text-2xl font-bold text-[#1c3b58] text-center sm:text-left">
-          {t("cart.title")}
+          Panier
         </h2>
         {cartItems.length > 0 && (
           <button
             onClick={handleClearCart}
             className="px-4 py-2 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition font-medium"
           >
-            {t("cart.clear_cart")}
+            Vider le panier
           </button>
         )}
       </div>
@@ -68,7 +77,7 @@ const CartPage = () => {
               <div className="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden border border-[#a3bddb] shadow">
                 <img
                   src={getImgUrl(product.color?.image || product.coverImage)}
-                  alt={product.title}
+                  alt={product.title || "Produit"}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -81,28 +90,27 @@ const CartPage = () => {
                       href={`/products/${product._id}`}
                       className="hover:underline hover:text-[#4f77a7] transition"
                     >
-                      {product.title}
+                      {product.title || "Produit inconnu"}
                     </a>
                   </h3>
                   <p className="text-[#4f77a7] font-semibold text-lg">
-                    {(product.newPrice * product.quantity).toFixed(2)} TND
+                    {(product.newPrice * product.quantity || 0).toFixed(2)} TND
                   </p>
                 </div>
 
                 <p className="text-sm text-gray-600">
-                  {t("cart.category")}: {product.category}
+                  Catégorie: {product.mainCategory || "inconnue"}
                 </p>
 
-                <p className="text-sm text-gray-600 capitalize">
-                  {t("cart.color")}:{" "}
-                  {product.color?.colorName?.[i18n.language] || t("cart.original")}
+                <p className="text-sm text-gray-600">
+                  Couleur: {product.color?.colorName?.fr || "Original"}
                 </p>
 
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 mt-4">
                   {/* 🔢 Quantity */}
                   <div className="flex items-center gap-2">
                     <label className="text-sm font-medium text-gray-700">
-                      {t("cart.qty")}:
+                      Qté:
                     </label>
                     <input
                       type="number"
@@ -120,7 +128,7 @@ const CartPage = () => {
                     onClick={() => handleRemoveFromCart(product)}
                     className="px-4 py-1.5 rounded-lg text-red-600 border border-red-200 bg-red-50 hover:bg-red-100 transition text-sm font-medium"
                   >
-                    {t("cart.remove")}
+                    Supprimer
                   </button>
                 </div>
               </div>
@@ -129,7 +137,7 @@ const CartPage = () => {
         </div>
       ) : (
         <p className="text-center text-gray-500 text-lg mt-8">
-          {t("cart.empty")}
+          Votre panier est vide.
         </p>
       )}
 
@@ -137,7 +145,7 @@ const CartPage = () => {
       {cartItems.length > 0 && (
         <div className="border-t pt-6 mt-10 space-y-4 px-2 sm:px-0">
           <div className="flex justify-between text-lg font-semibold">
-            <p>{t("cart.subtotal")}</p>
+            <p>Sous-total</p>
             <p className="text-[#1c3b58]">{totalPrice} TND</p>
           </div>
 
@@ -145,7 +153,7 @@ const CartPage = () => {
             to="/checkout"
             className="block w-full text-center bg-[#1c3b58] text-white py-3 rounded-lg font-semibold hover:bg-[#285d88] transition"
           >
-            {t("cart.proceed_to_checkout")}
+            Passer à la caisse
           </Link>
         </div>
       )}

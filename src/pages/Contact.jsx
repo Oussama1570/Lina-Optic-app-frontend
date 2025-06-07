@@ -65,15 +65,15 @@ const Contact = () => {
       =============================== */}
       <div className="contact-map-wrapper">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1597.1655808683242!2d10.093258385006342!3d36.81058361188362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd326e58495445%3A0x26a54a14bcb31d74!2sLINA%20OPTIC!5e0!3m2!1sfr!2stn!4v1745577727048!5m2!1sfr!2stn"
-          width="100%"
-          height="200"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Google Map"
-        ></iframe>
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3194.334835276219!2d10.092008475610537!3d36.81049556711959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd326e58495445%3A0x26a54a14bcb31d74!2sLINA%20OPTIC!5e0!3m2!1sfr!2stn!4v1749315427817!5m2!1sfr!2stn"
+  width="100%"
+  height="200"
+  style={{ border: 0 }} // ✅ ✅ This is valid in React
+  allowFullScreen
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  title="Google Map"
+/>
       </div>
     </div>
   );

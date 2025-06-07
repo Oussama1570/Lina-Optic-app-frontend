@@ -67,6 +67,30 @@
   outline: none;
 }
 
+
+/* ===============================
+➕ Add More Image Button
+================================= */
+.btn-add-more-img {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-add-more-img:hover {
+  background-color: #bae6fd;
+  color: #0c4a6e;
+  border-color: #7dd3fc;
+  transform: translateY(-1px);
+}
+
 /* ===============================
 💰 Price Grid
 ================================= */
