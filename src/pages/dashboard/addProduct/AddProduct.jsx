@@ -62,7 +62,8 @@ const AddProduct = () => {
   const addColorInput = () => {
     setColorInputs([
       ...colorInputs,
-      { colorName: "", imageFile: null, previewURL: "", stock: 0 },
+      { colorName: "", imageFiles: [], previewURLs: [], stock: 0 }
+
     ]);
   };
 
