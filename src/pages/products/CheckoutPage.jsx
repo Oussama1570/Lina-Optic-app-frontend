@@ -82,7 +82,7 @@ const CheckoutPage = () => {
       </div>
     );
 
- return (
+return (
   <div className="checkout-container min-h-screen bg-gradient-to-br from-white to-[#f0f6fc] py-10 px-4">
     <div className="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-xl border border-[#c4d4e3]">
       {/* Title */}
@@ -143,7 +143,7 @@ const CheckoutPage = () => {
                 />
               </div>
 
-              {/* Responsive 2-cols */}
+              {/* Row 1: City + Country */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium">{t("checkout.city")}</label>
@@ -167,6 +167,7 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
+              {/* Row 2: Region + Postal Code */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium">{t("checkout.region")}</label>
@@ -193,7 +194,7 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Conditions + Submit */}
+        {/* Accept Terms */}
         <div className="mt-6">
           <label className="flex items-center gap-2 text-sm">
             <input
@@ -211,6 +212,7 @@ const CheckoutPage = () => {
           </label>
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           className="mt-6 w-full bg-[#1c3b58] text-white py-3 rounded-lg font-semibold hover:bg-[#285d88] transition"

@@ -184,7 +184,7 @@ return (
   <div className="update-product-container">
     <h2 className="update-product-title">Mettre à jour le produit</h2>
     <form onSubmit={handleSubmit(onSubmit)} className="update-product-form">
-      
+
       <label>Nom du produit</label>
       <input {...register("title")} type="text" required />
 
@@ -281,21 +281,55 @@ return (
             required
           />
 
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              handleColorChange(index, "imageFile", e.target.files[0])
-            }
-          />
+          {/* 🟨 Existing images display (from backend) */}
+          {Array.isArray(color.images) &&
+            color.images.map((imgUrl, i) => (
+              <img
+                key={i}
+                src={getImgUrl(imgUrl)}
+                alt={`Image ${i + 1}`}
+                className="color-preview"
+              />
+            ))}
 
-          {color.previewURL && (
-            <img
-              src={color.previewURL}
-              alt="Aperçu couleur"
-              className="color-preview"
-            />
-          )}
+          {/* 🟩 New image uploads (dynamically added) */}
+          {color.imageFile?.map?.((file, i) => (
+            <div key={i} className="image-preview-group">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const newFiles = [...(color.imageFile || [])];
+                    newFiles[i] = file;
+                    handleColorChange(index, "imageFile", newFiles);
+                  }
+                }}
+              />
+              {color.previewURL?.[i] && (
+                <img
+                  src={color.previewURL[i]}
+                  alt={`Preview ${i + 1}`}
+                  className="color-preview"
+                />
+              )}
+            </div>
+          ))}
+
+          {/* ➕ Add new image field */}
+          <button
+            type="button"
+            onClick={() => {
+              const updated = [...(color.imageFile || []), null];
+              const previews = [...(color.previewURL || []), ""];
+              handleColorChange(index, "imageFile", updated);
+              handleColorChange(index, "previewURL", previews);
+            }}
+            className="btn-add-more-img"
+          >
+            + Ajouter une image
+          </button>
 
           <button
             type="button"

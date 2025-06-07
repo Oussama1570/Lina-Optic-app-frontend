@@ -147,171 +147,198 @@ const AddProduct = () => {
 
 
 
-   return (
-    <div className="add-product-container">
-      <h2 className="add-product-title">Ajouter un nouveau produit</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="add-product-form">
+  return (
+  <div className="add-product-container">
+    <h2 className="add-product-title">Ajouter un nouveau produit</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="add-product-form">
 
-        <label>Nom du produit</label>
-        <input
-          {...register("title")}
-          placeholder="Nom du produit"
-          required
-        />
+      <label>Nom du produit</label>
+      <input
+        {...register("title")}
+        placeholder="Nom du produit"
+        required
+      />
 
-        <label>Description du produit</label>
-        <textarea
-          {...register("description")}
-          placeholder="Description"
-          required
-        />
+      <label>Description du produit</label>
+      <textarea
+        {...register("description")}
+        placeholder="Description"
+        required
+      />
 
-        <label>Catégorie principale</label>
-        <select
-          value={mainCategory}
-          onChange={(e) => setMainCategory(e.target.value)}
-          required
-        >
-          <option value="">Sélectionner</option>
-          <option value="Hommes">Hommes</option>
-          <option value="Femmes">Femmes</option>
-          <option value="Enfants">Enfants</option>
-        </select>
+      <label>Catégorie principale</label>
+      <select
+        value={mainCategory}
+        onChange={(e) => setMainCategory(e.target.value)}
+        required
+      >
+        <option value="">Sélectionner</option>
+        <option value="Hommes">Hommes</option>
+        <option value="Femmes">Femmes</option>
+        <option value="Enfants">Enfants</option>
+      </select>
 
-        {mainCategory && (
-          <>
-            <label>Sous-catégorie</label>
-            <select
-              value={subCategory}
-              onChange={(e) => setSubCategory(e.target.value)}
-              required
-            >
-              <option value="">Sous-catégorie</option>
-              {subCategoryOptions.map((option, idx) => (
-                <option key={idx} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </>
-        )}
-
-        <label>Type de cadre</label>
-        <select {...register("frameType")}>
-          <option value="">Type de cadre</option>
-          {frameTypeOptions.map((type, idx) => (
-            <option key={idx} value={type}>{type}</option>
-          ))}
-        </select>
-
-        <label>Marque</label>
-        <input
-          {...register("brand")}
-          placeholder="Marque du produit"
-          required
-        />
-
-        <div className="price-grid">
-          <input
-            {...register("oldPrice")}
-            type="number"
-            placeholder="Prix initial"
+      {mainCategory && (
+        <>
+          <label>Sous-catégorie</label>
+          <select
+            value={subCategory}
+            onChange={(e) => setSubCategory(e.target.value)}
             required
-          />
-          <input
-            {...register("newPrice")}
-            type="number"
-            placeholder="Prix actuel"
-            required
-          />
-        </div>
+          >
+            <option value="">Sous-catégorie</option>
+            {subCategoryOptions.map((option, idx) => (
+              <option key={idx} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
 
-        <div className="checkbox-wrapper">
-          <input type="checkbox" {...register("trending")} />
-          Marquer comme tendance
-        </div>
-
-        <label>Image principale</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleCoverImageChange}
-          required
-        />
-        {coverPreviewURL && (
-          <img
-            src={coverPreviewURL}
-            alt="Aperçu"
-            className="cover-preview"
-          />
-        )}
-
-        <label>Couleurs du produit</label>
-        {colorInputs.map((input, index) => (
-          <div key={index} className="color-block">
-            <input
-              type="text"
-              placeholder="Nom de la couleur"
-              value={input.colorName}
-              onChange={(e) =>
-                handleColorInputChange(index, "colorName", e.target.value)
-              }
-              required
-            />
-            <input
-              type="number"
-              placeholder="Quantité en stock"
-              value={input.stock}
-              onChange={(e) =>
-                handleColorInputChange(index, "stock", Number(e.target.value))
-              }
-              required
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file && file.type.startsWith("image/")) {
-                  handleColorInputChange(index, "imageFile", file);
-                }
-              }}
-              required
-            />
-            {input.previewURL && (
-              <img
-                src={input.previewURL}
-                alt="Aperçu couleur"
-                className="color-preview"
-              />
-            )}
-            <button
-              type="button"
-              onClick={() => deleteColorInput(index)}
-              className="btn-delete-color"
-            >
-              Supprimer
-            </button>
-          </div>
+      <label>Type de cadre</label>
+      <select {...register("frameType")}>
+        <option value="">Type de cadre</option>
+        {frameTypeOptions.map((type, idx) => (
+          <option key={idx} value={type}>{type}</option>
         ))}
+      </select>
 
-        <button
-          type="button"
-          onClick={addColorInput}
-          className="btn-add-color"
-        >
-          Ajouter une couleur
-        </button>
+      <label>Marque</label>
+      <input
+        {...register("brand")}
+        placeholder="Marque du produit"
+        required
+      />
 
-        <button
-          type="submit"
-          className="btn-submit"
-        >
-          {isLoading ? "Ajout en cours..." : "Ajouter le produit"}
-        </button>
-      </form>
-    </div>
-  );
+      <div className="price-grid">
+        <input
+          {...register("oldPrice")}
+          type="number"
+          placeholder="Prix initial"
+          required
+        />
+        <input
+          {...register("newPrice")}
+          type="number"
+          placeholder="Prix actuel"
+          required
+        />
+      </div>
+
+      <div className="checkbox-wrapper">
+        <input type="checkbox" {...register("trending")} />
+        Marquer comme tendance
+      </div>
+
+      <label>Image principale</label>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleCoverImageChange}
+        required
+      />
+      {coverPreviewURL && (
+        <img
+          src={coverPreviewURL}
+          alt="Aperçu"
+          className="cover-preview"
+        />
+      )}
+
+      <label>Couleurs du produit</label>
+      {colorInputs.map((input, index) => (
+        <div key={index} className="color-block">
+          <input
+            type="text"
+            placeholder="Nom de la couleur"
+            value={input.colorName}
+            onChange={(e) =>
+              handleColorInputChange(index, "colorName", e.target.value)
+            }
+            required
+          />
+
+          <input
+            type="number"
+            placeholder="Quantité en stock"
+            value={input.stock}
+            onChange={(e) =>
+              handleColorInputChange(index, "stock", Number(e.target.value))
+            }
+            required
+          />
+
+          {/* 🔁 Loop through multiple image previews */}
+          {input.imageFiles?.map((file, i) => (
+            <div key={i} className="image-preview-group">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file && file.type.startsWith("image/")) {
+                    const newFiles = [...(input.imageFiles || [])];
+                    const newPreviews = [...(input.previewURLs || [])];
+                    newFiles[i] = file;
+                    newPreviews[i] = URL.createObjectURL(file);
+                    handleColorInputChange(index, "imageFiles", newFiles);
+                    handleColorInputChange(index, "previewURLs", newPreviews);
+                  }
+                }}
+              />
+              {input.previewURLs?.[i] && (
+                <img
+                  src={input.previewURLs[i]}
+                  alt={`Aperçu ${i + 1}`}
+                  className="color-preview"
+                />
+              )}
+            </div>
+          ))}
+
+          {/* ➕ Add another image */}
+          <button
+            type="button"
+            onClick={() => {
+              const newFiles = [...(input.imageFiles || []), null];
+              const newPreviews = [...(input.previewURLs || []), ""];
+              handleColorInputChange(index, "imageFiles", newFiles);
+              handleColorInputChange(index, "previewURLs", newPreviews);
+            }}
+            className="btn-add-more-img"
+          >
+            + Ajouter une image
+          </button>
+
+          <button
+            type="button"
+            onClick={() => deleteColorInput(index)}
+            className="btn-delete-color"
+          >
+            Supprimer
+          </button>
+        </div>
+      ))}
+
+      <button
+        type="button"
+        onClick={addColorInput}
+        className="btn-add-color"
+      >
+        Ajouter une couleur
+      </button>
+
+      <button
+        type="submit"
+        className="btn-submit"
+      >
+        {isLoading ? "Ajout en cours..." : "Ajouter le produit"}
+      </button>
+    </form>
+  </div>
+);
+
 };
 
 
