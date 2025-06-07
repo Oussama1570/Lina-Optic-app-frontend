@@ -332,6 +332,7 @@
     margin-bottom: 0.5rem;
     border-radius: 12px;
     align-items: center;
+    margin-right: auto !important;
     
   }
 
