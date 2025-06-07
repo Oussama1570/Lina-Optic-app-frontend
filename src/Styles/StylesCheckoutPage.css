@@ -97,6 +97,17 @@
   gap: 1rem;
 }
 
+/* ✅ Fix for smaller screens without breaking layout */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-input {
+    font-size: 0.95rem;
+  }
+}
+
 .form-footer {
   width: 100%;
   margin-top: 2.5rem;
@@ -104,19 +115,26 @@
 
 .checkbox-label {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   font-size: 0.95rem;
   color: #444;
   margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  line-height: 1.4;
-  gap: 0.25rem;
+  line-height: 1.5;
 }
 
 .checkbox {
   margin-right: 0.6rem;
   width: 18px;
   height: 18px;
+}
+
+.checkbox-label .link {
+  color: #1c3b58;
+  text-decoration: underline;
+  font-weight: 500;
+  white-space: nowrap;
+  margin: 0 4px;
 }
 
 .terms-text {
@@ -165,60 +183,4 @@ input[type="tel"] {
   word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
-}
-
-/* ✅ Styling for terms links */
-.checkbox-label .link {
-  color: #1c3b58;
-  font-weight: 500;
-  text-decoration: underline;
-  white-space: nowrap;
-}
-
-/* ✅ Mobile responsive adjustments */
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-  }
-
-  .checkbox-label {
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 0.9rem;
-  }
-
-  .checkbox-label .link {
-    display: inline;
-    margin-left: 4px;
-    margin-right: 4px;
-  }
-
-  .checkout-container {
-    padding: 1.5rem 1rem;
-  }
-
-  .checkout-title {
-    font-size: 1.5rem;
-  }
-
-  .checkout-summary {
-    font-size: 0.95rem;
-    padding: 1rem;
-  }
-
-  .form-input {
-    font-size: 0.95rem;
-  }
-
-  .form-section-title {
-    font-size: 1rem;
-  }
-
-  .checkout-button {
-    font-size: 1rem;
-  }
-
-  .form-group input {
-    min-width: 0;
-  }
 }
