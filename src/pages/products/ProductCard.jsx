@@ -91,151 +91,129 @@ const ProductCard = ({ product }) => {
     }
   };
 
-const totalStock = product.colors?.reduce(
-  (sum, color) => sum + (color?.stock || 0),
-  0
-);
+  const totalStock = product.colors?.reduce(
+    (sum, color) => sum + (color?.stock || 0),
+    0
+  );
 
-
-
-   return (
-  <div className="product-card-optic">
-    {/* 🏷️ Quantity Badge for all products */}
-    
-
-    {/* 🖼️ Image with badges */}
-    <a
-  href={`/products/${product._id}`}
-  className="image-box"
-  style={{ position: "relative" }}
->
-  {/* 🔖 Promotion Badge */}
-  {discountPercent > 0 && (
-    <div
-      style={{
-        position: "absolute",
-        top: "8px",
-        left: "8px",
-        backgroundColor: "#dc2626",
-        color: "#fff",
-        fontSize: "0.75rem",
-        padding: "3px 8px",
-        borderRadius: "4px",
-        fontWeight: "bold",
-        zIndex: 1,
-      }}
-    >
-      -{discountPercent}%
-    </div>
-  )}
-
-  {/* ✨ Trending Badge */}
-  {product?.trending && (
-    <div
-      style={{
-        position: "absolute",
-        top: "8px",
-        right: "8px",
-        backgroundColor: "#005fa3",
-        color: "#fff",
-        fontSize: "0.75rem",
-        padding: "3px 8px",
-        borderRadius: "4px",
-        fontWeight: "bold",
-        display: "flex",
-        alignItems: "center",
-        gap: "4px",
-        zIndex: 1,
-      }}
-    >
-      <HiOutlineSparkles style={{ fontSize: "1rem" }} />
-      Tendance
-    </div>
-  )}
-
-  {/* ✅ Green Stock Badge */}
-  <div
-    style={{
-      position: "absolute",
-      top: product?.trending ? "34px" : "8px",
-      right: "8px",
-      backgroundColor: selectedColor?.stock > 0 ? "#28a745" : "#dc3545",
-      color: "#fff",
-      fontSize: "0.7rem",
-      padding: "2px 6px",
-      borderRadius: "4px",
-      fontWeight: "normal",
-      zIndex: 1,
-    }}
-  >
-    {selectedColor?.stock > 0
-      ? `Stock: ${selectedColor.stock}`
-      : "Rupture de stock"}
-  </div>
-
-  <img
-    src={getImgUrl(isHovered ? hoverImage : mainImage)}
-    alt={product?.title}
-    className="product-img"
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
-  />
-</a>
-
-
-    {/* 📄 Product Info */}
-    <div className="product-details-box">
-      <h3 className="product-title-optic">
-        {product?.title || "Produit inconnu"}
-      </h3>
-      <p className="product-sub-info">
-        {product?.subCategory || "Sous-catégorie inconnue"},{" "}
-        {product?.mainCategory || "Catégorie inconnue"}
-      </p>
-      <p className="product-brand">{product?.brand || "Marque inconnue"}</p>
-
-      {/* 💰 Price */}
-      <div className="product-price-optic">
-        {product.oldPrice && (
-          <span className="old-price">
-            {Math.round(product.oldPrice)} TND
-          </span>
+  return (
+    <div className="product-card-optic">
+      <a
+        href={`/products/${product._id}`}
+        className="image-box"
+        style={{ position: "relative" }}
+      >
+        {discountPercent > 0 && (
+          <div
+            style={{
+              position: "absolute",
+              top: "6px",
+              left: "6px",
+              backgroundColor: "#dc2626",
+              color: "#fff",
+              fontSize: "0.75rem",
+              padding: "2px 6px",
+              borderRadius: "4px",
+              fontWeight: "bold",
+              zIndex: 1,
+            }}
+          >
+            -{discountPercent}%
+          </div>
         )}
-        <span className="new-price">
-          {product?.newPrice?.toFixed(2) || "0.00"} TND
+
+        {product?.trending && (
+          <div
+            style={{
+              position: "absolute",
+              top: "6px",
+              right: "6px",
+              backgroundColor: "#005fa3",
+              color: "#fff",
+              fontSize: "0.72rem",
+              padding: "2px 6px",
+              borderRadius: "4px",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              zIndex: 1,
+            }}
+          >
+            <HiOutlineSparkles style={{ fontSize: "0.9rem" }} />
+            Tendance
+          </div>
+        )}
+
+        <div
+          style={{
+            position: "absolute",
+            top: product?.trending ? "32px" : "6px",
+            right: "6px",
+            backgroundColor: selectedColor?.stock > 0 ? "#28a745" : "#dc3545",
+            color: "#fff",
+            fontSize: "0.68rem",
+            padding: "2px 6px",
+            borderRadius: "4px",
+            fontWeight: "normal",
+            zIndex: 1,
+          }}
+        >
+          {selectedColor?.stock > 0
+            ? `Stock: ${selectedColor.stock}`
+            : "Rupture de stock"}
+        </div>
+
+        <img
+          src={getImgUrl(isHovered ? hoverImage : mainImage)}
+          alt={product?.title}
+          className="product-img"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        />
+      </a>
+
+      <div className="product-details-box">
+        <h3 className="product-title-optic">
+          {product?.title || "Produit inconnu"}
+        </h3>
+        <p className="product-sub-info">
+          {product?.subCategory || "Sous-catégorie inconnue"}, {product?.mainCategory || "Catégorie inconnue"}
+        </p>
+        <p className="product-brand">{product?.brand || "Marque inconnue"}</p>
+
+        <div className="product-price-optic">
+          {product.oldPrice && (
+            <span className="old-price">
+              {Math.round(product.oldPrice)} TND
+            </span>
+          )}
+          <span className="new-price">
+            {product?.newPrice?.toFixed(2) || "0.00"} TND
+          </span>
+        </div>
+      </div>
+
+      <div className="hover-icons">
+        <button
+          className={`add-btn ${selectedColor?.stock <= 0 ? "disabled-btn" : ""}`}
+          onClick={selectedColor?.stock > 0 ? handleAddToCart : undefined}
+          disabled={selectedColor?.stock <= 0}
+        >
+          <FiShoppingCart />
+          {selectedColor?.stock > 0 ? "Ajouter au panier" : "En rupture de stock"}
+        </button>
+
+        <span className="icon" onClick={handleToggleWishlist} style={{ cursor: "pointer" }}>
+          <FiHeart className="icon" />
         </span>
+
+        <a href={`/products/${product._id}`} className="icon">
+          <FiEye />
+        </a>
       </div>
     </div>
-
-    {/* 🎯 Action Buttons */}
-    <div className="hover-icons">
-      <button
-        className={`add-btn ${
-          selectedColor?.stock <= 0 ? "disabled-btn" : ""
-        }`}
-        onClick={selectedColor?.stock > 0 ? handleAddToCart : undefined}
-        disabled={selectedColor?.stock <= 0}
-      >
-        <FiShoppingCart />
-        {selectedColor?.stock > 0
-          ? "Ajouter au panier"
-          : "En rupture de stock"}
-      </button>
-
-      <span
-        className="icon"
-        onClick={handleToggleWishlist}
-        style={{ cursor: "pointer" }}
-      >
-        <FiHeart className="icon" />
-      </span>
-
-      <a href={`/products/${product._id}`} className="icon">
-        <FiEye />
-      </a>
-    </div>
-  </div>
-);
+  );
 };
 
 export default ProductCard;
