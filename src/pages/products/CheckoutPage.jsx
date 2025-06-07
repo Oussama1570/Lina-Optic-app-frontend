@@ -6,97 +6,101 @@ import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
 import { useTranslation } from "react-i18next";
-import "../../Styles/StylesCheckoutPage.css";
+import "../../Styles/StylesCheckoutPage.css"
 
 const CheckoutPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { currentUser } = useAuth();
-
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = cartItems
     .reduce((acc, item) => acc + item.newPrice * item.quantity, 0)
     .toFixed(2);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
+  const { currentUser } = useAuth();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [createOrder, { isLoading }] = useCreateOrderMutation();
+  const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
 
   const onSubmit = async (data) => {
-    const newOrder = {
-      name: data.name,
-      email: currentUser?.email,
-      address: {
-        street: data.address,
-        city: data.city,
-        country: data.country,
-        state: data.state,
-        zipcode: data.zipcode,
-      },
-      phone: data.phone,
-      products: cartItems.map((item) => ({
+  const newOrder = {
+    name: data.name,
+    email: currentUser?.email,
+    address: {
+      street: data.address,
+      city: data.city,
+      country: data.country,
+      state: data.state,
+      zipcode: data.zipcode,
+    },
+    phone: data.phone,
+    products: cartItems.map((item) => {
+      const fallbackColor = {
+        colorName: {
+          en: "Original",
+          fr: "Original",
+          ar: "أصلي",
+        },
+        image: item.coverImage || "/assets/default-image.png",
+      };
+
+      // ✅ ensure color object is complete
+      const validColor =
+        item?.color?.colorName?.en &&
+        item?.color?.colorName?.fr &&
+        item?.color?.colorName?.ar &&
+        item?.color?.image
+          ? item.color
+          : fallbackColor;
+
+      return {
         productId: item._id,
         quantity: item.quantity,
-        color:
-          typeof item.color?.colorName === "object"
-            ? item.color
-            : {
-                colorName: {
-                  en: item.color?.colorName || "Original",
-                  fr: item.color?.colorName || "Original",
-                  ar: "أصلي",
-                },
-                image:
-                  item.color?.image ||
-                  item.coverImage ||
-                  "/assets/default-image.png",
-              },
-      })),
-      totalPrice,
-    };
-
-    try {
-      const result = await createOrder(newOrder).unwrap();
-      if (result) {
-        Swal.fire({
-          title: t("checkout.order_confirmed"),
-          text: t("checkout.success_message"),
-          icon: "success",
-          confirmButtonColor: "#1c3b58",
-          confirmButtonText: t("checkout.go_to_orders"),
-        }).then(() => navigate("/orders"));
-      }
-    } catch (error) {
-      Swal.fire({
-        title: t("checkout.error_title"),
-        text: error?.message || t("checkout.error_message"),
-        icon: "error",
-        confirmButtonColor: "#d33",
-      });
-    }
+        color: validColor,
+      };
+    }),
+    totalPrice: totalPrice,
   };
 
-  if (isLoading) {
+  try {
+    const result = await createOrder(newOrder).unwrap();
+    if (result) {
+      Swal.fire({
+        title: t("checkout.order_confirmed"),
+        text: t("checkout.success_message"),
+        icon: "success",
+        confirmButtonColor: "#1c3b58",
+        confirmButtonText: t("checkout.go_to_orders"),
+      }).then(() => {
+        navigate("/orders");
+      });
+    }
+  } catch (error) {
+    console.error("❌ Order submission error:", error);
+    Swal.fire({
+      title: t("checkout.error_title"),
+      text: error?.data?.message || error?.message || t("checkout.error_message"),
+      icon: "error",
+      confirmButtonColor: "#d33",
+    });
+  }
+};
+
+
+  if (isLoading)
     return (
       <div className="text-center text-lg font-semibold py-10 text-[#1c3b58]">
         {t("checkout.processing")}
       </div>
     );
-  }
 
-
-return (
-  <section className="checkout-wrapper px-4 md:px-8 lg:px-0">
+ return (
+  <section className="checkout-wrapper">
     <div className="checkout-container">
       <h2 className="checkout-title">{t("checkout.title")}</h2>
 
       <div className="checkout-summary">
+        
         <p>{t("checkout.total_price")}: <strong>{totalPrice} TND</strong></p>
         <p>{t("checkout.items")}: <strong>{totalItems}</strong></p>
       </div>
@@ -133,22 +137,22 @@ return (
           </div>
 
           <div className="form-row">
-            <div className="form-group w-full">
+            <div className="form-group">
               <label>{t("checkout.city")}</label>
               <input {...register("city", { required: true })} type="text" className="form-input" />
             </div>
-            <div className="form-group w-full">
+            <div className="form-group">
               <label>{t("checkout.country")}</label>
               <input {...register("country", { required: true })} type="text" className="form-input" />
             </div>
           </div>
 
           <div className="form-row">
-            <div className="form-group w-full">
+            <div className="form-group">
               <label>{t("checkout.state")}</label>
               <input {...register("state", { required: true })} type="text" className="form-input" />
             </div>
-            <div className="form-group w-full">
+            <div className="form-group">
               <label>{t("checkout.zipcode")}</label>
               <input {...register("zipcode", { required: true })} type="text" className="form-input" />
             </div>
@@ -162,7 +166,9 @@ return (
               onChange={(e) => setIsChecked(e.target.checked)}
               className="checkbox"
             />
-            {t("checkout.agree")} <Link className="link">{t("checkout.terms")}</Link> {t("checkout.and")} <Link className="link">{t("checkout.policy")}</Link>.
+            {t("checkout.agree")}{" "}
+            <Link className="link">{t("checkout.terms")}</Link> {t("checkout.and")}{" "}
+            <Link className="link">{t("checkout.policy")}</Link>.
           </label>
 
           <button
@@ -177,6 +183,10 @@ return (
     </div>
   </section>
 );
+
+
+
+  
 };
 
 export default CheckoutPage;
