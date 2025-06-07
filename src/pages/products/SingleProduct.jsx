@@ -127,156 +127,158 @@ const SingleProduct = () => {
       ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
       : 0;
 
+return (
+  <div className="single-product-container">
+    <h1 className="product-title-lina">{product?.title || "Produit non disponible"}</h1>
 
-<div className="single-product-container">
-  <h1 className="product-title-lina">{product?.title || "Produit non disponible"}</h1>
+    <div className="product-content">
+      {/* Left side - images & colors */}
+      <div>
+        <div className="product-image-box">
+          {/* 🔥 Promotion Badge */}
+          {product?.oldPrice && product?.newPrice && (
+            <div className="badge promotion-badge">-{discountPercent}%</div>
+          )}
 
-  <div className="product-content">
-    {/* Left side - images & colors */}
-    <div>
-      <div className="product-image-box">
-        {/* 🔥 Promo */}
-        {product?.oldPrice && product?.newPrice && (
-          <div className="badge promotion-badge">
-            -{discountPercent}%
+          {/* ✨ Trending */}
+          {product?.trending && (
+            <div className="badge trending-badge">
+              <HiOutlineSparkles className="badge-icon" />
+              Tendance
+            </div>
+          )}
+
+          {/* 📦 Stock Badge */}
+          <div
+            className={`badge stock-badge ${
+              selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
+            }`}
+            style={{ top: "46px", right: "10px" }}
+          >
+            {selectedColor?.stock > 0
+              ? `Stock: ${selectedColor?.stock}`
+              : "Rupture de stock"}
           </div>
-        )}
 
-        {/* ✨ Trending */}
-        {product?.trending && (
-          <div className="badge trending-badge">
-            <HiOutlineSparkles className="badge-icon" />
-            Tendance
-          </div>
-        )}
+          {/* 🖼️ Main Image */}
+          <img
+            src={getImgUrl(selectedImage ?? product?.coverImage)}
+            alt={product?.title}
+            className="product-main-image"
+            ref={imageRef}
+          />
 
-        {/* 📦 Stock badge */}
-        <div
-          className={`badge stock-badge ${
-            selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
-          }`}
-          style={{ top: "46px", right: "10px" }}
-        >
-          {selectedColor?.stock > 0
-            ? `Stock: ${selectedColor?.stock}`
-            : "Rupture de stock"}
-        </div>
-
-        {/* 🖼️ Main image */}
-        <img
-          src={getImgUrl(selectedImage ?? product?.coverImage)}
-          alt={product?.title}
-          className="product-main-image"
-          ref={imageRef}
-        />
-
-        {/* 🖼️ Thumbnails */}
-        {selectedColor?.images?.length > 1 && (
-          <div className="thumbnail-gallery">
-            {selectedColor.images.map((img, idx) => (
-              <img
-                key={idx}
-                src={getImgUrl(img)}
-                alt={`Preview ${idx + 1}`}
-                className={`thumbnail ${
-                  selectedImage === img ? "active" : ""
-                }`}
-                onClick={() => handleSelectImage(img)}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* 🎨 Colors */}
-      <div className="product-colors">
-        <label>Couleurs disponibles:</label>
-        <div className="color-options">
-          {product?.colors?.map((color, index) => {
-            const stock = color?.stock ?? 0;
-            const name = color?.colorName?.en || "Inconnue";
-            const isSelected =
-              selectedColor?.colorName?.en === color?.colorName?.en;
-
-            return (
-              <div key={index} className="color-option">
+          {/* 🖼️ Thumbnails */}
+          {selectedColor?.images?.length > 1 && (
+            <div className="thumbnail-gallery">
+              {selectedColor.images.map((img, idx) => (
                 <img
-                  src={getImgUrl(color?.images?.[0])}
-                  alt={name}
-                  className={`color-image ${isSelected ? "selected" : ""}`}
-                  onClick={() => handleSelectColor(color)}
+                  key={idx}
+                  src={getImgUrl(img)}
+                  alt={`Preview ${idx + 1}`}
+                  className={`thumbnail ${selectedImage === img ? "active" : ""}`}
+                  onClick={() => handleSelectImage(img)}
                 />
-                <div
-                  className={`color-stock ${
-                    stock > 0 ? "in-stock" : "out-of-stock"
-                  }`}
-                >
-                  {stock > 0 ? stock : "Rupture de stock"}
-                </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          )}
         </div>
 
-        <p className="selected-color">
-          Couleur sélectionnée: {" "}
-          <strong>{selectedColor?.colorName?.en || "Inconnue"}</strong>
-        </p>
+        {/* 🎨 Color Selector */}
+        <div className="product-colors">
+          <label>Couleurs disponibles:</label>
+          <div className="color-options">
+            {product?.colors?.map((color, index) => {
+              const stock = color?.stock ?? 0;
+              const name = color?.colorName?.en || "Inconnue";
+              const isSelected =
+                selectedColor?.colorName?.en === color?.colorName?.en;
+
+              return (
+                <div key={index} className="color-option">
+                  <img
+                    src={getImgUrl(color?.images?.[0])}
+                    alt={name}
+                    className={`color-image ${isSelected ? "selected" : ""}`}
+                    onClick={() => handleSelectColor(color)}
+                  />
+                  <div
+                    className={`color-stock ${stock > 0 ? "in-stock" : "out-of-stock"}`}
+                  >
+                    {stock > 0 ? stock : "Rupture de stock"}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="selected-color">
+            Couleur sélectionnée:{" "}
+            <strong>{selectedColor?.colorName?.en || "Inconnue"}</strong>
+          </p>
+        </div>
       </div>
-    </div>
 
-    {/* Right side - info */}
-    <div className="product-details">
-      <p className="product-description">{product?.description || ""}</p>
+      {/* Right side - product info */}
+      <div className="product-details">
+        <p className="product-description">{product?.description || ""}</p>
 
-      <div className="product-meta">
-        <p><strong>Marque:</strong> {product?.brand || "Inconnue"}</p>
-        <p><strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnue"}</p>
-        <p><strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnue"}</p>
-        <p>
-          <strong>Publié:</strong> {product?.createdAt
-            ? new Date(product.createdAt).toLocaleDateString()
-            : "Inconnue"}
-        </p>
-      </div>
+        <div className="product-meta">
+          <p><strong>Marque:</strong> {product?.brand || "Inconnue"}</p>
+          <p><strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnue"}</p>
+          <p><strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnue"}</p>
+          <p>
+            <strong>Publié:</strong>{" "}
+            {product?.createdAt
+              ? new Date(product.createdAt).toLocaleDateString()
+              : "Inconnue"}
+          </p>
+        </div>
 
-      <div className="product-price">
-        <span className="new">{product?.newPrice?.toFixed(2) ?? "0.00"} TND</span>
-        {product?.oldPrice && (
-          <span className="old">{Math.round(product?.oldPrice)} TND</span>
-        )}
-      </div>
+        <div className="product-price">
+          <span className="new">
+            {product?.newPrice?.toFixed(2) ?? "0.00"} TND
+          </span>
+          {product?.oldPrice && (
+            <span className="old">
+              {Math.round(product?.oldPrice)} TND
+            </span>
+          )}
+        </div>
 
-      <div className="product-stock-info">
-        <strong>Stock:</strong> {selectedColor?.stock > 0 ? selectedColor.stock : "Rupture de stock"}
-      </div>
+        <div className="product-stock-info">
+          <strong>Stock:</strong>{" "}
+          {selectedColor?.stock > 0 ? selectedColor.stock : "Rupture de stock"}
+        </div>
 
-      <div className="product-quantity">
-        <label>Quantité:</label>
-        <input
-          type="number"
-          min="1"
-          max={selectedColor?.stock ?? 0}
-          value={quantity}
-          onChange={handleQuantityChange}
+        <div className="product-quantity">
+          <label>Quantité:</label>
+          <input
+            type="number"
+            min="1"
+            max={selectedColor?.stock ?? 0}
+            value={quantity}
+            onChange={handleQuantityChange}
+            disabled={(selectedColor?.stock ?? 0) === 0}
+          />
+        </div>
+
+        <button
+          onClick={handleAddToCart}
           disabled={(selectedColor?.stock ?? 0) === 0}
-        />
+          className={`add-to-cart-btn ${
+            selectedColor?.stock > 0 ? "enabled" : "disabled"
+          }`}
+        >
+          <FiShoppingCart className="icon" />
+          {selectedColor?.stock > 0
+            ? "Ajouter au panier"
+            : "Rupture de stock"}
+        </button>
       </div>
-
-      <button
-        onClick={handleAddToCart}
-        disabled={(selectedColor?.stock ?? 0) === 0}
-        className={`add-to-cart-btn ${selectedColor?.stock > 0 ? "enabled" : "disabled"}`}
-      >
-        <FiShoppingCart className="icon" />
-        {selectedColor?.stock > 0 ? "Ajouter au panier" : "Rupture de stock"}
-      </button>
     </div>
   </div>
-</div>
-
-
-
+);
 };
 
 export default SingleProduct;
