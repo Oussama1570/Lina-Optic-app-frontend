@@ -12,9 +12,6 @@
   padding: 4rem 1rem;
   background: linear-gradient(to bottom, #f7fbff, #eef2f8);
   min-height: 100vh;
-  overflow-x: hidden; /* ✅ Prevent horizontal scroll on small screens */
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 .checkout-container {
@@ -25,9 +22,6 @@
   padding: 2.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   border: 1px solid #d8e4ee;
-  overflow-x: hidden; /* ✅ Prevent overflow from child inputs */
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 .checkout-title {
@@ -78,9 +72,7 @@
 }
 
 .form-input {
-  width: 100%;
-  max-width: 100%; /* ✅ Prevent overflow */
-  box-sizing: border-box; /* ✅ Includes padding in width */
+  width: 80%;
   padding: 0.65rem 1rem;
   border: 1px solid #cbd6e2;
   border-radius: 8px;
@@ -105,7 +97,7 @@
   gap: 1rem;
 }
 
-/* ✅ Responsive stack on mobile */
+/* ✅ Fix for smaller screens without breaking layout */
 @media (max-width: 600px) {
   .form-row {
     flex-direction: column;
@@ -191,11 +183,4 @@ input[type="tel"] {
   word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* ✅ Optional fallback for all inputs (safety net) */
-input {
-  max-width: 100%;
-  box-sizing: border-box;
 }
