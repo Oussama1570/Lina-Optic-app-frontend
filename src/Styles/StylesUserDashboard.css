@@ -247,6 +247,7 @@
   border-radius: 10px;
   background: #ffffff;
   transition: transform 0.2s ease;
+  
 }
 
 .product-item:hover {
@@ -319,13 +320,13 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 1.2rem;
+    padding: 100px;
     gap: 1rem;
   }
 
   .product-img {
-    width: 100%;
-    max-width: 180px;
+    width: 150px !important;
+    max-width: 250 px !important;
     height: auto;
     object-fit: contain;
     margin-bottom: 0.5rem;

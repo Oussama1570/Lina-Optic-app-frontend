@@ -72,7 +72,7 @@
 }
 
 .form-input {
-  width: 100%;
+  width: 100% !important;
   padding: 0.65rem 1rem;
   border: 1px solid #cbd6e2;
   border-radius: 8px;
@@ -176,6 +176,8 @@
 }
 
 /* ✅ Prevent input overflow and ensure mobile friendliness */
+
+@media (max-width: 600px) {
 input[type="text"],
 input[type="email"],
 input[type="tel"] {
@@ -183,4 +185,5 @@ input[type="tel"] {
   word-break: break-word;
   overflow-wrap: break-word;
   max-width: 73.5%;
+}
 }
