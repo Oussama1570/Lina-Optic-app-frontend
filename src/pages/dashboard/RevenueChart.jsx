@@ -69,14 +69,17 @@ const RevenueChart = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">Monthly Revenue (TND)</h2>
-      {/* Chart Container with Responsive Sizing */}
-      <div className="w-full h-[300px] md:h-[400px]">
+  <div className="revenue-chart-wrapper">
+    <h2 className="revenue-chart-title">Monthly Revenue (TND)</h2>
+    <div className="revenue-chart-scroll">
+      <div className="chart-inner">
         <Bar data={data} options={options} />
       </div>
     </div>
-  );
+  </div>
+);
+
+
 };
 
 export default RevenueChart;

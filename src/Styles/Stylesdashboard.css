@@ -101,30 +101,49 @@
     
   }
 
-  .revenue-chart-wrapper {
-  width: 100%;
+ /* 📦 Wrapper for better layout */
+.revenue-chart-wrapper {
+  background: #ffffff;
   padding: 1rem;
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2rem;
 }
 
-.chart-title {
+/* 📊 Horizontal scroll on mobile */
+.revenue-chart-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 transparent;
+}
+
+/* 🧭 Always show scrollbar on Android/Chrome */
+.revenue-chart-scroll::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.revenue-chart-scroll::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+/* 🔲 Inner chart size to trigger scroll */
+.chart-inner {
+  min-width: 600px; /* Force horizontal scroll */
+  height: 300px;
+}
+
+/* 🏷️ Chart title */
+.revenue-chart-title {
   text-align: center;
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 1rem;
   color: #1f2937;
+  margin-bottom: 1rem;
 }
 
-.revenue-chart-scroll {
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-}
-
-.chart-inner {
-  min-width: 600px; /* ensures chart is wide enough to scroll */
-  height: 300px;
-}
 
 }
