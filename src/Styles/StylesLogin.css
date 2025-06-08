@@ -166,13 +166,18 @@
 
   .form-group input {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     padding: 1rem 1.2rem;
     font-size: 1.05rem;
     border-radius: 12px;
     border: 1px solid #ccc;
     background-color: #fefefe;
     transition: all 0.3s ease;
+    box-sizing: border-box;
+    display: block;
   }
+}
 
   .form-group input:focus {
     border-color: #006a71;
