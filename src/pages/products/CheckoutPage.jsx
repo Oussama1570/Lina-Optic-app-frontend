@@ -72,7 +72,8 @@ const CheckoutPage = () => {
         confirmButtonColor: "#1c3b58",
         confirmButtonText: t("checkout.go_to_orders"),
       }).then(() => {
-        navigate("/orders");
+        window.location.href = "/orders";
+
       });
     }
   } catch (error) {
