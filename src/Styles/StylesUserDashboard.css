@@ -322,6 +322,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin-right: 120 px !important;
+  margin-left: -10% !important;
   padding: 1.2rem;
   gap: 1rem;
   border: 1px solid #4e8acf;
@@ -346,8 +348,7 @@
   box-shadow: 0 0 10px rgba(153, 194, 255, 0.25);
   display: block;
   margin: 0 auto;
-  margin-right: 120 px !important;
-  margin-left: -10% !important;
+  
 }
 
 
