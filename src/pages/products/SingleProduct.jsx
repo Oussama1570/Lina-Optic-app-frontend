@@ -21,6 +21,11 @@ const SingleProduct = () => {
   const [showContent, setShowContent] = useState(false);
   const imageRef = useRef(null);
 
+  // ✅ Wait until product is fully fetched before rendering
+  if (isLoading || !product || !product.title) {
+    return <div className="loader-container"><div className="spinner"></div></div>;
+  }
+
   // ✅ Set default color + image on load
   useEffect(() => {
     if (product?.colors?.length > 0) {
@@ -47,41 +52,39 @@ const SingleProduct = () => {
   };
 
   const handleAddToCart = () => {
-  const colorName = selectedColor?.colorName?.en;
-  const colorStock = selectedColor?.stock ?? 0;
+    const colorName = selectedColor?.colorName?.en;
+    const colorStock = selectedColor?.stock ?? 0;
 
-  const itemInCart = cartItems.find(
-    (item) =>
-      item._id === product._id &&
-      item.color?.colorName?.en === colorName
-  );
+    const itemInCart = cartItems.find(
+      (item) =>
+        item._id === product._id &&
+        item.color?.colorName?.en === colorName
+    );
 
-  const quantityInCart = itemInCart?.quantity || 0;
+    const quantityInCart = itemInCart?.quantity || 0;
 
-  if (quantityInCart + quantity > colorStock) {
-    Swal.fire({
-      icon: "warning",
-      title: "Stock épuisé",
-      text: "Impossible d’ajouter plus. Quantité maximale atteinte.",
-      confirmButtonColor: "#1c3b58",
-    });
-    return;
-  }
+    if (quantityInCart + quantity > colorStock) {
+      Swal.fire({
+        icon: "warning",
+        title: "Stock épuisé",
+        text: "Impossible d’ajouter plus. Quantité maximale atteinte.",
+        confirmButtonColor: "#1c3b58",
+      });
+      return;
+    }
 
-  dispatch(
-    addToCart({
-      _id: product._id,
-      title: product.title,
-      category: product.mainCategory,
-      coverImage: product.coverImage,
-      newPrice: product.newPrice,
-      color: selectedColor,
-      quantity,
-    })
-  );
-};
-
-
+    dispatch(
+      addToCart({
+        _id: product._id,
+        title: product.title,
+        category: product.mainCategory,
+        coverImage: product.coverImage,
+        newPrice: product.newPrice,
+        color: selectedColor,
+        quantity,
+      })
+    );
+  };
 
   // ✅ Zoom on hover
   useEffect(() => {
@@ -126,6 +129,7 @@ const SingleProduct = () => {
     product?.oldPrice && product?.newPrice
       ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
       : 0;
+
 
 return (
   <div className="single-product-container">
