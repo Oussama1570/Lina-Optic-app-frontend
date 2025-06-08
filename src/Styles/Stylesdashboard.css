@@ -101,7 +101,30 @@
     
   }
 
-  .RevenueChart {
-  width: 500px !important;
+  .revenue-chart-wrapper {
+  width: 100%;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
+
+.chart-title {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.revenue-chart-scroll {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.chart-inner {
+  min-width: 600px; /* ensures chart is wide enough to scroll */
+  height: 300px;
+}
+
 }
