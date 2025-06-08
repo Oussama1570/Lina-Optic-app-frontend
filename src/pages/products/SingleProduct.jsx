@@ -133,26 +133,26 @@ const SingleProduct = () => {
 
 return (
   <div className="single-product-container">
-    <h1 className="product-title-lina">{product?.title || "Produit non disponible"}</h1>
+    <h1 className="product-title-lina">{product?.title}</h1>
 
     <div className="product-content">
-      {/* Left side - images & colors */}
+      {/* LEFT: IMAGE + COLORS */}
       <div>
         <div className="product-image-box">
-          {/* 🔥 Promotion Badge */}
-          {product?.oldPrice && product?.newPrice && (
+          {/* DISCOUNT BADGE */}
+          {product.oldPrice && (
             <div className="badge promotion-badge">-{discountPercent}%</div>
           )}
 
-          {/* ✨ Trending */}
-          {product?.trending && (
+          {/* TRENDING BADGE */}
+          {product.trending && (
             <div className="badge trending-badge">
               <HiOutlineSparkles className="badge-icon" />
               Tendance
             </div>
           )}
 
-          {/* 📦 Stock Badge */}
+          {/* STOCK BADGE */}
           <div
             className={`badge stock-badge ${
               selectedColor?.stock > 0 ? "in-stock" : "out-of-stock"
@@ -164,15 +164,15 @@ return (
               : "Rupture de stock"}
           </div>
 
-          {/* 🖼️ Main Image */}
+          {/* MAIN IMAGE */}
           <img
-            src={getImgUrl(selectedImage ?? product?.coverImage)}
-            alt={product?.title}
+            src={getImgUrl(selectedImage || product.coverImage)}
+            alt={product.title}
             className="product-main-image"
             ref={imageRef}
           />
 
-          {/* 🖼️ Thumbnails */}
+          {/* THUMBNAILS */}
           {selectedColor?.images?.length > 1 && (
             <div className="thumbnail-gallery">
               {selectedColor.images.map((img, idx) => (
@@ -188,7 +188,7 @@ return (
           )}
         </div>
 
-        {/* 🎨 Color Selector */}
+        {/* COLOR OPTIONS */}
         <div className="product-colors">
           <label>Couleurs disponibles:</label>
           <div className="color-options">
@@ -201,7 +201,7 @@ return (
               return (
                 <div key={index} className="color-option">
                   <img
-                    src={getImgUrl(color?.images?.[0])}
+                    src={getImgUrl(color.images?.[0])}
                     alt={name}
                     className={`color-image ${isSelected ? "selected" : ""}`}
                     onClick={() => handleSelectColor(color)}
@@ -223,20 +223,15 @@ return (
         </div>
       </div>
 
-      {/* Right side - product info */}
+      {/* RIGHT: PRODUCT DETAILS */}
       <div className="product-details">
-        <p className="product-description">{product?.description || ""}</p>
+        <p className="product-description">{product.description}</p>
 
         <div className="product-meta">
-          <p><strong>Marque:</strong> {product?.brand || "Inconnue"}</p>
-          <p><strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnue"}</p>
-          <p><strong>Sous-catégorie:</strong> {product?.subCategory || "Inconnue"}</p>
-          <p>
-            <strong>Publié:</strong>{" "}
-            {product?.createdAt
-              ? new Date(product.createdAt).toLocaleDateString()
-              : "Inconnue"}
-          </p>
+          <p><strong>Marque :</strong> {product?.brand || "Inconnue"}</p>
+          <p><strong>Catégorie principale :</strong> {product?.mainCategory || "Inconnue"}</p>
+          <p><strong>Sous-catégorie :</strong> {product?.subCategory || "Inconnue"}</p>
+          <p><strong>Publié :</strong> {product?.createdAt ? new Date(product.createdAt).toLocaleDateString() : "Inconnue"}</p>
         </div>
 
         <div className="product-price">
@@ -244,14 +239,12 @@ return (
             {product?.newPrice?.toFixed(2) ?? "0.00"} TND
           </span>
           {product?.oldPrice && (
-            <span className="old">
-              {Math.round(product?.oldPrice)} TND
-            </span>
+            <span className="old">{Math.round(product.oldPrice)} TND</span>
           )}
         </div>
 
         <div className="product-stock-info">
-          <strong>Stock:</strong>{" "}
+          <strong>Stock :</strong>{" "}
           {selectedColor?.stock > 0 ? selectedColor.stock : "Rupture de stock"}
         </div>
 
@@ -275,9 +268,7 @@ return (
           }`}
         >
           <FiShoppingCart className="icon" />
-          {selectedColor?.stock > 0
-            ? "Ajouter au panier"
-            : "Rupture de stock"}
+          {selectedColor?.stock > 0 ? "Ajouter au panier" : "Rupture de stock"}
         </button>
       </div>
     </div>
@@ -286,4 +277,3 @@ return (
 };
 
 export default SingleProduct;
-
