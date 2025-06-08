@@ -329,11 +329,11 @@
     background: #ffffff;
     box-sizing: border-box;
     overflow: hidden;
-    width: 100%;
+    width: 380 px !important;
   }
 
   .product-img {
-    width: 380px !important;
+    width: auto !important;
     height: auto;
     object-fit: contain;
     border-radius: 10px;
