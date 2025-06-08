@@ -184,7 +184,7 @@
   }
 
   .form-input {
-    width: 85% !important;
+    width: 90% !important;
     max-width: 100%;
     padding: 0.9rem 1.2rem;
     font-size: 1rem;
@@ -194,7 +194,7 @@
   }
 
   .form-group {
-    width: 85%;
+    width: 90%;
   }
 
   .checkout-container {
