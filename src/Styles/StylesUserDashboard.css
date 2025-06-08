@@ -333,7 +333,7 @@
   }
 
   .product-img {
-    width: auto !important;
+    width: 380px !important;
     height: auto;
     object-fit: contain;
     border-radius: 10px;
