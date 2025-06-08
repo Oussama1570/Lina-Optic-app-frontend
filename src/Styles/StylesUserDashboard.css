@@ -330,7 +330,7 @@
     background: #ffffff;
     border: 1px solid #4e8acf;
     border-radius: 12px;
-    padding: 1.65rem;
+    padding: 250px !important
     gap: 1rem;
     width: 92%;
     max-width: 360px;
@@ -344,7 +344,6 @@
     width: 175px;
     height: 150px;
     object-fit: contain;
-    border: 2px solid #4e8acf;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(153, 194, 255, 0.25);
     margin: 0 auto;
