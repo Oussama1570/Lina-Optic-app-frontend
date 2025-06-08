@@ -330,7 +330,7 @@
     background: #ffffff;
     border: 1px solid #4e8acf;
     border-radius: 12px;
-    padding: 1.2rem;
+    padding: 1.65rem;
     gap: 1rem;
     width: 92%;
     max-width: 360px;
@@ -341,8 +341,8 @@
   }
 
   .product-img {
-    width: 120px;
-    height: 120px;
+    width: 175px;
+    height: 150px;
     object-fit: contain;
     border: 2px solid #4e8acf;
     border-radius: 10px;
