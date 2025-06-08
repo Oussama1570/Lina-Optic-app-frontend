@@ -29,7 +29,6 @@
   justify-content: center;
   gap: 1rem;
   margin-bottom: 2rem;
-  width: 500px !important;
 }
 
 .stat-card {
@@ -98,14 +97,11 @@
 @media (max-width: 768px) {
   .stat-card {
     flex: 1 1 100%;
+
+    
   }
-}
 
-.chart-container {
-  overflow: visible !important;
-  position: relative;
-}
-
-.RevenueChart {
+  .RevenueChart {
   width: 500px !important;
+}
 }
