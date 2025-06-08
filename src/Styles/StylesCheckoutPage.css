@@ -106,6 +106,8 @@
   .form-input {
     font-size: 0.95rem;
   }
+
+  .iput { width: 450 px !important;}
 }
 
 .form-footer {
