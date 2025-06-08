@@ -29,6 +29,7 @@
   justify-content: center;
   gap: 1rem;
   margin-bottom: 2rem;
+  width: 500px !important;
 }
 
 .stat-card {

@@ -7,7 +7,7 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js';
 import { useGetAllOrdersQuery } from '../../redux/features/orders/ordersApi';
 
@@ -24,19 +24,19 @@ const RevenueChart = () => {
 
   const calculateRevenue = () => {
     const monthlyRevenue = Array(12).fill(0);
+
     if (orders) {
       orders.forEach((order) => {
         const month = getMonth(order.createdAt);
         monthlyRevenue[month] += order.totalPrice;
       });
     }
+
     setRevenueData(monthlyRevenue);
   };
 
   useEffect(() => {
-    if (orders) {
-      calculateRevenue();
-    }
+    if (orders) calculateRevenue();
   }, [orders]);
 
   if (isLoading) return <p>Loading revenue data...</p>;
@@ -45,7 +45,10 @@ const RevenueChart = () => {
   const isMobile = window.innerWidth <= 480;
 
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ],
     datasets: [
       {
         label: 'Revenue (TND)',
@@ -69,22 +72,18 @@ const RevenueChart = () => {
         position: 'top',
         labels: {
           font: {
-            size: isMobile ? 13 : 14,
+            size: isMobile ? 12 : 14,
           },
         },
       },
       title: {
-        display: true,
-        text: 'Monthly Revenue (TND)',
-        font: {
-          size: isMobile ? 16 : 20,
-        },
-        color: '#1f2937',
+        display: false, // Hide chart title (we use h2 instead)
       },
       tooltip: {
-        backgroundColor: '#111827',
+        backgroundColor: '#1f2937',
         titleColor: '#fff',
         bodyColor: '#fff',
+        padding: isMobile ? 10 : 8,
         bodyFont: {
           size: isMobile ? 14 : 12,
         },
@@ -92,9 +91,8 @@ const RevenueChart = () => {
           size: isMobile ? 15 : 13,
           weight: 'bold',
         },
-        padding: isMobile ? 12 : 8,
-        cornerRadius: 6,
         displayColors: false,
+        cornerRadius: 6,
         callbacks: {
           label: function (context) {
             return ` ${context.dataset.label}: ${context.formattedValue} TND`;
@@ -106,7 +104,7 @@ const RevenueChart = () => {
       y: {
         beginAtZero: true,
         ticks: {
-          color: '#374151',
+          color: '#4b5563',
           font: {
             size: isMobile ? 12 : 13,
           },
@@ -114,7 +112,7 @@ const RevenueChart = () => {
       },
       x: {
         ticks: {
-          color: '#374151',
+          color: '#4b5563',
           font: {
             size: isMobile ? 12 : 13,
           },
@@ -124,11 +122,17 @@ const RevenueChart = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
+    <div
+      className="w-full bg-white shadow-lg rounded-lg p-4"
+      style={{ maxWidth: '100%', overflowX: 'auto' }}
+    >
+      <h2
+        className="text-center font-bold text-gray-800 mb-4"
+        style={{ fontSize: isMobile ? '1.2rem' : '1.5rem' }}
+      >
         Monthly Revenue (TND)
       </h2>
-      <div className="w-full h-[300px] md:h-[400px]">
+      <div style={{ width: '100%', height: isMobile ? '250px' : '400px' }}>
         <Bar data={data} options={options} />
       </div>
     </div>
