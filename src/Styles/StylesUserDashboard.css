@@ -327,8 +327,8 @@
   border: 1px solid #4e8acf;
   border-radius: 10px;
   background: #ffffff;
-  width: 90%;           /* ✅ use percentage for responsiveness */
-  max-width: 330px;     /* ✅ avoid overflow */
+  width: 350px !important;           /* ✅ use percentage for responsiveness */
+      /* ✅ avoid overflow */
   margin-left: auto;    /* ✅ align to the right */
   margin-right: 0;      /* ✅ ensure it hugs the right side */
   box-sizing: border-box;
