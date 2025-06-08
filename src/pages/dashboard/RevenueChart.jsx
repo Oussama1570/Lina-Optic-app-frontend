@@ -68,9 +68,10 @@ const RevenueChart = () => {
     },
   };
 
+  
   return (
   <div className="revenue-chart-wrapper">
-    <h2 className="revenue-chart-title">Monthly Revenue (TND)</h2>
+    <h2 className="chart-title">Monthly Revenue (TND)</h2>
     <div className="revenue-chart-scroll">
       <div className="chart-inner">
         <Bar data={data} options={options} />
@@ -78,6 +79,8 @@ const RevenueChart = () => {
     </div>
   </div>
 );
+
+
 
 
 };
