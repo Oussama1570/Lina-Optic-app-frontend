@@ -322,8 +322,6 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-right: 120 px !important;
-  margin-left: -10% !important;
   padding: 1.2rem;
   gap: 1rem;
   border: 1px solid #4e8acf;
@@ -332,7 +330,7 @@
   width: 350 px;
   /* 💡 fill almost full screen */
   margin: 0 auto;
-  margin-left: -10% !important;
+  margin-left: -20% !important;
   box-sizing: border-box;
   overflow: hidden;
 }
