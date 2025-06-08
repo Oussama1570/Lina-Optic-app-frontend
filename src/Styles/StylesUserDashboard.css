@@ -316,29 +316,29 @@
     gap: 1.5rem;
   }
 
-   .product-item {
+  .product-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1rem;
+  padding: 1.2rem;
   gap: 1rem;
   border: 1px solid #4e8acf;
   border-radius: 10px;
   background: #ffffff;
+  width: 100%;
+  max-width: 95vw; /* 💡 fill almost full screen */
+  margin: 0 auto;
   box-sizing: border-box;
-  width: 90%;         /* ✅ increased width for better space */
-  max-width: 360px;   /* ✅ optional: limit on large phones */
-  margin: 0 auto;     /* ✅ center horizontally */
   overflow: hidden;
 }
 
 
 
   .product-img {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
   border-radius: 10px;
   border: 2px solid #4e8acf;
