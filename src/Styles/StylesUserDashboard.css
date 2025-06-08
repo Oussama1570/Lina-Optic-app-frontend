@@ -346,6 +346,8 @@
   box-shadow: 0 0 10px rgba(153, 194, 255, 0.25);
   display: block;
   margin: 0 auto;
+  margin-right: 120 px !important;
+  margin-left: -10% !important;
 }
 
 
