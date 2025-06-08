@@ -327,8 +327,8 @@
   border: 1px solid #4e8acf;
   border-radius: 10px;
   background: #ffffff;
-  width: 100%;
-  max-width: 95vw; /* 💡 fill almost full screen */
+  width: 350 px;
+  /* 💡 fill almost full screen */
   margin: 0 auto;
   box-sizing: border-box;
   overflow: hidden;
@@ -337,8 +337,8 @@
 
 
   .product-img {
-  width: 140px;
-  height: 140px;
+  width: 140px !important;
+  height: 140px !important;
   object-fit: contain;
   border-radius: 10px;
   border: 2px solid #4e8acf;
