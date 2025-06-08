@@ -105,3 +105,7 @@
   overflow: visible !important;
   position: relative;
 }
+
+.RevenueChart {
+  width: 500px !important;
+}
