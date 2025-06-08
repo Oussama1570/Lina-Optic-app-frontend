@@ -327,9 +327,10 @@
   border: 1px solid #4e8acf;
   border-radius: 10px;
   background: #ffffff;
-  width: 92%;                  /* ✅ make it wide enough */
-  max-width: 380px;            /* ✅ prevents overflow on small screens */
-  margin: 0 auto;              /* ✅ center horizontally */
+  width: 350 px;
+  /* 💡 fill almost full screen */
+  margin: 0 auto;
+  margin-left: -10% !important;
   box-sizing: border-box;
   overflow: hidden;
 }
