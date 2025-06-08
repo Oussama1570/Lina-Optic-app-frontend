@@ -177,13 +177,3 @@
 
 /* ✅ Prevent input overflow and ensure mobile friendliness */
 
-@media (max-width: 600px) {
-input[type="text"],
-input[type="email"],
-input[type="tel"] {
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  max-width: 73.5%;
-}
-}
