@@ -99,17 +99,7 @@
 
 /* ✅ Fix for smaller screens without breaking layout */
 @media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-  }
-
-  .form-input {
-    font-size: 0.95rem;
-  }
-
-  .input { width: 450 px !important;}
-}
-@media (max-width: 600px) {
+  /* 🧾 Container & Wrapper Fixes */
   .checkout-wrapper {
     padding: 2rem 1rem;
   }
@@ -117,117 +107,128 @@
   .checkout-container {
     padding: 1.5rem;
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  .form-row {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .form-group {
-    width: 100%;
-  }
-
-  .form-input {
-    width: 100%;
     max-width: 100%;
-    padding: 0.85rem 1.1rem;
-    font-size: 1rem;
-    border-radius: 10px;
     box-sizing: border-box;
-    display: block;
-  }
-
-  .checkout-button {
-    width: 100%;
-    font-size: 1rem;
-    padding: 0.8rem;
-    margin-top: 1.5rem;
   }
 
   .checkout-title {
     font-size: 1.6rem;
     text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .checkout-summary {
+    font-size: 0.95rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  /* 📋 Form Layout Fix */
+  .checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .form-section {
+    width: 100%;
   }
 
   .form-section-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    display: block;
+    color: #333;
+  }
+
+  .form-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.8rem 1.1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 1px solid #cbd6e2;
+    background-color: #f9fbfc;
+    color: #1c3b58;
+    box-sizing: border-box;
+    display: block;
+  }
+
+  .form-input:focus {
+    border-color: #4f77a7;
+    background-color: #ffffff;
+    outline: none;
+  }
+
+  .form-input.disabled {
+    background-color: #eaeff5;
+    cursor: not-allowed;
+  }
+
+  /* 🧾 Form Row Stacking */
+  .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* 📎 Checkbox + Button */
+  .form-footer {
+    margin-top: 2rem;
   }
 
   .checkbox-label {
     font-size: 0.95rem;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .checkbox {
+    margin-right: 0.6rem;
+    width: 18px;
+    height: 18px;
+  }
+
+  .checkout-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .checkout-button.enabled {
+    background-color: #1c3b58;
+    color: white;
+  }
+
+  .checkout-button.enabled:hover {
+    background-color: #2a4c70;
+  }
+
+  .checkout-button.disabled {
+    background-color: #ccd6dd;
+    color: #f5f5f5;
+    cursor: not-allowed;
+  }
+
+  /* ❌ Error Text */
+  .error-text {
+    color: #e63946;
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
   }
 }
-
-
-.form-footer {
-  width: 100%;
-  margin-top: 2.5rem;
-}
-
-.checkbox-label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  font-size: 0.95rem;
-  color: #444;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.checkbox {
-  margin-right: 0.6rem;
-  width: 18px;
-  height: 18px;
-}
-
-.checkbox-label .link {
-  color: #1c3b58;
-  text-decoration: underline;
-  font-weight: 500;
-  white-space: nowrap;
-  margin: 0 4px;
-}
-
-.terms-text {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #444;
-  line-height: 1.6;
-}
-
-.checkout-button {
-  width: 100%;
-  padding: 0.9rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.checkout-button.enabled {
-  background-color: #1c3b58;
-  color: white;
-}
-
-.checkout-button.enabled:hover {
-  background-color: #2a4c70;
-}
-
-.checkout-button.disabled {
-  background-color: #ccd6dd;
-  color: #f5f5f5;
-  cursor: not-allowed;
-}
-
-.error-text {
-  color: #e63946;
-  font-size: 0.85rem;
-  margin-top: 0.3rem;
-}
-
-/* ✅ Prevent input overflow and ensure mobile friendliness */
-
