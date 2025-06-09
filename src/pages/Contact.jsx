@@ -46,7 +46,7 @@ const Contact = () => {
             </li>
             <li>
               <span className="contact-icon">⏰</span>
-              Lundi – Samedi : 9h à 18h
+              Lundi – Samedi : 8h à 20h
             </li>
           </ul>
         </div>
