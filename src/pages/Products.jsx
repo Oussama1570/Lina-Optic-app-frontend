@@ -33,12 +33,10 @@ const Products = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // 📦 Fetch products from API
-  const {
-    data: products = [],
-    isLoading,
-    isFetching,
-    isError,
-  } = useGetAllProductsQuery();
+ const { data: products = [], refetch } = useGetAllProductsQuery(undefined, {
+  refetchOnMountOrArgChange: true,
+});
+
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
