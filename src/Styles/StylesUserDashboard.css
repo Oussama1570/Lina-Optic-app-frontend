@@ -56,6 +56,35 @@
   color: #1c3b58;
 }
 
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: #4a4a4a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.email-icon {
+  color: #007a99;
+  font-size: 1.1rem;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .user-email {
+    font-size: 0.9rem;
+    text-align: left;
+  }
+}
+
 /* ================================
 📂 DROPDOWN MENU
 ================================ */

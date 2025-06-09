@@ -5,6 +5,7 @@ import { getImgUrl } from "../../../utils/getImgUrl";
 import { auth } from "../../../firebase/firebase.config";
 import { Helmet } from "react-helmet";
 import LoadingSpinner from "../../../components/Loading";
+import { MdEmail } from "react-icons/md"; 
 import "../../../Styles/StylesUserDashboard.css";
 
 const UserDashboard = () => {
@@ -12,6 +13,9 @@ const UserDashboard = () => {
 
   // 🚀 Fetch user-specific orders using their email
   const { data: orders = [], isLoading } = useGetOrderByEmailQuery(currentUser?.email);
+
+  const customerEmail = currentUser?.email || "Email inconnu";
+
 
   // 🧾 Extract customer name from order or fallback to user's name
   const customerName =
@@ -57,11 +61,20 @@ const UserDashboard = () => {
       <div className="dashboard-header-bar">
         {/* User info section with avatar and name */}
         <div className="user-info-left">
-          <div className="user-avatar-circle">
-            {customerName.charAt(0).toUpperCase()}
-          </div>
-          <span className="user-full-name">{customerName}</span>
-        </div>
+  <div className="user-avatar-circle">
+    {customerName.charAt(0).toUpperCase()}
+  </div>
+  <div className="user-details">
+    <span className="user-full-name">{customerName}</span>
+    <span className="user-email">
+  <MdEmail className="email-icon" /> {currentUser?.email}
+</span>
+  </div>
+</div>
+
+        
+   
+
 
         {/* Dropdown menu toggle and content */}
        <div
