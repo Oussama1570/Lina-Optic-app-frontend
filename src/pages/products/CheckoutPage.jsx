@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../redux/features/cart/cartSlice";
 import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
 import { useTranslation } from "react-i18next";
@@ -44,7 +46,6 @@ const CheckoutPage = () => {
         image: item.coverImage || "/assets/default-image.png",
       };
 
-      // ✅ ensure color object is complete
       const validColor =
         item?.color?.colorName?.en &&
         item?.color?.colorName?.fr &&
@@ -72,8 +73,8 @@ const CheckoutPage = () => {
         confirmButtonColor: "#1c3b58",
         confirmButtonText: t("checkout.go_to_orders"),
       }).then(() => {
+        dispatch(clearCart()); // ✅ Clear the cart after successful order
         window.location.href = "/orders";
-
       });
     }
   } catch (error) {
