@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../redux/features/cart/cartSlice";
+import { productsApi } from "../../redux/features/products/productsApi";
 import Swal from "sweetalert2";
 import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
 import { useTranslation } from "react-i18next";
@@ -22,6 +23,7 @@ const CheckoutPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // ✅ Add this here
   const [isChecked, setIsChecked] = useState(false);
 
   const onSubmit = async (data) => {
@@ -67,15 +69,17 @@ const CheckoutPage = () => {
     const result = await createOrder(newOrder).unwrap();
     if (result) {
       Swal.fire({
-        title: t("checkout.order_confirmed"),
-        text: t("checkout.success_message"),
-        icon: "success",
-        confirmButtonColor: "#1c3b58",
-        confirmButtonText: t("checkout.go_to_orders"),
-      }).then(() => {
-        dispatch(clearCart()); // ✅ Clear the cart after successful order
-        window.location.href = "/orders";
-      });
+  title: t("checkout.order_confirmed"),
+  text: t("checkout.success_message"),
+  icon: "success",
+  confirmButtonColor: "#1c3b58",
+  confirmButtonText: t("checkout.go_to_orders"),
+}).then(() => {
+  dispatch(clearCart()); // Clear cart
+  dispatch(productsApi.util.invalidateTags([{ type: "Products", id: "LIST" }])); // ✅ Force refetch products
+  window.location.href = "/orders";
+});
+
     }
   } catch (error) {
     console.error("❌ Order submission error:", error);
