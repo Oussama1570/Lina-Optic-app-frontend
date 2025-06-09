@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { confirmPasswordReset } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
-import Swal from "sweetalert2";
 import "../Styles/StylesLogin.css";
 
 const ResetPassword = () => {
@@ -38,27 +37,15 @@ const ResetPassword = () => {
       await confirmPasswordReset(auth, oobCode, password);
 
       // ✅ Success alert
-      Swal.fire({
-        icon: "success",
-        title: "Mot de passe modifié",
-        text: "Votre mot de passe a été réinitialisé avec succès.",
-        confirmButtonColor: "#3085d6",
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+     alert("✅ Votre mot de passe a été réinitialisé avec succès.");
+navigate("/login");
 
-      setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       console.error("Reset error:", err);
 
       // ❌ Error alert
-      Swal.fire({
-        icon: "error",
-        title: "Erreur",
-        text: "Lien invalide ou expiré. Veuillez demander un nouveau lien.",
-        confirmButtonColor: "#d33",
-      });
+      alert("❌ Lien invalide ou expiré. Veuillez demander un nouveau lien.");
+
     } finally {
       setLoading(false);
     }

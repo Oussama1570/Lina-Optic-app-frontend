@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
-import Swal from "sweetalert2";
 import "../Styles/StylesLogin.css";
 
 const ForgotPassword = () => {
@@ -17,27 +16,16 @@ const ForgotPassword = () => {
       await sendPasswordResetEmail(auth, email);
 
       // ✅ Success popup
-      Swal.fire({
-        icon: "success",
-        title: "Lien envoyé",
-        text: "Un lien de réinitialisation a été envoyé à votre adresse email.",
-        confirmButtonColor: "#3085d6",
-        timer: 3000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+      alert("✅ Un lien de réinitialisation a été envoyé à votre adresse email.");
+
 
       setEmail(""); // Clear input
     } catch (error) {
       console.error("Erreur de réinitialisation:", error);
 
       // ❌ Error popup
-      Swal.fire({
-        icon: "error",
-        title: "Erreur",
-        text: "Adresse email invalide ou utilisateur introuvable.",
-        confirmButtonColor: "#d33",
-      });
+      alert("❌ Adresse email invalide ou utilisateur introuvable.");
+
     } finally {
       setLoading(false);
     }

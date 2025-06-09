@@ -8,7 +8,7 @@ import {
 import { auth } from "../../../firebase/firebase.config";
 import "../../../Styles/StylesLogin.css";
 import { Helmet } from "react-helmet";
-import Swal from "sweetalert2";
+
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -22,12 +22,8 @@ const ChangePassword = () => {
     setLoading(true);
 
     if (newPassword !== confirmPassword) {
-      Swal.fire({
-        icon: "error",
-        title: "Erreur",
-        text: "❌ Les nouveaux mots de passe ne correspondent pas.",
-        confirmButtonColor: "#d33",
-      });
+      alert("❌ Les nouveaux mots de passe ne correspondent pas.");
+
       setLoading(false);
       return;
     }
@@ -38,16 +34,9 @@ const ChangePassword = () => {
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
 
-      Swal.fire({
-        icon: "success",
-        title: "Mot de passe mis à jour",
-        text: "✅ Votre mot de passe a été changé avec succès.",
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+     alert("✅ Votre mot de passe a été changé avec succès.");
+navigate("/user-dashboard");
 
-      setTimeout(() => navigate("/user-dashboard"), 2000);
     } catch (error) {
       console.error("Erreur :", error);
 
@@ -59,12 +48,8 @@ const ChangePassword = () => {
           confirmButtonColor: "#d33",
         });
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Erreur",
-          text: "❌ Une erreur est survenue. Veuillez réessayer.",
-          confirmButtonColor: "#d33",
-        });
+        alert("❌ Le mot de passe actuel est incorrect.");
+
       }
     } finally {
       setLoading(false);

@@ -27,11 +27,15 @@ const ContactForm = () => {
 
       // ✅ Success alert
       Swal.fire({
-        icon: 'success',
-        title: 'Message envoyé !',
-        text: 'Votre message a été envoyé avec succès.',
-        confirmButtonColor: '#3085d6',
-      });
+  icon: 'success',
+  title: 'Message envoyé !',
+  text: 'Votre message a été envoyé avec succès.',
+  confirmButtonColor: '#3085d6',
+  showCloseButton: true,
+  allowOutsideClick: false,
+  allowEscapeKey: false,
+});
+
 
       setFormData({
         name: '',
@@ -42,11 +46,15 @@ const ContactForm = () => {
     } catch (err) {
       // ❌ Error alert
       Swal.fire({
-        icon: 'error',
-        title: 'Erreur',
-        text: 'Une erreur est survenue. Veuillez réessayer.',
-        confirmButtonColor: '#d33',
-      });
+  icon: 'error',
+  title: 'Erreur',
+  text: 'Une erreur est survenue. Veuillez réessayer.',
+  confirmButtonColor: '#d33',
+  showCloseButton: true,
+  allowOutsideClick: false,
+  allowEscapeKey: false,
+});
+
     } finally {
       setLoading(false);
     }
