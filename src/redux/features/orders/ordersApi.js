@@ -19,31 +19,32 @@ const ordersApi = createApi({
   endpoints: (builder) => ({
     // ✅ Create a new order
     createOrder: builder.mutation({
-      query: (newOrder) => ({
-        url: "/",
-        method: "POST",
-        body: {
-          ...newOrder,
-          products: newOrder.products.map((product) => ({
-            productId: product.productId,
-            quantity: product.quantity,
-            color: product.color?.colorName?.en
-              ? product.color
-              : {
-                  colorName: {
-                    en: "Original",
-                    fr: "Original",
-                    ar: "أصلي",
-                  },
-                  image:
-                    product.productId?.coverImage ||
-                    "/default-image.png",
-                },
-          })),
-        },
-      }),
-      invalidatesTags: ["Orders"],
-    }),
+  query: (newOrder) => ({
+    url: "/",
+    method: "POST",
+    body: {
+      ...newOrder,
+      products: newOrder.products.map((product) => ({
+        productId: product.productId,
+        quantity: product.quantity,
+        color: product.color?.colorName?.en
+          ? product.color
+          : {
+              colorName: {
+                en: "Original",
+                fr: "Original",
+                ar: "أصلي",
+              },
+              image:
+                product.productId?.coverImage || "/default-image.png",
+            },
+      })),
+    },
+  }),
+  // ✅ Trigger refetch of both orders and updated product stock
+  invalidatesTags: ["Orders", { type: "Products", id: "LIST" }],
+}),
+
    
     // ✅ Get all orders (admin)
     getAllOrders: builder.query({
@@ -111,7 +112,8 @@ const ordersApi = createApi({
     // ✅ Get orders by customer email
     getOrderByEmail: builder.query({
       query: (email) => ({
-        url: `/email/${email}`,
+        url: `/email/${encodeURIComponent(email)}`,
+
       }),
       transformResponse: (response) =>
         response.map((order) => ({

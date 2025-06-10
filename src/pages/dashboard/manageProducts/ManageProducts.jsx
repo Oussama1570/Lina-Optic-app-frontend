@@ -8,8 +8,10 @@ import Swal from "sweetalert2";
 import { getImgUrl } from "../../../utils/getImgUrl";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { productEventsActions } from "../../../redux/features/products/productEventsSlice";
+import { triggerRefetch, resetTrigger } from "../../../redux/features/products/productEventsSlice.js";
 import "../../../Styles/StylesManageProducts.css";
+
+
 
 const ManageProducts = () => {
   const { data: products = [], isLoading, isError, refetch } = useGetAllProductsQuery();
@@ -18,6 +20,9 @@ const ManageProducts = () => {
   const lang = i18n.language;
   const dispatch = useDispatch();
   const shouldRefetch = useSelector((state) => state.productEvents.shouldRefetch);
+
+dispatch(triggerRefetch());
+
 
   // 🔍 Search term state
   const [searchTerm, setSearchTerm] = useState("");

@@ -5,28 +5,55 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../redux/features/cart/cartSlice";
-import { productsApi } from "../../redux/features/products/productsApi";
-import Swal from "sweetalert2";
-import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
+import productsApi from "../../redux/features/products/productsApi";
+import { useGetAllProductsQuery } from "../../redux/features/products/productsApi";
 import { useTranslation } from "react-i18next";
+import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
+import { triggerRefetch, resetTrigger } from "../../redux/features/products/productEventsSlice";
+
+
+
+import { getImgUrl } from "../../utils/getImgUrl";
+import Swal from "sweetalert2";
 import "../../Styles/StylesCheckoutPage.css"
 
 const CheckoutPage = () => {
   const { t } = useTranslation();
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrice = cartItems
-    .reduce((acc, item) => acc + item.newPrice * item.quantity, 0)
-    .toFixed(2);
+  
+  
+  
 
   const { currentUser } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [createOrder, { isLoading }] = useCreateOrderMutation();
+  
+const { refetch: refetchAllProducts, isLoading: isProductsLoading } = useGetAllProductsQuery();
   const navigate = useNavigate();
   const dispatch = useDispatch(); // ✅ Add this here
   const [isChecked, setIsChecked] = useState(false);
 
-  const onSubmit = async (data) => {
+  
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
+
+  
+  const cartItems = useSelector((state) => state.cart.cartItems);
+const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+const totalPrice = cartItems
+  .reduce((acc, item) => acc + item.newPrice * item.quantity, 0)
+  .toFixed(2);
+
+
+
+  
+ 
+
+  
+// Inside your component:
+
+
+
+
+  
+const onSubmit = async (data) => {
   const newOrder = {
     name: data.name,
     email: currentUser?.email,
@@ -38,54 +65,50 @@ const CheckoutPage = () => {
       zipcode: data.zipcode,
     },
     phone: data.phone,
-    products: cartItems.map((item) => {
-      const fallbackColor = {
-        colorName: {
-          en: "Original",
-          fr: "Original",
+    products: cartItems.map((item) => ({
+      productId: item._id,
+      quantity: item.quantity,
+      color: {
+  colorName:
+    typeof item.color?.colorName === "object"
+      ? item.color.colorName
+      : {
+          en: item.color?.colorName || "Original",
+          fr: item.color?.colorName || "Original",
           ar: "أصلي",
         },
-        image: item.coverImage || "/assets/default-image.png",
-      };
+  image:
+    item.color?.image ||
+    item.coverImage ||
+    (item.color?.colorName?.image ? item.color.colorName.image : "/assets/default-image.png"),
+},
 
-      const validColor =
-        item?.color?.colorName?.en &&
-        item?.color?.colorName?.fr &&
-        item?.color?.colorName?.ar &&
-        item?.color?.image
-          ? item.color
-          : fallbackColor;
-
-      return {
-        productId: item._id,
-        quantity: item.quantity,
-        color: validColor,
-      };
-    }),
-    totalPrice: totalPrice,
+    })),
+    totalPrice,
   };
 
   try {
     const result = await createOrder(newOrder).unwrap();
     if (result) {
       Swal.fire({
-  title: t("checkout.order_confirmed"),
-  text: t("checkout.success_message"),
-  icon: "success",
-  confirmButtonColor: "#1c3b58",
-  confirmButtonText: t("checkout.go_to_orders"),
-}).then(() => {
-  dispatch(clearCart()); // Clear cart
-  dispatch(productsApi.util.invalidateTags([{ type: "Products", id: "LIST" }])); // ✅ Force refetch products
-  window.location.href = "/orders";
-});
-
+        title: t("checkout.order_confirmed"),
+        text: t("checkout.success_message"),
+        icon: "success",
+        confirmButtonColor: "#1c3b58",
+        confirmButtonText: t("checkout.go_to_orders"),
+      }).then(() => {
+        navigate("/orders");
+        dispatch(clearCart()); // ✅ Clear the cart
+        dispatch(productsApi.util.invalidateTags([{ type: "Products", id: "LIST" }])); // ✅ Refresh products
+        dispatch(triggerRefetch()); // ✅ Notify others to refetch
+        setTimeout(() => dispatch(resetTrigger()), 1000); // ✅ Optional reset
+      });
     }
   } catch (error) {
     console.error("❌ Order submission error:", error);
     Swal.fire({
       title: t("checkout.error_title"),
-      text: error?.data?.message || error?.message || t("checkout.error_message"),
+      text: error?.message || t("checkout.error_message"),
       icon: "error",
       confirmButtonColor: "#d33",
     });
@@ -93,7 +116,10 @@ const CheckoutPage = () => {
 };
 
 
-  if (isLoading)
+
+
+  if (isLoading || isProductsLoading)
+
     return (
       <div className="text-center text-lg font-semibold py-10 text-[#1c3b58]">
         {t("checkout.processing")}

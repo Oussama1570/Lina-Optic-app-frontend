@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getImgUrl } from "../../utils/getImgUrl";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
@@ -96,13 +96,15 @@ const ProductCard = ({ product }) => {
     0
   );
 
-  return (
+
+    return (
     <div className="product-card-optic">
       <a
         href={`/products/${product._id}`}
         className="image-box"
         style={{ position: "relative" }}
       >
+        {/* 🔖 Discount badge */}
         {discountPercent > 0 && (
           <div
             style={{
@@ -122,6 +124,7 @@ const ProductCard = ({ product }) => {
           </div>
         )}
 
+        {/* ✨ Trending badge */}
         {product?.trending && (
           <div
             style={{
@@ -145,6 +148,7 @@ const ProductCard = ({ product }) => {
           </div>
         )}
 
+        {/* 🧮 Stock badge */}
         <div
           style={{
             position: "absolute",
@@ -164,6 +168,7 @@ const ProductCard = ({ product }) => {
             : "Rupture de stock"}
         </div>
 
+        {/* 🖼️ Product image */}
         <img
           src={getImgUrl(isHovered ? hoverImage : mainImage)}
           alt={product?.title}
@@ -178,7 +183,8 @@ const ProductCard = ({ product }) => {
           {product?.title || "Produit inconnu"}
         </h3>
         <p className="product-sub-info">
-          {product?.subCategory || "Sous-catégorie inconnue"}, {product?.mainCategory || "Catégorie inconnue"}
+          {product?.subCategory || "Sous-catégorie inconnue"},{" "}
+          {product?.mainCategory || "Catégorie inconnue"}
         </p>
         <p className="product-brand">{product?.brand || "Marque inconnue"}</p>
 
@@ -196,15 +202,23 @@ const ProductCard = ({ product }) => {
 
       <div className="hover-icons">
         <button
-          className={`add-btn ${selectedColor?.stock <= 0 ? "disabled-btn" : ""}`}
+          className={`add-btn ${
+            selectedColor?.stock <= 0 ? "disabled-btn" : ""
+          }`}
           onClick={selectedColor?.stock > 0 ? handleAddToCart : undefined}
           disabled={selectedColor?.stock <= 0}
         >
           <FiShoppingCart />
-          {selectedColor?.stock > 0 ? "Ajouter au panier" : "En rupture de stock"}
+          {selectedColor?.stock > 0
+            ? "Ajouter au panier"
+            : "En rupture de stock"}
         </button>
 
-        <span className="icon" onClick={handleToggleWishlist} style={{ cursor: "pointer" }}>
+        <span
+          className="icon"
+          onClick={handleToggleWishlist}
+          style={{ cursor: "pointer" }}
+        >
           <FiHeart className="icon" />
         </span>
 

@@ -7,6 +7,7 @@ import {
   useRemoveProductFromOrderMutation,
 } from "../../redux/features/orders/ordersApi";
 
+
 // 🔐 Auth context for the currently logged-in user
 import { useAuth } from "../../context/AuthContext";
 
@@ -27,7 +28,11 @@ import { useTranslation } from "react-i18next";
 
 // 🔁 Dispatch for triggering Redux actions (e.g. to refresh product stock)
 import { useDispatch } from "react-redux";
-import { productEventsActions } from "../../redux/features/products/productEventsSlice";
+import {
+  triggerRefetch,
+  resetTrigger,
+} from "../../redux/features/products/productEventsSlice.js";
+
 
 // 🎨 Styles
 import "../../Styles/StylesOrderPage.css";
@@ -89,10 +94,14 @@ const OrderPage = () => {
           await deleteOrder({ orderId }).unwrap();
           Swal.fire(t("ordersPage.deleted"), t("ordersPage.orderDeleted"), "success");
           refetch(); // 🔄 Refresh the order list
-          dispatch(productEventsActions.triggerRefetch()); // 🔁 Update product stock UI
-        } catch {
-          Swal.fire(t("ordersPage.error"), t("ordersPage.orderDeleteFailed"), "error");
-        }
+          dispatch(triggerRefetch());
+          setTimeout(() => dispatch(resetTrigger()), 1000);
+          // 🔁 Update product stock UI
+        } catch (error) {
+        console.error("❌ Error deleting order:", error);
+        Swal.fire(t("ordersPage.error"), t("ordersPage.orderDeleteFailed"), "error");
+}
+
       }
     });
   };
@@ -129,11 +138,16 @@ const OrderPage = () => {
         "success"
       );
       refetch(); // 🔄 Refresh the order list
-      dispatch(productEventsActions.triggerRefetch()); // 🔁 Refresh product stock
-    } catch {
+      dispatch(triggerRefetch());
+      setTimeout(() => dispatch(resetTrigger()), 1000);
+ // 🔁 Refresh product stock
+    } catch (error) {
+      console.error("❌ Error removing product:", error);
       Swal.fire(t("ordersPage.error"), t("ordersPage.productRemoveFailed"), "error");
-    }
+}
+
   };
+
 
 
  return (
@@ -243,3 +257,9 @@ const OrderPage = () => {
 };
 
 export default OrderPage;
+
+
+
+
+
+

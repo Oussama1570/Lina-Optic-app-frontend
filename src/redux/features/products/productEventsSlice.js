@@ -1,18 +1,21 @@
-// src/redux/features/products/productEventsSlice.js
 import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  shouldRefetch: false,
+};
 
 const productEventsSlice = createSlice({
   name: "productEvents",
-  initialState: { shouldRefetch: false },
+  initialState,
   reducers: {
     triggerRefetch: (state) => {
       state.shouldRefetch = true;
     },
-    resetRefetch: (state) => {
+    resetTrigger: (state) => {
       state.shouldRefetch = false;
     },
   },
 });
 
-export const productEventsActions = productEventsSlice.actions;
+export const { triggerRefetch, resetTrigger } = productEventsSlice.actions;
 export default productEventsSlice.reducer;

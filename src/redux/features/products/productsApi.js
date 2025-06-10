@@ -31,12 +31,10 @@ const productsApi = createApi({
             : [{ colorName: "Default", image: product.coverImage }],
         })),
       providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ _id }) => ({ type: "Products", id: _id })),
-              { type: "Products", id: "LIST" },
-            ]
-          : [{ type: "Products", id: "LIST" }],
+  result
+    ? [{ type: "Products", id: "LIST" }]
+    : [{ type: "Products", id: "LIST" }],
+
     }),
 
     // ✅ Get a single product by ID
