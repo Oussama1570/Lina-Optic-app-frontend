@@ -100,11 +100,29 @@ const AdminOrdersProgress = () => {
       // ✅ 2. Send notification if step is 60% or 100%
       if ([60, 100].includes(updatedValue) && productKey && email) {
         // Remove the index from the productKey: `${productId}|${colorName}|${index}`
-        const [productId, rawColorName] = productKey.split("|").slice(0, 2);
+        const [productId] = productKey.split("|");
 
-        const cleanColorName = rawColorName?.trim(); // already in selected lang
-  
-        const cleanProductKey = `${productId}|${cleanColorName}`;
+// ✅ Find the matching product to extract color in French
+const matchedProduct = order.products.find((p) => {
+  return (
+    p.productId._id.toString() === productId &&
+    p.color?.colorName // ensure exists
+  );
+});
+
+if (!matchedProduct) {
+  console.error("❌ Produit non trouvé dans la commande");
+  return;
+}
+
+// ✅ Get color name in French
+const colorNameObj = matchedProduct.color.colorName;
+const cleanColorName =
+  typeof colorNameObj === "object" ? colorNameObj.fr : colorNameObj;
+
+const cleanProductKey = `${productId}|${cleanColorName}`;
+
+
   
         await sendNotification({
           orderId,
@@ -232,3 +250,6 @@ const AdminOrdersProgress = () => {
 };
 
 export default AdminOrdersProgress;
+
+
+
