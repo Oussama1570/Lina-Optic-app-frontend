@@ -1,6 +1,6 @@
 import React from "react";
 
-// 🔄 API hooks for fetching and modifying orders
+// 🔄 API hooks for fetching and modifying orders 
 import {
   useGetOrderByEmailQuery,
   useDeleteOrderMutation,
@@ -107,52 +107,50 @@ const OrderPage = () => {
   };
 
   // ❌ Handle removal of a specific product from an order
-  const handleDeleteProduct = async (
-    orderId,
-    productId,
-    colorNameObj,
-    maxQuantity
-  ) => {
-    const colorName = colorNameObj?.[lang] || colorNameObj?.en || "Original";
-    const productKey = `${productId}|${colorName}`;
+ const handleDeleteProduct = async (
+  orderId,
+  productId,
+  colorNameObj,
+  maxQuantity
+) => {
+  const colorName = colorNameObj?.[lang] || colorNameObj?.en || "Original";
+  const productKey = `${productId}|${colorName}`;
 
-    // 📥 Prompt user for quantity to remove
-    const { value: quantityToRemove } = await Swal.fire({
-      title: t("ordersPage.removeQuantityTitle"),
-      input: "number",
-      inputLabel: t("ordersPage.removeQuantityLabel", { max: maxQuantity }),
-      inputAttributes: { min: 1, max: maxQuantity, step: 1 },
-      inputValue: 1,
-      showCancelButton: true,
-      confirmButtonText: t("ordersPage.removeBtn"),
-      cancelButtonText: t("ordersPage.cancelBtn"),
+  const { value: quantityToRemove } = await Swal.fire({
+    title: t("ordersPage.removeQuantityTitle"),
+    input: "number",
+    inputLabel: t("ordersPage.removeQuantityLabel", { max: maxQuantity }),
+    inputAttributes: { min: 1, max: maxQuantity, step: 1 },
+    inputValue: 1,
+    showCancelButton: true,
+    confirmButtonText: t("ordersPage.removeBtn"),
+    cancelButtonText: t("ordersPage.cancelBtn"),
+  });
+
+  if (!quantityToRemove || quantityToRemove <= 0) return;
+
+  try {
+    await removeProductFromOrder({ orderId, productKey, quantityToRemove }).unwrap();
+
+    // ✅ Show success message FIRST
+    Swal.fire({
+      title: t("ordersPage.removed"),
+      text: t("ordersPage.productRemoved", { qty: quantityToRemove }),
+      icon: "success",
+      confirmButtonText: t("ordersPage.okBtn") || "OK",
+    }).then(() => {
+      // ✅ Refresh ONLY AFTER USER CONFIRMS THE SUCCESS ALERT
+      refetch(); // Refresh user orders
+      dispatch(triggerRefetch()); // Refresh stock
+      setTimeout(() => dispatch(resetTrigger()), 1000);
     });
 
-    if (!quantityToRemove || quantityToRemove <= 0) return;
+  } catch (error) {
+    console.error("❌ Error removing product:", error);
+    Swal.fire(t("ordersPage.error"), t("ordersPage.productRemoveFailed"), "error");
+  }
+};
 
-    try {
-     await removeProductFromOrder({ orderId, productKey, quantityToRemove }).unwrap();
-Swal.fire(
-  t("ordersPage.removed"),
-  t("ordersPage.productRemoved", { qty: quantityToRemove }),
-  "success"
-);
-
-// ✅ Refresh backend & UI state
-refetch(); // Refetch order data
-dispatch(triggerRefetch()); // Refetch product stock
-setTimeout(() => dispatch(resetTrigger()), 1000);
-
-// ✅ Force UI refresh on all devices (esp. mobile)
-window.location.reload(); // Force DOM re-render (last resort for Android screen)
-
- // 🔁 Refresh product stock
-    } catch (error) {
-      console.error("❌ Error removing product:", error);
-      Swal.fire(t("ordersPage.error"), t("ordersPage.productRemoveFailed"), "error");
-}
-
-  };
 
 
 
