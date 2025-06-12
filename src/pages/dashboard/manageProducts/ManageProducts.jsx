@@ -21,18 +21,18 @@ const ManageProducts = () => {
   const dispatch = useDispatch();
   const shouldRefetch = useSelector((state) => state.productEvents.shouldRefetch);
 
-dispatch(triggerRefetch());
+
 
 
   // 🔍 Search term state
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    if (shouldRefetch) {
-      refetch();
-      dispatch(productEventsActions.resetRefetch());
-    }
-  }, [shouldRefetch, refetch, dispatch]);
+ useEffect(() => {
+  if (shouldRefetch) {
+    refetch();
+    dispatch(resetTrigger()); // ✅ fixed this line
+  }
+}, [shouldRefetch, refetch, dispatch]);
 
   const handleDeleteProduct = async (id) => {
     const confirmResult = await Swal.fire({
@@ -64,6 +64,8 @@ dispatch(triggerRefetch());
   const filteredProducts = products.filter((product) =>
     product._id.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
+
+
 
    return (
     <section className="w-full bg-gray-50 min-h-screen px-2 md:px-6 py-6">
