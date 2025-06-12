@@ -30,9 +30,10 @@ const Footer = () => {
   scrolling="no"
   marginHeight="0"
   marginWidth="0"
-  src="https://www.openstreetmap.org/export/embed.html?bbox=10.0890%2C36.8090%2C10.0950%2C36.8120&layer=mapnik&marker=36.8105%2C10.0920"
+  src="https://www.openstreetmap.org/export/embed.html?bbox=10.0915%2C36.8098%2C10.0925%2C36.8112&layer=mapnik&marker=36.8105%2C10.0920"
   title="Lina Optic – Manouba"
-></iframe>
+/>
+
 </div>
 
         </div>
