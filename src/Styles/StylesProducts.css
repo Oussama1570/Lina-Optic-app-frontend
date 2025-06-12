@@ -485,9 +485,9 @@
   .load-more-btn {
     width: 100%;
     max-width: 320px;
-    margin: 2rem auto 0;
-    margin-top: -120 px;
-    margin-bottom: 50px;
+    margin: 3rem auto; /* 🔁 Equal margin above and below */
+    padding: 14px 28px;
+    font-size: 1.05rem;
   }
 }
 
