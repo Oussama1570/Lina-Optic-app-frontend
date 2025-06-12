@@ -60,21 +60,22 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* ===============================
-          🗺️ Google Map Location
-      =============================== */}
-      <div className="contact-map-wrapper">
-        <iframe
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3194.334835276219!2d10.092008475610537!3d36.81049556711959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd326e58495445%3A0x26a54a14bcb31d74!2sLINA%20OPTIC!5e0!3m2!1sfr!2stn!4v1749315427817!5m2!1sfr!2stn"
+      {/* =============================== 🗺️ Google Map Location =============================== */}
+<div className="contact-map-wrapper">
+<iframe
   width="100%"
-  height="200"
-  style={{ border: 0 }} // ✅ ✅ This is valid in React
-  allowFullScreen
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade"
-  title="Google Map"
-/>
-      </div>
+  height="300"
+  frameBorder="0"
+  scrolling="no"
+  marginHeight="0"
+  marginWidth="0"
+  src="https://www.openstreetmap.org/export/embed.html?bbox=10.0890%2C36.8090%2C10.0950%2C36.8120&layer=mapnik&marker=36.8105%2C10.0920"
+  title="Lina Optic – Manouba"
+></iframe>
+
+
+</div>
+
     </div>
   );
 };
