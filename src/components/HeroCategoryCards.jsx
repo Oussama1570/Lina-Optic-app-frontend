@@ -26,7 +26,7 @@ const HeroCategoryCards = () => {
   return (
     <div className="category-cards-container">
       {/* 🔴 Card: Femme */}
-      <Link to="/products?category=Femmes" className="category-card-link-wrapper">
+      <a href="/products?category=Femmes" className="category-card-link-wrapper">
         <div
           className="category-card"
           onMouseMove={(e) => handleMouseMove(e, femmeZoomRef)}
@@ -43,10 +43,10 @@ const HeroCategoryCards = () => {
             <span className="card-link">VOIR LA COLLECTION</span>
           </div>
         </div>
-      </Link>
+      </a>
 
       {/* 🔵 Card: Homme */}
-      <Link to="/products?category=Hommes" className="category-card-link-wrapper">
+      <a href="/products?category=Hommes" className="category-card-link-wrapper">
         <div
           className="category-card"
           onMouseMove={(e) => handleMouseMove(e, hommeZoomRef)}
@@ -63,7 +63,7 @@ const HeroCategoryCards = () => {
             <span className="card-link">VOIR LA COLLECTION</span>
           </div>
         </div>
-      </Link>
+      </a>
     </div>
   );
 };
