@@ -4,8 +4,9 @@ import ProductCard from "./products/ProductCard";
 import { useGetAllProductsQuery } from "../redux/features/products/productsApi";
 import "../Styles/StylesProducts.css";
 import FadeInSection from "../Animations/FadeInSection";
-import SelectorsPageProducts from './../components/SelectorProductsPage';
+import SelectorsPageProducts from "./../components/SelectorProductsPage";
 import PriceSlider from "../components/PriceSlider";
+import { Helmet } from "react-helmet";
 
 // 🧩 Options for frame type filtering
 const frameTypeOptions = [
@@ -33,10 +34,14 @@ const Products = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   // 📦 Fetch products from API
- const { data: products = [], refetch } = useGetAllProductsQuery(undefined, {
-  refetchOnMountOrArgChange: true,
-});
-
+  const {
+    data: products = [],
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetAllProductsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -58,43 +63,50 @@ const Products = () => {
   // 🧠 Get unique brand list for selector
   const uniqueBrands = useMemo(() => {
     const brandsSet = new Set(products.map((p) => p.brand).filter(Boolean));
-    return Array.from(brandsSet);
+    const unique = Array.from(brandsSet);
+    return unique.length > 0 ? unique : ["Aucune marque"];
   }, [products]);
 
   // 🧹 Apply all filters
-  let filteredProducts = products;
+  const filteredProducts = useMemo(() => {
+    let result = products;
 
-  if (selectedCategory.length && !selectedCategory.includes("All")) {
-    filteredProducts = filteredProducts.filter((p) =>
-      selectedCategory.includes(p.mainCategory)
-    );
-  }
+    if (selectedCategory.length && !selectedCategory.includes("All")) {
+      result = result.filter((p) => selectedCategory.includes(p.mainCategory));
+    }
 
-  if (selectedSubCategory.length && !selectedSubCategory.includes("All")) {
-    filteredProducts = filteredProducts.filter((p) =>
-      selectedSubCategory.includes(p.subCategory)
-    );
-  }
+    if (selectedSubCategory.length && !selectedSubCategory.includes("All")) {
+      result = result.filter((p) =>
+        selectedSubCategory.includes(p.subCategory)
+      );
+    }
 
-  if (selectedBrand.length && !selectedBrand.includes("All")) {
-    filteredProducts = filteredProducts.filter((p) =>
-      selectedBrand.includes(p.brand)
-    );
-  }
+    if (selectedBrand.length && !selectedBrand.includes("All")) {
+      result = result.filter((p) => selectedBrand.includes(p.brand));
+    }
 
-  if (selectedFrameType.length && !selectedFrameType.includes("All")) {
-    filteredProducts = filteredProducts.filter((p) =>
-      selectedFrameType.includes(p.frameType)
-    );
-  }
+    if (selectedFrameType.length && !selectedFrameType.includes("All")) {
+      result = result.filter((p) => selectedFrameType.includes(p.frameType));
+    }
 
-  filteredProducts = filteredProducts.filter((p) => {
-    const price = p.newPrice || p.oldPrice || 0;
-    return price >= priceRange[0] && price <= priceRange[1];
-  });
+    return result.filter((p) => {
+      const price = p.newPrice || p.oldPrice || 0;
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
+  }, [
+    products,
+    selectedCategory,
+    selectedSubCategory,
+    selectedBrand,
+    selectedFrameType,
+    priceRange,
+  ]);
 
   // ✂️ Slice visible products for pagination
-  const visibleProducts = filteredProducts.slice(0, visibleCount);
+  const visibleProducts = useMemo(
+    () => filteredProducts.slice(0, visibleCount),
+    [filteredProducts, visibleCount]
+  );
 
   // ⬇️ Load more handler
   const handleLoadMore = () => {
@@ -102,6 +114,7 @@ const Products = () => {
     setTimeout(() => {
       setVisibleCount((prev) => prev + 6);
       setIsLoadingMore(false);
+      window.scrollBy({ top: 300, behavior: "smooth" });
     }, 800);
   };
 
@@ -114,6 +127,7 @@ const Products = () => {
       </div>
     );
   }
+
 
 
 
