@@ -95,7 +95,7 @@ const OrderPage = () => {
           Swal.fire(t("ordersPage.deleted"), t("ordersPage.orderDeleted"), "success");
           refetch(); // 🔄 Refresh the order list
           dispatch(triggerRefetch());
-          setTimeout(() => dispatch(resetTrigger()), 1000);
+          setTimeout(() => dispatch(resetTrigger()), 7000);
           // 🔁 Update product stock UI
         } catch (error) {
         console.error("❌ Error deleting order:", error);
