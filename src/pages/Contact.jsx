@@ -63,7 +63,7 @@ const Contact = () => {
       {/* =============================== 🗺️ Google Map Location =============================== */}
 <div className="contact-map-wrapper">
 <div className="footer-map-small">
-  <iframe
+   <iframe
     width="100%"
     height="300"
     frameBorder="0"
