@@ -95,7 +95,7 @@ const OrderPage = () => {
           Swal.fire(t("ordersPage.deleted"), t("ordersPage.orderDeleted"), "success");
           refetch(); // 🔄 Refresh the order list
           dispatch(triggerRefetch());
-          setTimeout(() => dispatch(resetTrigger()), 7000);
+          setTimeout(() => dispatch(resetTrigger()), 1000);
           // 🔁 Update product stock UI
         } catch (error) {
         console.error("❌ Error deleting order:", error);
@@ -141,7 +141,7 @@ Swal.fire(
 // ✅ Refresh backend & UI state
 refetch(); // Refetch order data
 dispatch(triggerRefetch()); // Refetch product stock
-setTimeout(() => dispatch(resetTrigger()), 1000);
+setTimeout(() => dispatch(resetTrigger()), 7000);
 
 // ✅ Force UI refresh on all devices (esp. mobile)
 window.location.reload(); // Force DOM re-render (last resort for Android screen)
