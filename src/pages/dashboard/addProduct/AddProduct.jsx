@@ -87,63 +87,76 @@ const AddProduct = () => {
     }
   };
 
-  const onSubmit = async (data) => {
-    if (!mainCategory || !subCategory) {
-      Swal.fire("Erreur", "Veuillez sélectionner une catégorie et une sous-catégorie.", "error");
-      return;
-    }
+ const onSubmit = async (data) => {
+  if (!mainCategory || !subCategory) {
+    Swal.fire("Erreur", "Veuillez sélectionner une catégorie et une sous-catégorie.", "error");
+    return;
+  }
 
-    let coverImage = "";
-    if (coverImageFile instanceof File && coverImageFile.type.startsWith("image/")) {
-      coverImage = await uploadImage(coverImageFile);
-    }
+  let coverImage = "";
+  if (coverImageFile instanceof File && coverImageFile.type.startsWith("image/")) {
+    coverImage = await uploadImage(coverImageFile);
+  }
 
-    const colors = await Promise.all(
-      colorInputs.map(async (colorInput) => {
-        if (
-          colorInput.imageFile instanceof File &&
-          colorInput.colorName &&
-          colorInput.stock >= 0
-        ) {
-          const imageUrl = await uploadImage(colorInput.imageFile);
-          return {
-            colorName: colorInput.colorName,
-            image: imageUrl,
-            stock: Number(colorInput.stock),
-          };
+ const colors = await Promise.all(
+  colorInputs.map(async (input) => {
+    if (
+      input.colorName &&
+      Array.isArray(input.imageFiles) &&
+      input.stock >= 0
+    ) {
+      const uploadedImages = [];
+
+      for (const file of input.imageFiles) {
+        if (file && file.type.startsWith("image/")) {
+          const imageUrl = await uploadImage(file);
+          uploadedImages.push(imageUrl);
         }
-        return null;
-      })
-    );
+      }
 
-    const filteredColors = colors.filter(Boolean);
-
-    const newProductData = {
-      ...data,
-      mainCategory,
-      subCategory,
-      frameType: data.frameType || "",
-      coverImage,
-      colors: filteredColors,
-      brand: data.brand || "",
-      oldPrice: Number(data.oldPrice),
-      newPrice: Number(data.newPrice),
-      stockQuantity: filteredColors[0]?.stock || 0,
-    };
-
-    try {
-      await addProduct(newProductData).unwrap();
-      Swal.fire("Succès!", "Produit ajouté avec succès!", "success");
-      reset();
-      setCoverImageFile(null);
-      setCoverPreviewURL("");
-      setColorInputs([]);
-    } catch (error) {
-      console.error("❌ Error adding product:", error?.data || error);
-      Swal.fire("Erreur!", "Échec de l'ajout du produit.", "error");
+      return {
+        colorName: {
+          en: input.colorName,
+          fr: input.colorName, // Optional: add auto-translate if needed
+          ar: input.colorName,
+        },
+        images: uploadedImages,
+        stock: Number(input.stock),
+      };
     }
-  };
+    return null;
+  })
+);
 
+
+ const filteredColors = colors.filter(Boolean);
+
+const newProductData = {
+  ...data,
+  mainCategory,
+  subCategory,
+  frameType: data.frameType || "",
+  coverImage,
+  colors: filteredColors,
+  brand: data.brand || "",
+  oldPrice: Number(data.oldPrice),
+  newPrice: Number(data.newPrice),
+  stockQuantity: filteredColors[0]?.stock || 0,
+};
+
+
+  try {
+    await addProduct(newProductData).unwrap();
+    Swal.fire("Succès!", "Produit ajouté avec succès!", "success");
+    reset();
+    setCoverImageFile(null);
+    setCoverPreviewURL("");
+    setColorInputs([]);
+  } catch (error) {
+    console.error("❌ Error adding product:", error?.data || error);
+    Swal.fire("Erreur!", "Échec de l'ajout du produit.", "error");
+  }
+};
 
 
 
