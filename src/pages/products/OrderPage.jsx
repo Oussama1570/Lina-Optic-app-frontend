@@ -131,15 +131,21 @@ const OrderPage = () => {
     if (!quantityToRemove || quantityToRemove <= 0) return;
 
     try {
-      await removeProductFromOrder({ orderId, productKey, quantityToRemove }).unwrap();
-      Swal.fire(
-        t("ordersPage.removed"),
-        t("ordersPage.productRemoved", { qty: quantityToRemove }),
-        "success"
-      );
-      refetch(); // 🔄 Refresh the order list
-      dispatch(triggerRefetch());
-      setTimeout(() => dispatch(resetTrigger()), 1000);
+     await removeProductFromOrder({ orderId, productKey, quantityToRemove }).unwrap();
+Swal.fire(
+  t("ordersPage.removed"),
+  t("ordersPage.productRemoved", { qty: quantityToRemove }),
+  "success"
+);
+
+// ✅ Refresh backend & UI state
+refetch(); // Refetch order data
+dispatch(triggerRefetch()); // Refetch product stock
+setTimeout(() => dispatch(resetTrigger()), 1000);
+
+// ✅ Force UI refresh on all devices (esp. mobile)
+window.location.reload(); // Force DOM re-render (last resort for Android screen)
+
  // 🔁 Refresh product stock
     } catch (error) {
       console.error("❌ Error removing product:", error);
