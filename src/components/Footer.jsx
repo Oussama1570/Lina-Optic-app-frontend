@@ -24,15 +24,15 @@ const Footer = () => {
           {/* Embedded Google Map */}
           <div className="footer-map-small">
  <iframe
-  width="100%"
-  height="300"
-  frameBorder="0"
-  scrolling="no"
-  marginHeight="0"
-  marginWidth="0"
-  src="https://www.openstreetmap.org/export/embed.html?bbox=10.0890%2C36.8090%2C10.0950%2C36.8120&layer=mapnik&marker=36.8105%2C10.0920"
-  title="Lina Optic – Manouba"
-></iframe>
+    width="100%"
+    height="300"
+    frameBorder="0"
+    scrolling="no"
+    marginHeight="0"
+    marginWidth="0"
+    src="https://www.openstreetmap.org/export/embed.html?bbox=10.0905%2C36.8100%2C10.0925%2C36.8115&layer=mapnik&marker=36.8109%2C10.0915"
+    title="Lina Optic – Manouba"
+  ></iframe>
 </div>
 
         </div>
