@@ -1,6 +1,6 @@
 // src/PercentageSlider.jsx
 import { useState } from 'react';
-import './PercentageSlider.css';
+import '../Styles/StylesPercentageSlicer.css';
 
 const PercentageSlider = () => {
   // Retrieve the saved percentage value from localStorage (or default to 50)

@@ -9,19 +9,20 @@ import { useGetProductByIdQuery } from "../../redux/features/products/productsAp
 import Swal from "sweetalert2";
 import "../../Styles/StylesSingleProduct.css";
 
+// ✅ Main component
 const SingleProduct = () => {
   const { id } = useParams();
   const { data: product, isLoading, isError, refetch } = useGetProductByIdQuery(id);
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showContent, setShowContent] = useState(false);
-  const imageRef = useRef(null);
+  const [quantity, setQuantity] = useState(1); // selected quantity
+  const [selectedColor, setSelectedColor] = useState(null); // selected color
+  const [selectedImage, setSelectedImage] = useState(null); // main image shown
+  const [showContent, setShowContent] = useState(false); // fade-in effect
+  const imageRef = useRef(null); // ref for zoom
 
-  // ✅ Set default color + image on load or when product refetches
+  // ✅ Set default color and image when product loads
   useEffect(() => {
     if (product?.colors?.length > 0) {
       const firstColor = product.colors[0];
@@ -30,22 +31,26 @@ const SingleProduct = () => {
     }
   }, [product]);
 
+  // ✅ Handle quantity changes
   const handleQuantityChange = (e) => {
     const value = Number(e.target.value);
     const maxStock = selectedColor?.stock ?? 0;
     setQuantity(value > maxStock ? maxStock : value);
   };
 
+  // ✅ Handle color selection
   const handleSelectColor = (color) => {
     setSelectedColor(color);
     setSelectedImage(color?.images?.[0] || product?.coverImage);
     setQuantity(1);
   };
 
+  // ✅ Handle image selection (thumbnails)
   const handleSelectImage = (imgUrl) => {
     setSelectedImage(imgUrl);
   };
 
+  // ✅ Add product to cart with validation
   const handleAddToCart = () => {
     const colorName = selectedColor?.colorName?.en;
     const colorStock = selectedColor?.stock ?? 0;
@@ -81,7 +86,7 @@ const SingleProduct = () => {
     );
   };
 
-  // ✅ Zoom on hover
+  // ✅ Zoom on image hover
   useEffect(() => {
     const image = imageRef.current;
     if (!image) return;
@@ -108,7 +113,7 @@ const SingleProduct = () => {
     };
   }, [selectedImage]);
 
-  // ✅ Show content after delay
+  // ✅ Show product content after small delay
   useEffect(() => {
     if (isLoading) {
       setShowContent(false);
@@ -120,25 +125,29 @@ const SingleProduct = () => {
     }
   }, [isLoading]);
 
+  // ✅ Calculate discount %
   const discountPercent =
     product?.oldPrice && product?.newPrice
       ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
       : 0;
 
-
-      if (isLoading || !product || !product.title) {
+  // ✅ Show loader if still fetching
+  if (isLoading || !product || !product.title) {
     return <div className="loader-container"><div className="spinner"></div></div>;
   }
 
   return (
     <div className="single-product-container">
-      <h1 className="product-title-lina">{product?.title || "Produit non disponible"}</h1>
+      {/* 🏷️ Product Title */}
+      <h1 className="product-title-lina">
+        {product?.title || "Produit non disponible"}
+      </h1>
 
       <div className="product-content">
-        {/* 🔵 Left Side – Images & Colors */}
+        {/* 🔵 LEFT SIDE: Images + Color Options */}
         <div>
           <div className="product-image-box">
-            {/* 🔖 Promotion Badge */}
+            {/* 🔖 Discount Badge */}
             {product?.oldPrice && product?.newPrice && (
               <div className="badge promotion-badge">-{discountPercent}%</div>
             )}
@@ -163,7 +172,7 @@ const SingleProduct = () => {
                 : "Rupture de stock"}
             </div>
 
-            {/* 🖼️ Main Image */}
+            {/* 🖼️ Main Product Image with zoom effect */}
             <img
               src={getImgUrl(selectedImage ?? product?.coverImage)}
               alt={product?.title}
@@ -171,7 +180,7 @@ const SingleProduct = () => {
               ref={imageRef}
             />
 
-            {/* 🖼️ Thumbnails */}
+            {/* 🖼️ Additional Image Thumbnails */}
             {selectedColor?.images?.length > 1 && (
               <div className="thumbnail-gallery">
                 {selectedColor.images.map((img, idx) => (
@@ -187,7 +196,7 @@ const SingleProduct = () => {
             )}
           </div>
 
-          {/* 🎨 Color Selector */}
+          {/* 🎨 Color Options */}
           <div className="product-colors">
             <label>Couleurs disponibles:</label>
             <div className="color-options">
@@ -215,6 +224,7 @@ const SingleProduct = () => {
               })}
             </div>
 
+            {/* ✅ Selected Color Label */}
             <p className="selected-color">
               Couleur sélectionnée:{" "}
               <strong>{selectedColor?.colorName?.en || "Inconnue"}</strong>
@@ -222,10 +232,12 @@ const SingleProduct = () => {
           </div>
         </div>
 
-        {/* 🟢 Right Side – Product Info */}
+        {/* 🟢 RIGHT SIDE: Product Info + Actions */}
         <div className="product-details">
+          {/* 📄 Description */}
           <p className="product-description">{product?.description || ""}</p>
 
+          {/* 📋 Meta Details */}
           <div className="product-meta">
             <p><strong>Marque:</strong> {product?.brand || "Inconnue"}</p>
             <p><strong>Catégorie principale:</strong> {product?.mainCategory || "Inconnue"}</p>
@@ -238,6 +250,7 @@ const SingleProduct = () => {
             </p>
           </div>
 
+          {/* 💰 Price Section */}
           <div className="product-price">
             <span className="new">
               {product?.newPrice?.toFixed(2) ?? "0.00"} TND
@@ -249,11 +262,13 @@ const SingleProduct = () => {
             )}
           </div>
 
+          {/* 📦 Stock Information */}
           <div className="product-stock-info">
             <strong>Stock:</strong>{" "}
             {selectedColor?.stock > 0 ? selectedColor.stock : "Rupture de stock"}
           </div>
 
+          {/* 🔢 Quantity Selector */}
           <div className="product-quantity">
             <label>Quantité:</label>
             <input
@@ -266,6 +281,7 @@ const SingleProduct = () => {
             />
           </div>
 
+          {/* 🛒 Add to Cart Button */}
           <button
             onClick={handleAddToCart}
             disabled={(selectedColor?.stock ?? 0) === 0}

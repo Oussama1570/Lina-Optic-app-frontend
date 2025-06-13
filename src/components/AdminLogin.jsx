@@ -7,17 +7,26 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../Styles/StylesAdminLogin.css";
 
+// ✅ AdminLogin component handles admin authentication with styled UI and multilingual support
 const AdminLogin = () => {
+  // 🧠 Local state to store error or system messages
   const [message, setMessage] = useState("");
+
+  // 📝 useForm hook for form validation
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === "ar";
 
+  // 🔁 For redirecting after successful login
+  const navigate = useNavigate();
+
+  // 🌍 Translation setup
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar"; // Handle right-to-left layout for Arabic
+
+  // ✅ Display success alert using SweetAlert
   const showSuccessAlert = (title, text) => {
     Swal.fire({
       title,
@@ -31,6 +40,7 @@ const AdminLogin = () => {
     });
   };
 
+  // ❌ Display error alert using SweetAlert
   const showErrorAlert = (title, text) => {
     Swal.fire({
       title,
@@ -43,15 +53,21 @@ const AdminLogin = () => {
     });
   };
 
+  // 🚀 Submit form to authenticate admin
   const onSubmit = async (data) => {
     try {
+      // 🔐 Send login credentials to backend
       const response = await axios.post(`${getBaseUrl()}/api/auth/admin`, data, {
         headers: { "Content-Type": "application/json" },
       });
+
       const auth = response.data;
 
+      // ✅ If login successful, store token temporarily
       if (auth.token) {
         localStorage.setItem("token", auth.token);
+
+        // ⏳ Token expires after 1 hour
         setTimeout(() => {
           localStorage.removeItem("token");
           showErrorAlert(t("admin.session_expired_title"), t("admin.session_expired_text"));
@@ -59,9 +75,11 @@ const AdminLogin = () => {
         }, 3600 * 1000);
       }
 
+      // ✅ Show success and redirect
       showSuccessAlert(t("admin.success_title"), t("admin.success_text"));
       navigate("/dashboard");
     } catch (error) {
+      // ❌ Show error alert if login fails
       showErrorAlert(t("admin.error_title"), t("admin.error_text"));
       console.error(error);
     }
@@ -70,11 +88,15 @@ const AdminLogin = () => {
   return (
     <div className="admin-login-page" dir={isRTL ? "rtl" : "ltr"}>
       <div className="admin-login-box">
+        {/* 🏷️ Title */}
         <h2 className="admin-login-title">{t("admin.title")}</h2>
 
+        {/* ⚠️ Optional error message */}
         {message && <p className="admin-error">{message}</p>}
 
+        {/* 📋 Login form */}
         <form onSubmit={handleSubmit(onSubmit)} className="admin-login-form">
+          {/* 📧 Username field */}
           <div className="form-group">
             <label htmlFor="username">{t("admin.username_label")}</label>
             <input
@@ -88,6 +110,7 @@ const AdminLogin = () => {
             )}
           </div>
 
+          {/* 🔐 Password field */}
           <div className="form-group">
             <label htmlFor="password">{t("admin.password_label")}</label>
             <input
@@ -101,11 +124,13 @@ const AdminLogin = () => {
             )}
           </div>
 
+          {/* 🔘 Submit button */}
           <button type="submit" className="admin-login-btn">
             {t("admin.login_btn")}
           </button>
         </form>
 
+        {/* 📄 Footer note */}
         <p className="admin-login-footer">
           ©2025 Lina Optic — {t("admin.rights")}
         </p>

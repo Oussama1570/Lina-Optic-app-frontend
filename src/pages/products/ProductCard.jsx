@@ -1,26 +1,35 @@
 import React, { useState } from "react";
-import { getImgUrl } from "../../utils/getImgUrl";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
-import { FiShoppingCart, FiEye, FiHeart } from "react-icons/fi";
-import { HiOutlineSparkles } from "react-icons/hi";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../../redux/features/wishlist/wishlistSlice";
+import { getImgUrl } from "../../utils/getImgUrl";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
+// 🎨 Icons
+import { FiShoppingCart, FiEye, FiHeart } from "react-icons/fi";
+import { HiOutlineSparkles } from "react-icons/hi";
+
+// 🖼️ Styles
 import "../../Styles/StylesProductCard.css";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
+
+  // 🔄 Local states
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
+  // 🛒 Redux state for cart and wishlist
   const cartItems = useSelector((state) => state.cart.cartItems);
   const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+
   const isInWishlist = wishlistItems.some((item) => item._id === product._id);
 
+  // 🎨 Selected color logic
   const selectedColor =
     product.colors?.[selectedColorIndex] || {
       images: [product.coverImage || "/assets/default-image.png"],
@@ -31,11 +40,13 @@ const ProductCard = ({ product }) => {
     selectedColor?.images?.[0] || product.coverImage || "/assets/default-image.png";
   const hoverImage = selectedColor?.images?.[1] || mainImage;
 
+  // 🔖 Calculate discount
   const discountPercent =
     product.oldPrice && product.newPrice
       ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
       : 0;
 
+  // 🛒 Add to cart handler
   const handleAddToCart = () => {
     const quantityInCart =
       cartItems.find(
@@ -69,6 +80,7 @@ const ProductCard = ({ product }) => {
     );
   };
 
+  // 💖 Wishlist toggle
   const handleToggleWishlist = () => {
     if (isInWishlist) {
       dispatch(removeFromWishlist(product._id));
@@ -91,14 +103,16 @@ const ProductCard = ({ product }) => {
     }
   };
 
+  // 📦 Calculate total stock (across all colors)
   const totalStock = product.colors?.reduce(
     (sum, color) => sum + (color?.stock || 0),
     0
   );
 
 
-    return (
+  return (
     <div className="product-card-optic">
+      {/* 🖱️ Clickable image box with product link */}
       <a
         href={`/products/${product._id}`}
         className="image-box"
@@ -168,7 +182,7 @@ const ProductCard = ({ product }) => {
             : "Rupture de stock"}
         </div>
 
-        {/* 🖼️ Product image */}
+        {/* 🖼️ Product image with hover effect */}
         <img
           src={getImgUrl(isHovered ? hoverImage : mainImage)}
           alt={product?.title}
@@ -178,6 +192,7 @@ const ProductCard = ({ product }) => {
         />
       </a>
 
+      {/* 📝 Product info section */}
       <div className="product-details-box">
         <h3 className="product-title-optic">
           {product?.title || "Produit inconnu"}
@@ -188,6 +203,7 @@ const ProductCard = ({ product }) => {
         </p>
         <p className="product-brand">{product?.brand || "Marque inconnue"}</p>
 
+        {/* 💰 Prices */}
         <div className="product-price-optic">
           {product.oldPrice && (
             <span className="old-price">
@@ -200,7 +216,9 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
 
+      {/* 🧭 Hover action buttons */}
       <div className="hover-icons">
+        {/* 🛒 Add to Cart */}
         <button
           className={`add-btn ${
             selectedColor?.stock <= 0 ? "disabled-btn" : ""
@@ -214,6 +232,7 @@ const ProductCard = ({ product }) => {
             : "En rupture de stock"}
         </button>
 
+        {/* ❤️ Wishlist toggle */}
         <span
           className="icon"
           onClick={handleToggleWishlist}
@@ -222,6 +241,7 @@ const ProductCard = ({ product }) => {
           <FiHeart className="icon" />
         </span>
 
+        {/* 👁️ View product details */}
         <a href={`/products/${product._id}`} className="icon">
           <FiEye />
         </a>

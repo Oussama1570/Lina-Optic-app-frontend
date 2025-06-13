@@ -11,31 +11,38 @@ import {
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 
+// 🌐 Create context for authentication state and actions
 const AuthContext = createContext();
 
+// ✅ Hook to use the AuthContext in child components
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
+// 🔐 Google provider for popup authentication
 const googleProvider = new GoogleAuthProvider();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { t, i18n } = useTranslation();
+  const [currentUser, setCurrentUser] = useState(null); // 🧑‍💻 Currently logged-in user
+  const [loading, setLoading] = useState(true);         // ⏳ Loading state while checking auth
+  const { t, i18n } = useTranslation();                  // 🌍 For multilingual alerts
 
+  // 🔐 Register a user with email and password
   const registerUser = async (email, password) => {
     return await createUserWithEmailAndPassword(auth, email, password);
   };
 
+  // 🔐 Login a user with email and password
   const loginUser = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password);
   };
 
+  // 🔐 Login with Google account
   const signInWithGoogle = async () => {
     return await signInWithPopup(auth, googleProvider);
   };
 
+  // 🚪 Logout function with multilingual SweetAlert confirmation
   const logout = async () => {
     const result = await Swal.fire({
       title:
@@ -61,9 +68,9 @@ export const AuthProvider = ({ children }) => {
           ? "Oui, déconnectez-moi !"
           : "Yes, Logout!",
     });
-  
+
     if (result.isConfirmed) {
-      await signOut(auth);
+      await signOut(auth); // 🔄 Sign the user out
       Swal.fire({
         title:
           i18n.language === "ar"
@@ -83,16 +90,18 @@ export const AuthProvider = ({ children }) => {
       });
     }
   };
-  
 
+  // 🧭 Track authentication state on initial load
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
     });
-    return () => unsubscribe();
+
+    return () => unsubscribe(); // 🔁 Clean up listener on unmount
   }, []);
 
+  // 📦 Values to be shared through the context
   const value = {
     currentUser,
     loading,

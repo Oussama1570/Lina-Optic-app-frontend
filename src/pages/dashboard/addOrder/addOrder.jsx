@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateOrderMutation } from "../../../redux/features/orders/ordersApi";  // Assuming you have an `ordersApi` set up
-import Swal from "sweetalert2";
+import { useCreateOrderMutation } from "../../../redux/features/orders/ordersApi"; // 🧩 RTK Query mutation hook
+import Swal from "sweetalert2"; // 🔔 For success and error popups
 
 const AddOrder = () => {
+  // 📝 useForm hook for handling form state
   const { register, handleSubmit, reset } = useForm();
-  const [createOrder] = useCreateOrderMutation();  // Assuming the mutation hook is set up for creating orders
 
-  // Handle form submission
+  // 🔄 Mutation function to create a new order
+  const [createOrder] = useCreateOrderMutation();
+
+  // 📤 Submit handler for the form
   const onSubmit = async (data) => {
     try {
-      await createOrder(data).unwrap();  // Send the order data to the backend
+      // 🚀 Send order data to the backend
+      await createOrder(data).unwrap();
+
+      // ✅ Show success alert and reset form
       Swal.fire("Success!", "Order added successfully!", "success");
-      reset();  // Reset the form fields after submission
+      reset();
     } catch (error) {
+      // ❌ Show error alert if submission fails
       Swal.fire("Error!", "Failed to add order.", "error");
     }
   };
@@ -30,6 +37,7 @@ const AddOrder = () => {
           placeholder="Customer Name"
           required
         />
+
         {/* Customer Email */}
         <input
           {...register("email")}
@@ -38,6 +46,7 @@ const AddOrder = () => {
           placeholder="Customer Email"
           required
         />
+
         {/* Address */}
         <textarea
           {...register("address")}
@@ -45,7 +54,8 @@ const AddOrder = () => {
           placeholder="Customer Address"
           required
         />
-        {/* Phone */}
+
+        {/* Phone Number */}
         <input
           {...register("phone")}
           type="number"
@@ -53,7 +63,8 @@ const AddOrder = () => {
           placeholder="Phone Number"
           required
         />
-        {/* Product IDs (if you have product data to link) */}
+
+        {/* Product IDs - comma separated */}
         <input
           {...register("productIds")}
           type="text"
@@ -61,6 +72,7 @@ const AddOrder = () => {
           placeholder="Product IDs (comma separated)"
           required
         />
+
         {/* Total Price */}
         <input
           {...register("totalPrice")}
@@ -69,18 +81,21 @@ const AddOrder = () => {
           placeholder="Total Price"
           required
         />
+
         {/* Payment Status */}
         <select {...register("isPaid")} className="w-full p-2 border rounded" required>
           <option value="">Select Payment Status</option>
           <option value={true}>Paid</option>
           <option value={false}>Not Paid</option>
         </select>
+
         {/* Delivery Status */}
         <select {...register("isDelivered")} className="w-full p-2 border rounded" required>
           <option value="">Select Delivery Status</option>
           <option value={true}>Delivered</option>
           <option value={false}>Not Delivered</option>
         </select>
+
         {/* Completion Percentage */}
         <input
           {...register("completionPercentage")}

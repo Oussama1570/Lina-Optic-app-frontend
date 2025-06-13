@@ -1,40 +1,45 @@
-import { motion } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const FadeInSection = ({ children, delay = 0 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+// ✅ FadeInSection component for scroll-triggered animations
+const FadeInSection = ({ children }) => {
+  // 📦 Ref to attach to the DOM element we want to observe
+  const domRef = useRef();
+
+  // ✅ State to control visibility (used to add the fade-in class)
+  const [isVisible, setVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
+    // 👀 Create an intersection observer
+    const observer = new IntersectionObserver((entries) => {
+      // ✅ Loop through entries (should only be one)
+      entries.forEach((entry) => {
+        // 🔍 Check if the element is visible in the viewport
         if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 } // Adjust how much of the element needs to be visible
-    );
+          // ✅ Update visibility to true when element comes into view
+          setVisible(true);
 
-    if (ref.current) {
-      observer.observe(ref.current);
+          // 🛑 Stop observing after it becomes visible
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    // 🎯 Start observing the current DOM node
+    if (domRef.current) {
+      observer.observe(domRef.current);
     }
 
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
+    // 🧹 Cleanup observer when the component unmounts
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
+    <div
+      className={`fade-in-section ${isVisible ? "is-visible" : ""}`}
+      ref={domRef}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

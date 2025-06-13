@@ -12,8 +12,9 @@ import "../Styles/StylesFooter.css";
 const Footer = () => {
   return (
     <footer className="lina-footer">
+      {/* 🔳 Grid layout for footer sections */}
       <div className="footer-grid">
-        {/* À propos */}
+        {/* 🔹 About section with description and embedded map */}
         <div className="footer-section">
           <h4>À propos</h4>
           <p>
@@ -21,7 +22,7 @@ const Footer = () => {
             et un service client irréprochable pour tous vos besoins optiques.
           </p>
 
-          {/* Embedded Google Map */}
+           {/* 🗺️ Embedded OpenStreetMap iframe with current timestamp to avoid caching */}
           <div className="footer-map-small">
  <iframe
   key={Date.now()}
@@ -39,7 +40,7 @@ const Footer = () => {
 
         </div>
 
-        {/* Liens rapides */}
+        {/* 🔹 Quick links navigation section */}
         <div className="footer-section">
           <h4>Liens rapides</h4>
           <ul>
@@ -49,7 +50,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* 🔹 Contact info and social media links */}
         <div className="footer-section">
           <h4>Contact</h4>
           <p>
@@ -59,6 +60,7 @@ const Footer = () => {
           <p><FaPhoneAlt className="footer-icon" /> +216 22 344 803</p>
           <p><FaEnvelope className="footer-icon" /> linaopticlunettes@gmail.com</p>
 
+          {/* 🌐 Social icons with links */}
           <div className="footer-socials">
             <a
               href="https://www.instagram.com/linaoptic2"
@@ -80,6 +82,7 @@ const Footer = () => {
         </div>
       </div>
 
+{/* 🔻 Bottom copyright text */}
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} Lina Optic – Tous droits réservés.</p>
       </div>

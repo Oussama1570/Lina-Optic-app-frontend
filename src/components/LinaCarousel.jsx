@@ -1,11 +1,6 @@
-// 🧠 React hooks
 import { useEffect } from "react";
-
-// 🎠 Carousel component from react-responsive-carousel
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // 📦 Carousel default styles
-
-// 🎨 Custom styles
 import "../Styles/StylesLinaCarousel.css";
 
 // 📷 Carousel images

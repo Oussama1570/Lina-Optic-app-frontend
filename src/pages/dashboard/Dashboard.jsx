@@ -2,17 +2,19 @@ import { FaBoxOpen, FaClipboardList, FaChartLine, FaUser } from 'react-icons/fa'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loading from '../../components/Loading';
-import getBaseUrl from '../../utils/baseURL';
-import RevenueChart from './RevenueChart';
-import ManageOrders from './manageOrders/manageOrder';
-import "../../Styles/Stylesdashboard.css"
+
+import Loading from '../../components/Loading'; // 🌀 Custom loading component
+import getBaseUrl from '../../utils/baseURL'; // 🌐 Utility to get backend URL
+import RevenueChart from './RevenueChart'; // 📊 Monthly revenue chart
+import ManageOrders from './manageOrders/manageOrder'; // 📦 Order management component
+import "../../Styles/Stylesdashboard.css"; // 🎨 Dashboard styles
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState({});
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);     // ⏳ State to track data loading
+  const [data, setData] = useState({});             // 📦 State to store fetched admin data
+  const navigate = useNavigate();                   // 🔁 Router hook to navigate programmatically
 
+  // 📡 Fetch admin dashboard stats when component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,10 +24,11 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
         });
-        setData(response.data);
-        setLoading(false);
+
+        setData(response.data);   // ✅ Store fetched stats
+        setLoading(false);        // 🔁 Stop loading spinner
       } catch (error) {
-        console.error('Erreur:', error);
+        console.error('Erreur:', error); // ❌ Handle API errors
         setLoading(false);
       }
     };
@@ -33,11 +36,13 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  // 🔐 Logout handler: clear token and redirect
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate("/");
   };
 
+  // 🌀 Show loading screen while data is being fetched
   if (loading) {
     return (
       <div className="dashboard-loading">
@@ -45,6 +50,7 @@ const Dashboard = () => {
       </div>
     );
   }
+
 
   return (
     <div dir="ltr" className="dashboard-main enhanced-dashboard">

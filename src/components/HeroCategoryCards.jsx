@@ -1,41 +1,41 @@
 import React, { useRef } from "react";
-import "../Styles/StylesHeroCategoryCards.css";
-import femmeImage from "../assets/Glasses/Img HeroCategory Card Women Glasses.png";
-import hommeImage from "../assets/Glasses/Img HeroCategory Card Men Glasses.png";
+import "../Styles/StylesHeroCategoryCards.css"; // 🎨 Import custom styles
+import femmeImage from "../assets/Glasses/Img HeroCategory Card Women Glasses.png"; // 👓 Image for women's glasses
+import hommeImage from "../assets/Glasses/Img HeroCategory Card Men Glasses.png";   // 👓 Image for men's glasses
 import { Link } from "react-router-dom";
 
 const HeroCategoryCards = () => {
-  // 🧭 Custom zoom tracking effect
+  // 🧭 Handle mouse movement to create a zoom-follow effect
   const handleMouseMove = (e, zoomRef) => {
     const zoom = zoomRef.current;
     const rect = zoom.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    zoom.style.backgroundPosition = `${x}% ${y}%`;
+    zoom.style.backgroundPosition = `${x}% ${y}%`; // Set background position based on cursor
   };
 
-  // 🛑 Reset position to center when mouse leaves
+  // 🛑 Reset zoom to center when mouse leaves the card
   const handleMouseLeave = (zoomRef) => {
     zoomRef.current.style.backgroundPosition = "center center";
   };
 
-  // 🪞 References for image zoom layers
+  // 🪞 Refs for accessing DOM elements for each zoom layer
   const femmeZoomRef = useRef(null);
   const hommeZoomRef = useRef(null);
 
   return (
     <div className="category-cards-container">
-      {/* 🔴 Card: Femme */}
+      {/* 🔴 Hero Card for Women's Glasses */}
       <a href="/products?category=Femmes" className="category-card-link-wrapper">
         <div
           className="category-card"
-          onMouseMove={(e) => handleMouseMove(e, femmeZoomRef)}
-          onMouseLeave={() => handleMouseLeave(femmeZoomRef)}
+          onMouseMove={(e) => handleMouseMove(e, femmeZoomRef)}   // Track mouse movement
+          onMouseLeave={() => handleMouseLeave(femmeZoomRef)}    // Reset on leave
         >
           <div
             ref={femmeZoomRef}
             className="zoom-layer"
-            style={{ backgroundImage: `url(${femmeImage})` }}
+            style={{ backgroundImage: `url(${femmeImage})` }}     // Set background image for zoom effect
           ></div>
           <div className="card-overlay">
             <p className="card-subtitle">Lunettes pour Elle</p>
@@ -45,17 +45,17 @@ const HeroCategoryCards = () => {
         </div>
       </a>
 
-      {/* 🔵 Card: Homme */}
+      {/* 🔵 Hero Card for Men's Glasses */}
       <a href="/products?category=Hommes" className="category-card-link-wrapper">
         <div
           className="category-card"
-          onMouseMove={(e) => handleMouseMove(e, hommeZoomRef)}
-          onMouseLeave={() => handleMouseLeave(hommeZoomRef)}
+          onMouseMove={(e) => handleMouseMove(e, hommeZoomRef)}   // Track mouse movement
+          onMouseLeave={() => handleMouseLeave(hommeZoomRef)}    // Reset on leave
         >
           <div
             ref={hommeZoomRef}
             className="zoom-layer"
-            style={{ backgroundImage: `url(${hommeImage})` }}
+            style={{ backgroundImage: `url(${hommeImage})` }}     // Set background image for zoom effect
           ></div>
           <div className="card-overlay">
             <p className="card-subtitle">Lunettes pour Lui</p>

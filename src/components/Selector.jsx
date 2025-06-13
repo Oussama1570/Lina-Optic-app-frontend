@@ -1,23 +1,29 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import "../Styles/StylesSelector.css";
 
-const Selector = ({ label, options = [], value, onChange }) => {
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.dir() === "rtl";
+const Selector = ({ label, value, options, onChange }) => {
+  // 🌍 Hook for accessing translation strings
+  const { t } = useTranslation();
+
+  // 🧾 This component renders a labeled <select> dropdown
+  // 🔁 Options are dynamically mapped from the `options` prop
+  // 📦 `value` is the currently selected option
+  // 🛠️ `onChange` is triggered when a different option is selected
 
   return (
-    <div className="selector-wrapper" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="selector-container">
+      {/* 🏷️ Optional label shown above the selector */}
       {label && <label className="selector-label">{label}</label>}
+
       <select
-        className="selector-dropdown"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        className="selector-dropdown" // 🎨 Custom styling class
+        value={value} // ✅ Controlled value for the selector
+        onChange={(e) => onChange(e.target.value)} // 📝 Update value on change
       >
-        <option value="">{t("select_option")}</option>
-        {options.map((opt, i) => (
-          <option key={i} value={opt}>
-            {opt}
+        {/* 🔄 Render each option as <option> */}
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {t(option)} {/* 🌐 Translate the option label */}
           </option>
         ))}
       </select>
