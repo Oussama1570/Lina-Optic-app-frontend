@@ -147,10 +147,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* 🌐 Language Selector */}
-          <div className="language-switcher-wrapper">
-            <LanguageSwitcher />
-          </div>
+          
         </div>
       </nav>
 
