@@ -4,9 +4,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // 📦 Carousel
 import "../Styles/StylesLinaCarousel.css";
 
 // 📷 Carousel images
-import CarreraImg from "../assets/Les lunettes de Lina Optic/CARRERA/Carrera Tendance sans Cadre Prix 1150 Prix aprés Remise 960.jpeg";
-import  CerrutiImg from "../assets/Les lunettes de Lina Optic/Cerruti/Cerruti 1881 Tendance Prix 1140 Prix aprés Remise 950.jpeg";
-import GucciImg from "../assets/Les lunettes de Lina Optic/GUCCI/GUCCI Tendance Prix 2000 Prix aprés remise 1600.jpeg";
+import CarreraImg from "../assets/Les lunettes de Lina Optic/CARRERA/carrera.jpg";
+import  CerrutiImg from "../assets/Les lunettes de Lina Optic/Cerruti/cerruti.jpg";
+import GucciImg from "../assets/Les lunettes de Lina Optic/GUCCI/gucci.jpg";
 
 const LinaCarousel = () => {
   // 🖱️ Custom cursor animation inside the carousel wrapper
