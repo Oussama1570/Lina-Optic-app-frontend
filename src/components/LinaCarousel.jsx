@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // 📦 Carousel default styles
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // 📦 Carousel default styles // 
 import "../Styles/StylesLinaCarousel.css";
 
 // 📷 Carousel images
