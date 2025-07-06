@@ -4,9 +4,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // 📦 Carousel
 import "../Styles/StylesLinaCarousel.css";
 
 // 📷 Carousel images
-import CarreraImg from "../assets/Les lunettes-de-Carousel-Lina/carrera.jpg";
-import CerrutiImg from "../assets/Les lunettes-de-Carousel-Lina/cerruti.jpg";
-import GucciImg from "../assets/Les lunettes-de-Carousel-Lina/gucci.jpg";
+import CarreraImg from "../assets/Les-lunettes-de-Carousel-Lina/carrera.jpg";
+import CerrutiImg from "../assets/Les-lunettes-de-Carousel-Lina/cerruti.jpg";
+import GucciImg from "../assets/Les-lunettes-de-Carousel-Lina/gucci.jpg";
 
 const LinaCarousel = () => {
   // 🖱️ Custom cursor animation inside the carousel wrapper
