@@ -4,9 +4,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // 📦 Carousel
 import "../Styles/StylesLinaCarousel.css";
 
 // 📷 Carousel images
-import Img1 from "../assets/Lunettes de carousel/Lunettes pour hommes Carousel.jpg";
-import Img2 from "../assets/Lunettes de carousel/Lunettes optiques pour femmes Carousel.jpg";
-import Img3 from "../assets/Lunettes de carousel/Lunettes divers cadres.jpg";
+import CarreraImg from "../assets/Les lunettes de Lina Optic/CARRERA/Carrera Tendance sans Cadre Prix 1150 Prix aprés Remise 960.jpeg";
+import  CerrutiImg from "../assets/Les lunettes de Lina Optic/Cerruti/Cerruti 1881 Tendance Prix 1140 Prix aprés Remise 950.jpeg";
+import GucciImg from "../assets/Les lunettes de Lina Optic/GUCCI/GUCCI Tendance Prix 2000 Prix aprés remise 1600.jpeg";
 
 const LinaCarousel = () => {
   // 🖱️ Custom cursor animation inside the carousel wrapper
@@ -78,22 +78,23 @@ const LinaCarousel = () => {
       >
         {/* 📷 Slides data */}
         {[
-          {
-            subtitle: "GUSTO EYEWEAR",
-            title: "Lunettes avec verres solaires",
-            image: Img1,
-          },
-          {
-            subtitle: "Lunettes Modulables",
-            title: "Clip-On Intelligents & Élégants",
-            image: Img2,
-          },
-          {
-            subtitle: "Collection JOW WAY",
-            title: "OLIVIA – Style & Douceur",
-            image: Img3,
-          },
-        ].map((slide, index) => (
+  {
+    subtitle: "CARRERA",
+    title: "Tendance Sans Cadre",
+    image: CarreraImg,
+  },
+  {
+    subtitle: "CERRUTI 1881",
+    title: "Monture Fine et Élégante",
+    image: CerrutiImg,
+  },
+  {
+    subtitle: "GUCCI",
+    title: "Design Classique & Luxe",
+    image: GucciImg,
+  },
+]
+.map((slide, index) => (
           <div className="carousel-slide" key={index}>
             {/* 📸 Slide image */}
             <div className="carousel-image-block">
